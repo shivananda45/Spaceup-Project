@@ -15,13 +15,21 @@ const HomeScreen = () => {
                     <Text style={styles.welcomeText}>Hi Welcome</Text>
                     <Text style={styles.nameText}>Santhosh Kumar</Text>
                 </View>
+                <View style={styles.progressCon}>
+                    <Text style={styles.progressText}>51% Completed</Text>
+                    <View style={styles.progressCon1}>
+                        <View style={styles.progressCon2}>
+                            <View style={styles.progressCon3} />
+                        </View>
+                    </View>
+                </View>
                 <View style={styles.menu} >
                     <TouchableOpacity style={styles.menuItem}>
                         <MaterialIcons name="payment" style={styles.iconStyle} />
                         <Text>Payment Tracking</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.menuItem}>
-                        <MaterialCommunityIcons name="briefcase-clock-outline" style={styles.iconStyle}  />
+                        <MaterialCommunityIcons name="briefcase-clock-outline" style={styles.iconStyle} />
                         <Text>Project tracker</Text>
                     </TouchableOpacity>
                 </View>
@@ -57,20 +65,20 @@ const styles = StyleSheet.create({
         // backgroundColor: '#f3f3f3'
     },
     welCon: {
-        justifyContent:'center',
-        alignItems:'center',
-        paddingVertical:20
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingVertical: 20
     },
     welcomeText: {
-        fontSize:15
+        fontSize: 15
     },
     nameText: {
-        fontSize:17,
+        fontSize: 17,
         color: '#383974'
     },
     mainBody: {
-        //backgroundColor: 'red',
-        height:Deviceheight,
+        // backgroundColor: 'red',
+        height: Deviceheight,
     },
     menu: {
         flexDirection: 'row',
@@ -93,18 +101,59 @@ const styles = StyleSheet.create({
     iconStyle: {
         color: '#383974',
         fontSize: 35,
-        marginBottom:10
+        marginBottom: 10
     },
     imageStyle: {
         width: '100%',
         height: 80,
         //alignSelf: 'baseline',
-        marginTop : 'auto',
+        // marginTop: 'auto',
     },
     bottomBody: {
         // height: '13%',
         width: '100%'
-    }
+    },
+    progressCon: {
+        width: '90%',
+        // backgroundColor:'#fff',
+        alignItems:'center',
+        justifyContent:'center',
+        paddingVertical:25,
+        alignSelf:'center'
+    },
+    progressText: {
+        color: '#383974',
+        fontSize: 13,
+        marginBottom: 10,
+        alignSelf:'flex-start'
+    },
+    progressCon1: {
+        width: '100%',
+        backgroundColor:'#fff',
+        alignItems:'center',
+        justifyContent:'center',
+        paddingVertical:5,
+        paddingHorizontal:5,
+        borderRadius:25
+    },
+    progressCon2: {
+        width: '100%',
+        backgroundColor:'#f3f3fb',
+        // alignItems:'center',
+        // justifyContent:'center',
+        // paddingVertical:10,
+        // paddingHorizontal:10,
+        borderRadius:25
+    },
+    progressCon3: {
+        width: '50%',
+        backgroundColor:'#383974',
+        // alignItems:'center',
+        // justifyContent:'center',
+        paddingVertical:7,
+        paddingHorizontal:7,
+        borderRadius:25
+    },
 })
 
 export default HomeScreen;
