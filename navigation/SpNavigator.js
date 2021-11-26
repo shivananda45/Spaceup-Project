@@ -13,6 +13,7 @@ import HomeScreen from '../screens/HomeScreen';
 import BannerScreen from '../screens/BannerScreen';
 import ForgotPassword from '../screens/ForgotPassword';
 import { Image, Text } from 'react-native';
+import Feather from 'react-native-vector-icons/Feather'
 
 const PrNavigator = () => {
   const Stack = createStackNavigator();
@@ -66,10 +67,12 @@ const PrNavigator = () => {
               headerStyle: {
                 backgroundColor: '#383974'
               },
-              headerLeft: ()=>{
-                <Text>Vamshiiiiii</Text>
-                // <Image source={require('../assets/images/mainLogo.png')} style={{width: 100, height: 30, backgroundColor: 'red'}} />
-              }
+              headerLeft: ()=>(
+                <Image source={require('../assets/images/mainLogo.png')} style={{width: 120, height: 50,marginLeft:15}} resizeMode="contain" />
+                ),
+                headerRight:()=>(
+                  <Feather name="bell" style={{fontSize:25,color:'#fff',marginRight:15}} />
+                )
               
             })
           }
