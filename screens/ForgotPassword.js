@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
         color: '#333',
         marginTop: 25,
         alignSelf: 'flex-start',
-        marginBottom: Platform.OS === 'ios' ? 10 : 0,
+        marginBottom: Platform.OS === 'ios' ? 10 : 10,
     },
     InputStyle: {
         fontSize: 15,
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 0.5,
         width: '100%',
         alignSelf: 'flex-start',
-        paddingVertical : Platform.OS === 'ios' ? 10 : 0,
+        paddingVertical : Platform.OS === 'ios' ? 10 : 10,
     },
     SubmitBtn: {
         width: '100%',

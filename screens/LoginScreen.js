@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
         marginBottom:0,
         color: '#f3f3f3',
         marginTop:25,
-        marginBottom: Platform.OS === 'ios' ? 10 : 0,
+        marginBottom: Platform.OS === 'ios' ? 10 : 10,
     },
     InputStyle: {
         fontSize:15,
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
         color: '#f3f3f3',
         borderBottomColor:'white',
         borderBottomWidth:0.5,
-        paddingVertical: Platform.OS === 'ios' ? 10 : 0
+        paddingVertical: Platform.OS === 'ios' ? 10 : 10
     },
     SubmitBtn: {
         paddingVertical:15,
