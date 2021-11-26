@@ -9,7 +9,7 @@ const ForgotPassword = () => {
             <Text style={styles.LablelText}>Mobile</Text>
             <TextInput placeholder="Enter Mobile" style={styles.InputStyle} placeholderTextColor="rgba(255,255,255,0.3)" />
             <TouchableOpacity style={styles.SubmitBtn}>
-                <Text style={styles.SubmitBtnText}>Login</Text>
+                <Text style={styles.SubmitBtnText}>OK</Text>
             </TouchableOpacity>
            </View>
            <View style={styles.ImageCon}>
