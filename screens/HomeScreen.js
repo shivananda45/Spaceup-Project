@@ -9,7 +9,7 @@ const Devicewidth = Dimensions.get('window').width;
 const Deviceheight = Dimensions.get('window').height;
 const HomeScreen = () => {
     return (
-        <View style={styles.container} >
+        // <View style={styles.container} >
             <ScrollView contentContainerStyle={styles.mainBody}>
                 <View style={styles.welCon} >
                     <Text style={styles.welcomeText}>Hi Welcome</Text>
@@ -53,9 +53,11 @@ const HomeScreen = () => {
                         <Text>Support</Text>
                     </TouchableOpacity>
                 </View>
+                <View style={styles.imgCon}>
                 <Image source={require('../assets/images/menuBottom.png')} style={styles.imageStyle} />
+                </View>
             </ScrollView>
-        </View>
+        // </View>
     )
 }
 
@@ -78,7 +80,9 @@ const styles = StyleSheet.create({
     },
     mainBody: {
         // backgroundColor: 'red',
-        height: Deviceheight,
+        //height: Deviceheight,
+        flex: 1
+        
     },
     menu: {
         flexDirection: 'row',
@@ -103,11 +107,17 @@ const styles = StyleSheet.create({
         fontSize: 35,
         marginBottom: 10
     },
+    imgCon: {
+        //  alignSelf: 'baseline',
+        //marginTop: 'auto',
+        position: 'absolute',
+        bottom: 0,
+        right: 0,
+        left: 0
+    },
     imageStyle: {
         width: '100%',
         height: 80,
-        //alignSelf: 'baseline',
-        // marginTop: 'auto',
     },
     bottomBody: {
         // height: '13%',
