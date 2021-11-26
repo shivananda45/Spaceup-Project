@@ -12,7 +12,9 @@ const ForgotPassword = () => {
                 <Text style={styles.SubmitBtnText}>Login</Text>
             </TouchableOpacity>
            </View>
-            <Image source={require('../assets/images/color-arrow-up.png')} style={styles.imageStyle} resizeMode="contain"/>
+           <View style={styles.ImageCon}>
+            <Image source={require('../assets/images/color-arrow-up.png')} style={styles.imageStyle} resizeMode="stretch" />
+           </View>
         </View>
     )
 }
@@ -23,15 +25,16 @@ const styles = StyleSheet.create({
     con:{
         flex:1,
         alignItems: 'center',
-        paddingTop: '20%',
+        // paddingTop: '20%',
 
     },
     inputs_con: {
         // backgroundColor:'#333',
         width: '85%',
+        height: '50%',
         alignItems: 'center',
         // paddingHorizontal: '5%',
-        // justifyContent:'center',
+        justifyContent:'flex-end',
         // paddingTop: '20%',
     },
     HeaddingText: {
@@ -60,7 +63,7 @@ const styles = StyleSheet.create({
         width: '100%',
         paddingVertical: 15,
         backgroundColor: '#333',
-        marginBottom: 20,
+        // marginBottom: 20,
         marginTop: 35,
         alignItems: 'center'
     },
@@ -68,12 +71,20 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: '#fff'
     },
+    ImageCon:{
+        width: '100%',
+        height: '50%',
+        // backgroundColor:'red',
+        // alignItems:'flex-end'
+    },
     imageStyle:{
-        width: '65%',
-        height: '53%',
-        position: 'absolute',
-        bottom: 0,
-        right: 0,
+        width: '100%',
+        height: '100%',
+        // backgroundColor:'red',
+
+        // position: 'absolute',
+        // bottom: 0,
+        // right: 0,
         opacity: 0.15,
         zIndex:-1
     }
