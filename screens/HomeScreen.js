@@ -69,8 +69,8 @@ const styles = StyleSheet.create({
         color: '#383974'
     },
     mainBody: {
-        // backgroundColor: 'red',
-        // height:Deviceheight,
+        //backgroundColor: 'red',
+        height:Deviceheight,
     },
     menu: {
         flexDirection: 'row',
@@ -98,7 +98,8 @@ const styles = StyleSheet.create({
     imageStyle: {
         width: '100%',
         height: 80,
-        //marginTop: '22%',
+        //alignSelf: 'baseline',
+        marginTop : 'auto',
     },
     bottomBody: {
         // height: '13%',
