@@ -14,6 +14,7 @@ import BannerScreen from '../screens/BannerScreen';
 import ForgotPassword from '../screens/ForgotPassword';
 import { Image, Text } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather'
+import TempNav from '../screens/tempNav';
 
 const PrNavigator = () => {
   const Stack = createStackNavigator();
@@ -46,19 +47,26 @@ const PrNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-      initialRouteName="Home"
+      initialRouteName="TemNav"
       // screenOptions={{
       //   headerBackTitleVisible: false,
       //   headerTintColor: '#FFFFFF',
       // }} 
       >
-         {/* <Stack.Screen name="Banner" component={BannerScreen}
+         <Stack.Screen name="TemNav" component={TempNav}
           options={
             ({ route }) => ({
               headerShown: false
             })
           }
-        /> */}
+        />
+         <Stack.Screen name="Banner" component={BannerScreen}
+          options={
+            ({ route }) => ({
+              headerShown: false
+            })
+          }
+        />
          <Stack.Screen name="Home" component={HomeScreen}
           options={
             ({ route }) => ({

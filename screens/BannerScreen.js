@@ -13,7 +13,7 @@ export default BannerScreen;
 const styles = StyleSheet.create({
     container:{
         flex: 1,
-        backgroundColor:'red'
+        // backgroundColor:'red'
     },
     image_style:{
         height: '100%',
