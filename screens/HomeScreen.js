@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Dimensions, } from 'react-native';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -11,7 +11,7 @@ const HomeScreen = () => {
     return (
         <View style={styles.container} >
         <ScrollView contentContainerStyle={styles.mainBody}>
-            <View style={styles.bodyTop}>
+            {/* <View style={styles.bodyTop}> */}
                 <View style={styles.welCon} >
                     <Text style={styles.welcomeText}>Hi Welcome</Text>
                     <Text style={styles.nameText}>Santhosh Kumar</Text>
@@ -54,10 +54,10 @@ const HomeScreen = () => {
                         <Text>Support</Text>
                     </TouchableOpacity>
                 </View>
-            </View>
-            <View style={styles.bodyBottom}>
+            {/* </View>
+            <View style={styles.bodyBottom}> */}
                 <Image source={require('../assets/images/menuBottom.png')} style={styles.imageStyle} />
-            </View>
+            {/* </View> */}
         </ScrollView>
         </View>
     )
@@ -82,8 +82,9 @@ const styles = StyleSheet.create({
     },
     mainBody: {
         // backgroundColor: 'red',
-        //height: Deviceheight,
-        // flex: 1
+        height: Deviceheight,
+        justifyContent: 'center'
+        //flex: 1
     },
     menu: {
         flexDirection: 'row',
@@ -119,6 +120,10 @@ const styles = StyleSheet.create({
     imageStyle: {
         width: '100%',
         height: 80,
+        position: 'absolute',
+        bottom: 0,
+        right: 0,
+        left: 0
     },
     bodyBottom: {
         height: '13%',
