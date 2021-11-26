@@ -9,8 +9,9 @@ const Devicewidth = Dimensions.get('window').width;
 const Deviceheight = Dimensions.get('window').height;
 const HomeScreen = () => {
     return (
-        // <View style={styles.container} >
-            <ScrollView contentContainerStyle={styles.mainBody}>
+        <View style={styles.container} >
+        <ScrollView contentContainerStyle={styles.mainBody}>
+            <View style={styles.bodyTop}>
                 <View style={styles.welCon} >
                     <Text style={styles.welcomeText}>Hi Welcome</Text>
                     <Text style={styles.nameText}>Santhosh Kumar</Text>
@@ -53,11 +54,12 @@ const HomeScreen = () => {
                         <Text>Support</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={styles.imgCon}>
+            </View>
+            <View style={styles.bodyBottom}>
                 <Image source={require('../assets/images/menuBottom.png')} style={styles.imageStyle} />
-                </View>
-            </ScrollView>
-        // </View>
+            </View>
+        </ScrollView>
+        </View>
     )
 }
 
@@ -81,8 +83,7 @@ const styles = StyleSheet.create({
     mainBody: {
         // backgroundColor: 'red',
         //height: Deviceheight,
-        flex: 1
-        
+        // flex: 1
     },
     menu: {
         flexDirection: 'row',
@@ -119,50 +120,54 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 80,
     },
-    bottomBody: {
-        // height: '13%',
+    bodyBottom: {
+        height: '13%',
         width: '100%'
+    },
+    bodyTop: {
+        height: '87%',
+
     },
     progressCon: {
         width: '90%',
         // backgroundColor:'#fff',
-        alignItems:'center',
-        justifyContent:'center',
-        paddingVertical:25,
-        alignSelf:'center'
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 25,
+        alignSelf: 'center'
     },
     progressText: {
         color: '#383974',
         fontSize: 13,
         marginBottom: 10,
-        alignSelf:'flex-start'
+        alignSelf: 'flex-start'
     },
     progressCon1: {
         width: '100%',
-        backgroundColor:'#fff',
-        alignItems:'center',
-        justifyContent:'center',
-        paddingVertical:5,
-        paddingHorizontal:5,
-        borderRadius:25
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 5,
+        paddingHorizontal: 5,
+        borderRadius: 25
     },
     progressCon2: {
         width: '100%',
-        backgroundColor:'#f3f3fb',
+        backgroundColor: '#f3f3fb',
         // alignItems:'center',
         // justifyContent:'center',
         // paddingVertical:10,
         // paddingHorizontal:10,
-        borderRadius:25
+        borderRadius: 25
     },
     progressCon3: {
         width: '50%',
-        backgroundColor:'#383974',
+        backgroundColor: '#383974',
         // alignItems:'center',
         // justifyContent:'center',
-        paddingVertical:7,
-        paddingHorizontal:7,
-        borderRadius:25
+        paddingVertical: 7,
+        paddingHorizontal: 7,
+        borderRadius: 25
     },
 })
 
