@@ -71,7 +71,7 @@ const PrNavigator = () => {
                 <Image source={require('../assets/images/mainLogo.png')} style={{width: 120, height: 50,marginLeft:15}} resizeMode="contain" />
                 ),
                 headerRight:()=>(
-                  <Feather name="bell" style={{fontSize:25,color:'#fff',marginRight:15}} />
+                  <Feather name="bell" style={{fontSize:25,color:'#fff',marginRight:20}} />
                 )
               
             })
