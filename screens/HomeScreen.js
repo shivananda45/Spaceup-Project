@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Dimensions, } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Dimensions, Platform } from 'react-native';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     },
     mainBody: {
         // backgroundColor: 'red',
-        // height: Deviceheight+80,
+        //height: Deviceheight+80,
         // justifyContent: 'flex-start'
         //flex: 1
     },
@@ -97,7 +97,6 @@ const styles = StyleSheet.create({
     menuItem: {
         height: 120,
         width: '40%',
-        marginHorizontal: 10,
         marginVertical: 10,
         backgroundColor: '#fff',
         justifyContent: 'center',
@@ -120,11 +119,12 @@ const styles = StyleSheet.create({
     imageStyle: {
         width: '100%',
         height: 80,
+        marginTop: Platform.OS === 'ios' ? 75 : 0 
         // marginBottom:'auto'
         // position: 'absolute',
         // // bottom: -50,
         // right: 0,
-        // left: 0
+        // left: 0,
     },
     bodyBottom: {
         height: '13%',
