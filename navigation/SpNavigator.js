@@ -45,6 +45,7 @@ const PrNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
+      initialRouteName="Home"
       // screenOptions={{
       //   headerBackTitleVisible: false,
       //   headerTintColor: '#FFFFFF',

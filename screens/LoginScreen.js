@@ -5,7 +5,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 const LoginScreen = () => {
     return (
         // <View style={styles.con}>
-            <ImageBackground source={require('../assets/images/banner-img.png')} style={styles.con}>
+            <ImageBackground source={require('../assets/images/login-bg-2.png')} style={styles.con}>
             <View style={styles.inputs_con}>
                 <Text style={styles.HeaddingText}>Login</Text>
                 <Text style={styles.LablelText}>Mobile/Email</Text>

@@ -1,80 +1,109 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Entypo from 'react-native-vector-icons/Entypo';
 import Feather from 'react-native-vector-icons/Feather';
-
+const Devicewidth = Dimensions.get('window').width;
+const Deviceheight = Dimensions.get('window').height;
 const HomeScreen = () => {
     return (
         <View style={styles.container} >
-            <View style={styles.welCon} >
-                <Text>Hi Welcome{'\n' }Santhosh Kumar</Text>
-            </View>
-            <View style={styles.mainBody}>
+            <ScrollView contentContainerStyle={styles.mainBody}>
+                <View style={styles.welCon} >
+                    <Text style={styles.welcomeText}>Hi Welcome</Text>
+                    <Text style={styles.nameText}>Santhosh Kumar</Text>
+                </View>
                 <View style={styles.menu} >
-                    <TouchableOpacity>
-                        <MaterialIcons name="payment" />
-                    <Text>Payment Tracking</Text>
+                    <TouchableOpacity style={styles.menuItem}>
+                        <MaterialIcons name="payment" style={styles.iconStyle} />
+                        <Text>Payment Tracking</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity>
-                        <MaterialCommunityIcons name="briefcase-clock-outline"/>
-                    <Text>Project tracker</Text>
+                    <TouchableOpacity style={styles.menuItem}>
+                        <MaterialCommunityIcons name="briefcase-clock-outline" style={styles.iconStyle}  />
+                        <Text>Project tracker</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.menu} >
-                    <TouchableOpacity>
-                        <MaterialIcons name='tap-and-play' />
-                    <Text>Live Streaming</Text>
+                    <TouchableOpacity style={styles.menuItem}>
+                        <MaterialIcons name='tap-and-play' style={styles.iconStyle} />
+                        <Text>Live Streaming</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity>
-                      <Entypo name="text-document" />   
-                    <Text>Documents</Text>
+                    <TouchableOpacity style={styles.menuItem}>
+                        <Entypo name="text-document" style={styles.iconStyle} />
+                        <Text>Documents</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.menu}>
-                    <TouchableOpacity>
-                        <Feather name="box" />
-                    <Text>Materials</Text>
+                    <TouchableOpacity style={styles.menuItem}>
+                        <Feather name="box" style={styles.iconStyle} />
+                        <Text>Materials</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity>
-                        <MaterialIcons name="headset" />
-                    <Text>Support</Text>
+                    <TouchableOpacity style={styles.menuItem}>
+                        <MaterialIcons name="headset" style={styles.iconStyle} />
+                        <Text>Support</Text>
                     </TouchableOpacity>
                 </View>
-            </View>
-            <View>
                 <Image source={require('../assets/images/menuBottom.png')} style={styles.imageStyle} />
-            </View>
+            </ScrollView>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-
+        flex: 1,
+        // backgroundColor: '#f3f3f3'
     },
     welCon: {
-        marginTop: '10%',
-        paddingLeft: '40%',
-        paddingBottom: '30%'
+        justifyContent:'center',
+        alignItems:'center',
+        paddingVertical:20
+    },
+    welcomeText: {
+        fontSize:15
+    },
+    nameText: {
+        fontSize:17,
+        color: '#383974'
     },
     mainBody: {
-        backgroundColor: 'red',
+        // backgroundColor: 'red',
+        // height:Deviceheight,
     },
     menu: {
         flexDirection: 'row',
-        justifyContent: 'space-around',
+        justifyContent: 'space-evenly',
         //margin: '20%',
-        paddingHorizontal: '20%',
-        paddingVertical: '15%'
+        // paddingHorizontal: '20%',
+        // paddingVertical: '15%',
+        // backgroundColor: '#333'
+    },
+    menuItem: {
+        height: 120,
+        width: '40%',
+        marginHorizontal: 10,
+        marginVertical: 10,
+        backgroundColor: '#fff',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 15
+    },
+    iconStyle: {
+        color: '#383974',
+        fontSize: 35,
+        marginBottom:10
     },
     imageStyle: {
         width: '100%',
         height: 80,
         //marginTop: '22%',
+    },
+    bottomBody: {
+        // height: '13%',
+        width: '100%'
     }
-}) 
+})
 
 export default HomeScreen;
