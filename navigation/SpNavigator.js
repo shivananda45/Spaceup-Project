@@ -63,7 +63,7 @@ const PrNavigator = () => {
          <Stack.Screen name="Banner" component={BannerScreen}
           options={
             ({ route }) => ({
-              headerShown: false
+              headerShown: true,
             })
           }
         />
@@ -88,14 +88,14 @@ const PrNavigator = () => {
         <Stack.Screen name="ForgotPassword" component={ForgotPassword}
           options={
             ({ route }) => ({
-              headerShown: false
+              headerShown: true
             })
           }
         />
         <Stack.Screen name="Login" component={LoginScreen}
           options={
             ({ route }) => ({
-              headerShown: false
+              headerShown: true
             })
           }
         />

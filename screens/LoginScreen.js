@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, ImageBackground, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, ImageBackground, StyleSheet, TextInput, TouchableOpacity, Platform } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 const LoginScreen = () => {
@@ -47,14 +47,16 @@ const styles = StyleSheet.create({
         fontSize:15,
         marginBottom:0,
         color: '#f3f3f3',
-        marginTop:25
+        marginTop:25,
+        marginBottom: Platform.OS === 'ios' ? 10 : 0,
     },
     InputStyle: {
         fontSize:15,
         marginBottom:10,
         color: '#f3f3f3',
         borderBottomColor:'white',
-        borderBottomWidth:0.5
+        borderBottomWidth:0.5,
+        paddingVertical: Platform.OS === 'ios' ? 10 : 0
     },
     SubmitBtn: {
         paddingVertical:15,

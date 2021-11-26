@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, Platform } from 'react-native'
 
 const ForgotPassword = () => {
     return (
@@ -7,7 +7,7 @@ const ForgotPassword = () => {
            <View style={styles.inputs_con}>
            <Text style={styles.HeaddingText}>Forgot Password</Text>
             <Text style={styles.LablelText}>Mobile</Text>
-            <TextInput placeholder="Enter Mobile" style={styles.InputStyle} placeholderTextColor="rgba(255,255,255,0.3)" />
+            <TextInput placeholder="Enter Mobile" style={styles.InputStyle} placeholderTextColor="rgba(0,0,0,0.3)" />
             <TouchableOpacity style={styles.SubmitBtn}>
                 <Text style={styles.SubmitBtnText}>OK</Text>
             </TouchableOpacity>
@@ -48,7 +48,8 @@ const styles = StyleSheet.create({
         marginBottom: 0,
         color: '#333',
         marginTop: 25,
-        alignSelf: 'flex-start'
+        alignSelf: 'flex-start',
+        marginBottom: Platform.OS === 'ios' ? 10 : 0,
     },
     InputStyle: {
         fontSize: 15,
@@ -57,7 +58,8 @@ const styles = StyleSheet.create({
         borderBottomColor: '#333',
         borderBottomWidth: 0.5,
         width: '100%',
-        alignSelf: 'flex-start'
+        alignSelf: 'flex-start',
+        paddingVertical : Platform.OS === 'ios' ? 10 : 0,
     },
     SubmitBtn: {
         width: '100%',

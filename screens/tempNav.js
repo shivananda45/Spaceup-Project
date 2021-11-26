@@ -7,14 +7,14 @@ const TempNav = ({navigation}) => {
             <TouchableOpacity onPress={()=>navigation.navigate('Banner')} style={styles.Btn}>
                 <Text>Banner Screen</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=>navigation.navigate('Home')} style={styles.Btn}>
-                <Text>Home Screen</Text>
-            </TouchableOpacity>
             <TouchableOpacity onPress={()=>navigation.navigate('Login')} style={styles.Btn}>
                 <Text>Login Screen</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={()=>navigation.navigate('ForgotPassword')} style={styles.Btn}>
                 <Text>Forgot Password</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={()=>navigation.navigate('Home')} style={styles.Btn}>
+                <Text>Home Screen</Text>
             </TouchableOpacity>
         </View>
     )
