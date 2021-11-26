@@ -82,8 +82,8 @@ const styles = StyleSheet.create({
     },
     mainBody: {
         // backgroundColor: 'red',
-        height: Deviceheight,
-        justifyContent: 'center'
+        // height: Deviceheight+80,
+        // justifyContent: 'flex-start'
         //flex: 1
     },
     menu: {
@@ -120,10 +120,11 @@ const styles = StyleSheet.create({
     imageStyle: {
         width: '100%',
         height: 80,
-        position: 'absolute',
-        bottom: 0,
-        right: 0,
-        left: 0
+        // marginBottom:'auto'
+        // position: 'absolute',
+        // // bottom: -50,
+        // right: 0,
+        // left: 0
     },
     bodyBottom: {
         height: '13%',
