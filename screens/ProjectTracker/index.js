@@ -1,15 +1,15 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
-const ProjectTracker = () => {
+const PaymentTracking = () => {
     return (
         <View>
-            <Text>project track</Text>
+            <Text>paymnt tracking</Text>
         </View>
     )
 }
 
-export default ProjectTracker
+export default PaymentTracking
 
 const styles = StyleSheet.create({
 
