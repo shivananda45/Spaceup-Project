@@ -31,7 +31,7 @@ const NeftScreen = () => {
     )
 }
 
-export default NeftScreen
+export default NeftScreen;
 
 const styles = StyleSheet.create({
     Body:{

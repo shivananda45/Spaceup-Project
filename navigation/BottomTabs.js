@@ -23,7 +23,8 @@ import Support from '../screens/Support'
 import kitchenScreen from '../screens/ProjectTracker/kitchen';
 import DrawingRoom from '../screens/ProjectTracker/DrawingRoom';
 import ProjectTrackerRequests from '../screens/ProjectTracker/ProjectTrackerRequests';
-
+import EmiScreen from '../screens/PaymentTracking/emi'
+import NeftScreen from '../screens/PaymentTracking/neft'
 const BottomTabs = () => {
     return (
         <Tab.Navigator
