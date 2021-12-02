@@ -10,8 +10,8 @@ const Deviceheight = Dimensions.get('window').height;
 const HomeScreen = () => {
     return (
         <View style={styles.container} >
-        <ScrollView contentContainerStyle={styles.mainBody}>
-            {/* <View style={styles.bodyTop}> */}
+            <ScrollView contentContainerStyle={styles.mainBody}>
+                {/* <View style={styles.bodyTop}> */}
                 <View style={styles.welCon} >
                     <Text style={styles.welcomeText}>Hi Welcome</Text>
                     <Text style={styles.nameText}>Santhosh Kumar</Text>
@@ -20,9 +20,9 @@ const HomeScreen = () => {
                     <Text style={styles.progressText}>51% Completed</Text>
                     <View style={styles.progressCon1}>
                         <View style={styles.progressCon2}>
-                            <Image source={require('../assets/images/progressbar.png')} 
-                            resizeMode='repeat' 
-                            style={styles.progressCon3}/>
+                            <Image source={require('../assets/images/progressbar.png')}
+                                resizeMode={Platform.OS === 'ios' ? 'repeat' : 'cover'}
+                                style={styles.progressCon3} />
                         </View>
                     </View>
                 </View>
@@ -56,11 +56,11 @@ const HomeScreen = () => {
                         <Text>Support</Text>
                     </TouchableOpacity>
                 </View>
-            {/* </View>
+                {/* </View>
             <View style={styles.bodyBottom}> */}
                 <Image source={require('../assets/images/menuBottom.png')} style={styles.imageStyle} />
-            {/* </View> */}
-        </ScrollView>
+                {/* </View> */}
+            </ScrollView>
         </View>
     )
 }
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     imageStyle: {
         width: '100%',
         height: 80,
-        marginTop: Platform.OS === 'ios' ? 75 : 0 
+        marginTop: Platform.OS === 'ios' ? 75 : 0
         // marginBottom:'auto'
         // position: 'absolute',
         // // bottom: -50,
