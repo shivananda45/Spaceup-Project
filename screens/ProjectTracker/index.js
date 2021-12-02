@@ -1,6 +1,5 @@
 import { NavigationContainer } from '@react-navigation/native';
 import React from 'react'
-<<<<<<< Updated upstream
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 
 import Feather from 'react-native-vector-icons/Feather';
