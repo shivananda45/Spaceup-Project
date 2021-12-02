@@ -13,7 +13,7 @@ const LoginScreen = () => {
                 <Text style={styles.LablelText}>Password</Text>
                 <TextInput placeholder="Enter Your Password" style={styles.InputStyle}placeholderTextColor="rgba(255,255,255,0.3)" />
                 <TouchableOpacity style={styles.SubmitBtn}>
-                    <Text style={styles.SubmitBtnText}>Login</Text>
+                    <Text style={styles.SubmitBtnText}>LOGIN</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.ForgotBtn}>
                     <Text style={styles.ForgotBtnText}>Forgot Password?</Text>
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
         paddingBottom:'5%'
     },
     inputs_con: {
-        // backgroundColor:'#333',
+        //backgroundColor:'#333',
         width: '85%',
     },
     HeaddingText: {

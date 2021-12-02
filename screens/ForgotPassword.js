@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
     con:{
         flex:1,
         alignItems: 'center',
+        backgroundColor: 'white'
         // paddingTop: '20%',
 
     },
