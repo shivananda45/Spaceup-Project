@@ -55,10 +55,15 @@ const PrNavigator = () => {
                 backgroundColor: '#383974'
               },
               headerLeft: () => (
-                <Image source={require('../assets/images/mainLogo.png')} style={{ width: 120, height: 50, marginLeft: 15 }} resizeMode="contain" />
+                <Image source={require('../assets/images/mainLogo.png')}
+                  style={{ width: 120, height: 50, marginLeft: 15 }}
+                  resizeMode="contain"
+                />
               ),
               headerRight: () => (
-                <Feather name="bell" style={{ fontSize: 25, color: '#fff', marginRight: 20 }} />
+                <Feather name="bell"
+                  style={{ fontSize: 25, color: '#fff', marginRight: 20 }}
+                />
               )
 
             })
