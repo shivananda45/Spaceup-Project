@@ -96,7 +96,7 @@ const PaymentTrackingStackscreen = ({ navigation }) => (
                 },
                 headerRight: () => (
                     <TouchableOpacity style={styles.HlpBtn}>
-                        <Feather name="help-circle" style={styles.HlpIcon} />
+                        <Feather name="info" style={styles.HlpIcon} />
                         <Text>help</Text>
                     </TouchableOpacity>
                 )
@@ -212,8 +212,8 @@ const styles = StyleSheet.create({
     },
     iconStyle: {
         // color: '#383974',
-        fontSize: 22,
-        marginBottom: 10
+        fontSize: 28,
+        //marginBottom: 10,
     },
     HlpBtn: {
         flexDirection:'row',
