@@ -88,16 +88,19 @@ const PaymentTrackingStackscreen = ({ navigation }) => (
                 title: 'Payment Tracking',
                 headerShown: true,
                 headerTitleAlign: 'center',
+                headerTitleStyle: {
+                    fontWeight: '500'
+                },
                 headerStyle: {
                     shadowOpacity: 0,
                     elevation: 0,
                     borderBottomColor: '#ccc',
-                    borderBottomWidth: 1
+                    borderBottomWidth: 1,
                 },
                 headerRight: () => (
                     <TouchableOpacity style={styles.HlpBtn}>
                         <Feather name="info" style={styles.HlpIcon} />
-                        <Text>help</Text>
+                        <Text style={styles.helpText}>Help</Text>
                     </TouchableOpacity>
                 )
             }}
@@ -111,6 +114,9 @@ const ProjectTrackerStackscreen = ({ navigation }) => (
                 title: 'Project Tracker',
                 headerShown: true,
                 headerTitleAlign: 'center',
+                headerTitleStyle: {
+                    fontWeight: '500'
+                },
                 headerStyle: {
                     shadowOpacity: 0,
                     elevation: 0,
@@ -118,7 +124,10 @@ const ProjectTrackerStackscreen = ({ navigation }) => (
                     borderBottomWidth: 1
                 },
                 headerRight: () => (
-                    <Text>help</Text>
+                    <TouchableOpacity style={styles.HlpBtn}>
+                        <Feather name="info" style={styles.HlpIcon} />
+                        <Text  style={styles.helpText}>Help</Text>
+                    </TouchableOpacity>
                 )
             }}
         />
@@ -131,6 +140,9 @@ const LiveStreamingStackscreen = ({ navigation }) => (
                 title: 'Live Streaming',
                 headerShown: true,
                 headerTitleAlign: 'center',
+                headerTitleStyle: {
+                    fontWeight: '500'
+                },
                 headerStyle: {
                     shadowOpacity: 0,
                     elevation: 0,
@@ -138,7 +150,10 @@ const LiveStreamingStackscreen = ({ navigation }) => (
                     borderBottomWidth: 1
                 },
                 headerRight: () => (
-                    <Text>help</Text>
+                    <TouchableOpacity style={styles.HlpBtn}>
+                        <Feather name="info" style={styles.HlpIcon} />
+                        <Text style={styles.helpText}>Help</Text>
+                    </TouchableOpacity>
                 )
             }}
         />
@@ -151,15 +166,18 @@ const DocumentsStackscreen = ({ navigation }) => (
                 title: 'Documents',
                 headerShown: true,
                 headerTitleAlign: 'center',
+                headerTitleStyle: {
+                    fontWeight: '500'
+                },
                 headerStyle: {
                     shadowOpacity: 0,
                     elevation: 0,
                     borderBottomColor: '#ccc',
                     borderBottomWidth: 1
                 },
-                headerRight: () => (
-                    <Text>help</Text>
-                )
+                // headerRight: () => (
+                //     <Text>help</Text>
+                // )
             }}
         />
     </DocumentsStack.Navigator>
@@ -171,15 +189,18 @@ const MaterialsStackscreen = ({ navigation }) => (
                 title: 'Materials',
                 headerShown: true,
                 headerTitleAlign: 'center',
+                headerTitleStyle: {
+                    fontWeight: '500'
+                },
                 headerStyle: {
                     shadowOpacity: 0,
                     elevation: 0,
                     borderBottomColor: '#ccc',
                     borderBottomWidth: 1
                 },
-                headerRight: () => (
-                    <Text>help</Text>
-                )
+                // headerRight: () => (
+                //     <Text>help</Text>
+                // )
             }}
         />
     </MaterialsStack.Navigator>
@@ -191,15 +212,18 @@ const SupportStackscreen = ({ navigation }) => (
                 title: 'Support',
                 headerShown: true,
                 headerTitleAlign: 'center',
+                headerTitleStyle: {
+                    fontWeight: '500'
+                },
                 headerStyle: {
                     shadowOpacity: 0,
                     elevation: 0,
                     borderBottomColor: '#ccc',
                     borderBottomWidth: 1
                 },
-                headerRight: () => (
-                    <Text>help</Text>
-                )
+                // headerRight: () => (
+                //     <Text>help</Text>
+                // )
             }}
         />
     </SupportStack.Navigator>
@@ -218,10 +242,14 @@ const styles = StyleSheet.create({
     HlpBtn: {
         flexDirection:'row',
         alignItems:'center',
-        marginRight:10
+        marginRight:18,
     },
     HlpIcon: {
         // color: '#ccc',
-        marginRight:2,
+        marginRight:5,
+        fontSize: 18
     },
+    helpText: {
+        fontWeight: '600'
+    }
 })
