@@ -1,20 +1,21 @@
+import { NavigationContainer } from '@react-navigation/native';
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 
 import Feather from 'react-native-vector-icons/Feather';
 
 
-const PaymentTracking = () => {
+const PaymentTracking = ({navigation}) => {
     return (
         <View style={styles.container}>
-            <View style={styles.detail}>
+            <TouchableOpacity style={styles.detail} onPress={()=> navigation.navigate('Kitchen')} >
                 <Text style={styles.kitchenText}>Kitchen</Text>
                 <Feather name="chevron-right" style={styles.chevronIcon} />   
-            </View>
-            <View style={styles.detail}>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.detail} onPress={()=> navigation.navigate('DrawingRoom') }>
                 <Text style={styles.DrawingText}>Drawing Room</Text>
                 <Feather name="chevron-right" style={styles.chevronIcon} /> 
-            </View>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -45,3 +46,7 @@ const styles = StyleSheet.create({
         opacity: 0.5
     }
 })
+
+
+
+

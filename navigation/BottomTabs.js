@@ -20,6 +20,10 @@ import LiveStreaming from '../screens/LiveStreaming'
 import Documents from '../screens/Documents'
 import Materials from '../screens/Materials'
 import Support from '../screens/Support'
+import kitchenScreen from '../screens/ProjectTracker/kitchen';
+import DrawingRoom from '../screens/ProjectTracker/DrawingRoom';
+import ProjectTrackerRequests from '../screens/ProjectTracker/ProjectTrackerRequests';
+
 const BottomTabs = () => {
     return (
         <Tab.Navigator
@@ -131,7 +135,56 @@ const ProjectTrackerStackscreen = ({ navigation }) => (
                 )
             }}
         />
+         <ProjectTrackerStack.Screen name='Kitchen' component={kitchenScreen}
+            options={{
+                title: 'Kitchen',
+                headerShown: true,
+                headerTitleAlign: 'center',
+                headerTitleStyle: {
+                    fontWeight: '500'
+                },
+                headerStyle: {
+                    shadowOpacity: 0,
+                    elevation: 0,
+                    borderBottomColor: '#ccc',
+                    borderBottomWidth: 1
+                },
+            }}
+        />
+          <ProjectTrackerStack.Screen name='DrawingRoom' component={DrawingRoom}
+            options={{
+                title: 'DrawingRoom',
+                headerShown: true,
+                headerTitleAlign: 'center',
+                headerTitleStyle: {
+                    fontWeight: '500'
+                },
+                headerStyle: {
+                    shadowOpacity: 0,
+                    elevation: 0,
+                    borderBottomColor: '#ccc',
+                    borderBottomWidth: 1
+                },
+            }}
+        />
+         <ProjectTrackerStack.Screen name='ProjectRequests' component={ProjectTrackerRequests}
+            options={{
+                title: 'Drawing Room',
+                headerShown: true,
+                headerTitleAlign: 'center',
+                headerTitleStyle: {
+                    fontWeight: '500'
+                },
+                headerStyle: {
+                    shadowOpacity: 0,
+                    elevation: 0,
+                    borderBottomColor: '#ccc',
+                    borderBottomWidth: 1
+                },
+            }}
+        />
     </ProjectTrackerStack.Navigator>
+    
 );
 const LiveStreamingStackscreen = ({ navigation }) => (
     <LiveStreamingStack.Navigator>

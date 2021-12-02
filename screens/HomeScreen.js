@@ -47,7 +47,7 @@ const HomeScreen = () => {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.menu}>
-                    <TouchableOpacity style={styles.menuItem}>
+                    <TouchableOpacity style={styles.menuItem}> 
                         <Feather name="box" style={styles.iconStyle} />
                         <Text>Materials</Text>
                     </TouchableOpacity>
