@@ -13,13 +13,14 @@ import Feather from 'react-native-vector-icons/Feather'
 import TempNav from '../screens/tempNav';
 import BottomTabs from './BottomTabs';
 
+import PaymentsSupport from '../screens/PaymentsSupport'
 const PrNavigator = () => {
   const Stack = createStackNavigator();
   const Tab = createBottomTabNavigator();
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="BottomTabs"
+        initialRouteName="TemNav"
       // screenOptions={{
       //   headerBackTitleVisible: false,
       //   headerTintColor: '#FFFFFF',
@@ -79,6 +80,14 @@ const PrNavigator = () => {
         <Stack.Screen name="Login" component={LoginScreen}
           options={
             ({ route }) => ({
+              headerShown: true
+            })
+          }
+        />
+         <Stack.Screen name="PaymentSupport" component={PaymentsSupport}
+          options={
+            ({ route }) => ({
+              title:"Payment Support",
               headerShown: true
             })
           }

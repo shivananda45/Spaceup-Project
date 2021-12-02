@@ -20,6 +20,10 @@
 		<string>Evillcons.ttf</string>
 		<string>Entypo.ttf</string>
 		<string>AntDesign.ttf</string>
+		<string>EvilIcons.ttf</string>
+		<string>Roboto_medium.ttf</string>
+		<string>Roboto.ttf</string>
+		<string>rubicon-icon-font.ttf</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>

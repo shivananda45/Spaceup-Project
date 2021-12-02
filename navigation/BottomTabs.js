@@ -20,10 +20,16 @@ import LiveStreaming from '../screens/LiveStreaming'
 import Documents from '../screens/Documents'
 import Materials from '../screens/Materials'
 import Support from '../screens/Support'
+<<<<<<< Updated upstream
 import kitchenScreen from '../screens/ProjectTracker/kitchen';
 import DrawingRoom from '../screens/ProjectTracker/DrawingRoom';
 import ProjectTrackerRequests from '../screens/ProjectTracker/ProjectTrackerRequests';
 
+=======
+import EmiScreen from '../screens/PaymentTracking/emi';
+import NeftScreen from '../screens/PaymentTracking/neft';
+// -------------
+>>>>>>> Stashed changes
 const BottomTabs = () => {
     return (
         <Tab.Navigator
@@ -109,6 +115,38 @@ const PaymentTrackingStackscreen = ({ navigation }) => (
                 )
             }}
         />
+        <PaymentTrackingStack.Screen name='Emi' component={EmiScreen}
+            options={{
+                title: 'Payment Tracking',
+                headerShown: true,
+                headerTitleAlign: 'center',
+                headerStyle: {
+                    shadowOpacity: 0,
+                    elevation: 0,
+                    borderBottomColor: '#ccc',
+                    borderBottomWidth: 1
+                },
+                headerRight: () => (
+                    <TouchableOpacity style={styles.HlpBtn}>
+                        <Feather name="info" style={styles.HlpIcon} />
+                        <Text>help</Text>
+                    </TouchableOpacity>
+                )
+            }}
+        />
+        <PaymentTrackingStack.Screen name='Neft' component={NeftScreen}
+            options={{
+                title: 'NEFT',
+                headerShown: true,
+                headerTitleAlign: 'center',
+                headerStyle: {
+                    shadowOpacity: 0,
+                    elevation: 0,
+                    borderBottomColor: '#ccc',
+                    borderBottomWidth: 1
+                }
+            }}
+        />
     </PaymentTrackingStack.Navigator>
 );
 const ProjectTrackerStackscreen = ({ navigation }) => (
@@ -127,12 +165,15 @@ const ProjectTrackerStackscreen = ({ navigation }) => (
                     borderBottomColor: '#ccc',
                     borderBottomWidth: 1
                 },
+<<<<<<< Updated upstream
                 headerRight: () => (
                     <TouchableOpacity style={styles.HlpBtn}>
                         <Feather name="info" style={styles.HlpIcon} />
                         <Text  style={styles.helpText}>Help</Text>
                     </TouchableOpacity>
                 )
+=======
+>>>>>>> Stashed changes
             }}
         />
          <ProjectTrackerStack.Screen name='Kitchen' component={kitchenScreen}
