@@ -70,7 +70,8 @@ const styles = StyleSheet.create({
         color: '#333'
     },
     ForgotBtn: {
-        alignItems:'flex-end'
+        alignItems:'flex-end',
+        marginBottom: 10
     },
     ForgotBtnText: {
         fontSize:15,

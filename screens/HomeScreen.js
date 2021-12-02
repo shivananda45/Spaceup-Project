@@ -20,7 +20,9 @@ const HomeScreen = () => {
                     <Text style={styles.progressText}>51% Completed</Text>
                     <View style={styles.progressCon1}>
                         <View style={styles.progressCon2}>
-                            <View style={styles.progressCon3} />
+                            <Image source={require('../assets/images/progressbar.png')} 
+                            resizeMode='repeat' 
+                            style={styles.progressCon3}/>
                         </View>
                     </View>
                 </View>
@@ -167,13 +169,14 @@ const styles = StyleSheet.create({
         borderRadius: 25
     },
     progressCon3: {
-        width: '50%',
-        backgroundColor: '#383974',
+        width: '51%',
+        height: 15,
+        //backgroundColor: '',
         // alignItems:'center',
         // justifyContent:'center',
-        paddingVertical: 7,
-        paddingHorizontal: 7,
-        borderRadius: 25
+        //paddingVertical: 7,
+        //paddingHorizontal: 7,
+        borderRadius: 50
     },
 })
 
