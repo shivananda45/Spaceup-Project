@@ -27,10 +27,10 @@ const PaymentTracking = ({ navigation }) => {
             <View style={styles.ListCon}>
                 <View style={styles.LeftBody}>
                     <View style={styles.ListIconActive}>
-                        <Text style={styles.ListNumActive}>3</Text>
+                        <Text style={styles.ListNumActive}>2</Text>
                     </View>
                     <View style={styles.Body}>
-                        <Text style={styles.BodyTextActive1}>Week3</Text>
+                        <Text style={styles.BodyTextActive1}>Week2</Text>
                     </View>
                 </View>
                 <View style={styles.RightBody}>

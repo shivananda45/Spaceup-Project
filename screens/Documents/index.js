@@ -69,12 +69,14 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     itemText: {
-        marginLeft:15
+        marginLeft:15,
+        opacity: 0.5
     },
     itemIconCon: {
         backgroundColor: '#ebeafa',
         height: 40,
-        width: 40, alignItems: 'center',
+        width: 40, 
+        alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 35,
     },

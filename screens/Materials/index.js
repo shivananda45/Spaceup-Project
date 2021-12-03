@@ -111,7 +111,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     itemText: {
-        marginLeft:15
+        marginLeft:15,
+        opacity: 0.5,
     },
     itemIconCon: {
         backgroundColor: '#ebeafa',
