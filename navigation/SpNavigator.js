@@ -19,6 +19,7 @@ import ProjectTrackerRequests from '../screens/ProjectTracker/ProjectTrackerRequ
 import DrawingRoom from '../screens/ProjectTracker/DrawingRoom';
 import Photos from '../screens/ProjectTracker/Photos';
 import ProductWarenty from '../screens/Documents/ProductWarenty';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Support from '../screens/Support';
 const PrNavigator = () => {
   const Stack = createStackNavigator();
@@ -101,8 +102,18 @@ const PrNavigator = () => {
         <Stack.Screen name="Neft" component={NeftScreen}
           options={
             ({ route }) => ({
-              title: "Payment Support",
-              headerShown: true
+              title: "NEFT",
+              headerShown: true,
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                fontWeight: '500'
+              },
+              headerStyle: {
+                shadowOpacity: 0,
+                elevation: 0,
+                borderBottomColor: '#ccc',
+                borderBottomWidth: 1
+              },
             })
           }
         />
@@ -207,7 +218,8 @@ const PrNavigator = () => {
             },
             headerRight: () => (
               <TouchableOpacity style={styles.HlpBtn} onPress={() => navigation.navigate('ProjectRequests')}>
-                <Feather name="info" style={styles.HlpIcon} />
+                {/* <Feather name="info" style={styles.HlpIcon} /> */}
+                <MaterialCommunityIcons name="information-outline" style={styles.HlpIcon} />
                 <Text style={styles.helpText}>Help</Text>
               </TouchableOpacity>
             )

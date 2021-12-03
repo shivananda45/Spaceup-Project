@@ -25,10 +25,9 @@ const BottomTabs = ({navigation}) => {
     return (
         <Tab.Navigator
             tabBarOptions={{
-                activeTintColor: '#f3f3fb',
+                activeTintColor: 'white',
+                inactiveTintColor:'#b0b1e1',
                 showLabel: false,
-                activeColor: "#f3f3fb",
-                inactiveColor: "#f1f1f1",
                 style: {
                     backgroundColor: '#383974',
                     borderTopLeftRadius: 18,
@@ -106,7 +105,8 @@ const PaymentTrackingStackscreen = ({ navigation }) => (
                 },
                 headerRight: () => (
                     <TouchableOpacity style={styles.HlpBtn} onPress={() => navigation.navigate('PaymentSupport')}>
-                        <Feather name="info" style={styles.HlpIcon} />
+                        {/* <Feather name="info" style={styles.HlpIcon} /> */}
+                        <MaterialCommunityIcons name="information-outline" style={styles.HlpIcon} />
                         <Text style={styles.helpText}>Help</Text>
                     </TouchableOpacity>
                 )
@@ -125,7 +125,8 @@ const PaymentTrackingStackscreen = ({ navigation }) => (
                 },
                 headerRight: () => (
                     <TouchableOpacity style={styles.HlpBtn}>
-                        <Feather name="info" style={styles.HlpIcon} />
+                        {/* <Feather name="info" style={styles.HlpIcon} /> */}
+                        <MaterialCommunityIcons name="information-outline" style={styles.HlpIcon} />
                         <Text>help</Text>
                     </TouchableOpacity>
                 )
@@ -164,7 +165,8 @@ const ProjectTrackerStackscreen = ({ navigation }) => (
                 },
                 headerRight: () => (
                     <TouchableOpacity style={styles.HlpBtn} onPress={() => navigation.navigate('ProjectRequests')}>
-                        <Feather name="info" style={styles.HlpIcon} />
+                        {/* <Feather name="info" style={styles.HlpIcon} /> */}
+                        <MaterialCommunityIcons name="information-outline" style={styles.HlpIcon} />
                         <Text style={styles.helpText}>Help</Text>
                     </TouchableOpacity>
                 )
@@ -191,7 +193,8 @@ const LiveStreamingStackscreen = ({ navigation }) => (
                 },
                 headerRight: () => (
                     <TouchableOpacity style={styles.HlpBtn}>
-                        <Feather name="info" style={styles.HlpIcon} />
+                        {/* <Feather name="info" style={styles.HlpIcon} /> */}
+                        <MaterialCommunityIcons name="information-outline" style={styles.HlpIcon} />
                         <Text style={styles.helpText}>Help</Text>
                     </TouchableOpacity>
                 )

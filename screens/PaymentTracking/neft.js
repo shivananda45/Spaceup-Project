@@ -75,4 +75,7 @@ const styles = StyleSheet.create({
         fontSize: 17,
         color: 'gray',
     },
+    FormCon:{
+        marginTop:50
+    }
 })

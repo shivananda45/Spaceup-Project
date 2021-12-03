@@ -4,14 +4,13 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 const NewRequest = () => {
     const [modalVisible, setModalVisible] = useState(false);
     return (
-        <View style={{ width: '100%', alignSelf: 'center', backgroundColor: 'white', padding: '5%' }}>
+        <View style={{ width: '100%', height: '100%', alignSelf: 'center', backgroundColor: 'white', padding: '5%' }}>
             <Text style={styles.LablelText}>Enter New Request</Text>
             <TextInput
                 placeholder="Describe your request."
-                pla
                 style={styles.InputStyle}
             />
-            <TouchableOpacity style={styles.SubmitBtn} onPress={()=>setModalVisible(!modalVisible)}>
+            <TouchableOpacity style={styles.SubmitBtn} onPress={() => setModalVisible(!modalVisible)}>
                 <Text style={styles.SubmitBtnText}>SEND</Text>
             </TouchableOpacity>
             <Modal
@@ -29,7 +28,7 @@ const NewRequest = () => {
                             style={styles.OverlayIcon}
                         />
                         <Text style={styles.modalText}>Understand your concern{"\n"}
-                        your designer will get in touch with you shortly.
+                            your designer will get in touch with you shortly.
                         </Text>
                     </View>
                 </View>
@@ -61,12 +60,14 @@ const styles = StyleSheet.create({
     },
     InputStyle: {
         fontSize: 15,
-        marginBottom: 10,
-        height: 100,
+        // marginBottom: 10,
+        paddingBottom: 90,
+        // height: 100,
         color: '#f3f3f3',
+        paddingVertical: Platform.OS === 'ios' ? 10 : 10,
+        // backgroundColor: 'red',
         borderBottomColor: '#383974',
         borderBottomWidth: 0.5,
-        paddingVertical: Platform.OS === 'ios' ? 10 : 10
     },
     centeredView: {
         flex: 1,
@@ -95,11 +96,12 @@ const styles = StyleSheet.create({
         backgroundColor: "#2196F3",
     },
     OverlayIcon: {
-        fontSize:150,
-        color: 'green'
+        fontSize: 150,
+        color: '#7dbc28'
     },
     modalText: {
-        textAlign:'center',
-        marginTop:15
+        textAlign: 'center',
+        marginTop:20,
+        marginBottom:5,
     },
 })

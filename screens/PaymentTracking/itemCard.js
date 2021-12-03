@@ -19,7 +19,7 @@ const ItemCard = (props) => {
                     <View style={styles.calenderCon}>
                         <MaterialCommunityIcons name="calendar-month-outline" style={styles.calenderIcon} />
                         <Text style={styles.BodyTextActive2}>
-                            Payment Date:{data.date}
+                        {data.status === "paid" ? 'Payment':'Due'} Date:{data.date}
                         </Text>
                     </View>
                 </View>
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
         fontSize: 13
     },
     BodyTextActive2: {
-        fontSize: 13
+        fontSize: 12
     },
     Paid: {
         flexDirection: 'row',

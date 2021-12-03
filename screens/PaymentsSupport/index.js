@@ -8,7 +8,7 @@ const PaymentSupport = () => {
     return (
         <Tab.Navigator
             screenOptions={{
-                tabBarLabelStyle: { fontSize: 12, },
+                tabBarLabelStyle: { fontSize: 12,fontWeight:'bold' },
                 tabBarActiveTintColor: '#fff',
                 tabBarInactiveTintColor: 'rgba(255,255,255,0.5)',
                 tabBarStyle: { backgroundColor: '#393874', shadowOpacity: 0, elevation: 0 },
