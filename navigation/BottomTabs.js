@@ -20,12 +20,8 @@ import LiveStreaming from '../screens/LiveStreaming'
 import Documents from '../screens/Documents'
 import Materials from '../screens/Materials'
 import Support from '../screens/Support'
-import kitchenScreen from '../screens/ProjectTracker/kitchen';
-import DrawingRoom from '../screens/ProjectTracker/DrawingRoom';
-import ProjectTrackerRequests from '../screens/ProjectTracker/ProjectTrackerRequests';
 import EmiScreen from '../screens/PaymentTracking/emi'
-import NeftScreen from '../screens/PaymentTracking/neft'
-const BottomTabs = () => {
+const BottomTabs = ({navigation}) => {
     return (
         <Tab.Navigator
             tabBarOptions={{
@@ -76,6 +72,12 @@ const BottomTabs = () => {
                 }}
             />
             <Tab.Screen name="Support" component={SupportStackscreen}
+              listeners={({ navigation }) => ({
+                tabPress: event => {
+                  event.preventDefault();
+                  navigation.navigate("SupportScreen")
+                }
+              })}
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <MaterialIcons name="headset" color={color} style={styles.iconStyle} />
@@ -103,7 +105,7 @@ const PaymentTrackingStackscreen = ({ navigation }) => (
                     borderBottomWidth: 1,
                 },
                 headerRight: () => (
-                    <TouchableOpacity style={styles.HlpBtn}>
+                    <TouchableOpacity style={styles.HlpBtn} onPress={() => navigation.navigate('PaymentSupport')}>
                         <Feather name="info" style={styles.HlpIcon} />
                         <Text style={styles.helpText}>Help</Text>
                     </TouchableOpacity>
@@ -129,7 +131,7 @@ const PaymentTrackingStackscreen = ({ navigation }) => (
                 )
             }}
         />
-        <PaymentTrackingStack.Screen name='Neft' component={NeftScreen}
+        {/* <PaymentTrackingStack.Screen name='Neft' component={NeftScreen}
             options={{
                 title: 'NEFT',
                 headerShown: true,
@@ -141,7 +143,7 @@ const PaymentTrackingStackscreen = ({ navigation }) => (
                     borderBottomWidth: 1
                 }
             }}
-        />
+        /> */}
     </PaymentTrackingStack.Navigator>
 );
 const ProjectTrackerStackscreen = ({ navigation }) => (
@@ -161,63 +163,15 @@ const ProjectTrackerStackscreen = ({ navigation }) => (
                     borderBottomWidth: 1
                 },
                 headerRight: () => (
-                    <TouchableOpacity style={styles.HlpBtn}>
+                    <TouchableOpacity style={styles.HlpBtn} onPress={() => navigation.navigate('ProjectRequests')}>
                         <Feather name="info" style={styles.HlpIcon} />
-                        <Text  style={styles.helpText}>Help</Text>
+                        <Text style={styles.helpText}>Help</Text>
                     </TouchableOpacity>
                 )
             }}
         />
-         <ProjectTrackerStack.Screen name='Kitchen' component={kitchenScreen}
-            options={{
-                title: 'Kitchen',
-                headerShown: true,
-                headerTitleAlign: 'center',
-                headerTitleStyle: {
-                    fontWeight: '500'
-                },
-                headerStyle: {
-                    shadowOpacity: 0,
-                    elevation: 0,
-                    borderBottomColor: '#ccc',
-                    borderBottomWidth: 1
-                },
-            }}
-        />
-          <ProjectTrackerStack.Screen name='DrawingRoom' component={DrawingRoom}
-            options={{
-                title: 'DrawingRoom',
-                headerShown: true,
-                headerTitleAlign: 'center',
-                headerTitleStyle: {
-                    fontWeight: '500'
-                },
-                headerStyle: {
-                    shadowOpacity: 0,
-                    elevation: 0,
-                    borderBottomColor: '#ccc',
-                    borderBottomWidth: 1
-                },
-            }}
-        />
-         <ProjectTrackerStack.Screen name='ProjectRequests' component={ProjectTrackerRequests}
-            options={{
-                title: 'Drawing Room',
-                headerShown: true,
-                headerTitleAlign: 'center',
-                headerTitleStyle: {
-                    fontWeight: '500'
-                },
-                headerStyle: {
-                    shadowOpacity: 0,
-                    elevation: 0,
-                    borderBottomColor: '#ccc',
-                    borderBottomWidth: 1
-                },
-            }}
-        />
     </ProjectTrackerStack.Navigator>
-    
+
 );
 const LiveStreamingStackscreen = ({ navigation }) => (
     <LiveStreamingStack.Navigator>
@@ -238,7 +192,7 @@ const LiveStreamingStackscreen = ({ navigation }) => (
                 headerRight: () => (
                     <TouchableOpacity style={styles.HlpBtn}>
                         <Feather name="info" style={styles.HlpIcon} />
-                        <Text style={styles.helpText}>Help</Text>
+                        <Text style={styles.helpText}>Help</Text>
                     </TouchableOpacity>
                 )
             }}
@@ -326,13 +280,13 @@ const styles = StyleSheet.create({
         //marginBottom: 10,
     },
     HlpBtn: {
-        flexDirection:'row',
-        alignItems:'center',
-        marginRight:18,
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginRight: 18,
     },
     HlpIcon: {
         // color: '#ccc',
-        marginRight:5,
+        marginRight: 5,
         fontSize: 18
     },
     helpText: {

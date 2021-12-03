@@ -8,9 +8,9 @@ const DeviceHeight = Dimensions.get('window').height;
 
 function FlatlistBottom() {
     return (
-    <View style={styles.bodyBottom}>
-        <Text style={styles.TotalDueText}>Total Due  :  ₹4,50,000</Text>
-    </View>
+        <View style={styles.bodyBottom}>
+            <Text style={styles.TotalDueText}>Total Due  :  ₹4,50,000</Text>
+        </View>
     );
 }
 
@@ -60,7 +60,7 @@ const PaymentTracking = ({ navigation }) => {
                         />
                     </View>
                     <Button title="emi" onPress={() => navigation.navigate('Emi')} />
-            <Button title="neft" onPress={() => navigation.navigate('Neft')} />
+                    {/* <Button title="neft" onPress={() => navigation.navigate('Neft')} /> */}
                 </View>
             </View>
         </SafeAreaView>
@@ -103,6 +103,6 @@ const styles = StyleSheet.create({
     TotalDueText: {
         color: "#383974",
         textAlign: 'center',
-        marginTop:20
+        marginTop: 20
     },
 })

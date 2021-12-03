@@ -8,12 +8,18 @@ import LoginScreen from '../screens/LoginScreen';
 import HomeScreen from '../screens/HomeScreen';
 import BannerScreen from '../screens/BannerScreen';
 import ForgotPassword from '../screens/ForgotPassword';
-import { Image, Text } from 'react-native';
+import { Image, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather'
 import TempNav from '../screens/tempNav';
 import BottomTabs from './BottomTabs';
-
+import NeftScreen from '../screens/PaymentTracking/neft'
 import PaymentsSupport from '../screens/PaymentsSupport'
+import kitchenScreen from '../screens/ProjectTracker/kitchen';
+import ProjectTrackerRequests from '../screens/ProjectTracker/ProjectTrackerRequests';
+import DrawingRoom from '../screens/ProjectTracker/DrawingRoom';
+import Photos from '../screens/ProjectTracker/Photos';
+import ProductWarenty from '../screens/Documents/ProductWarenty';
+import Support from '../screens/Support';
 const PrNavigator = () => {
   const Stack = createStackNavigator();
   const Tab = createBottomTabNavigator();
@@ -84,13 +90,128 @@ const PrNavigator = () => {
             })
           }
         />
-         <Stack.Screen name="PaymentSupport" component={PaymentsSupport}
+        <Stack.Screen name="PaymentSupport" component={PaymentsSupport}
           options={
             ({ route }) => ({
-              title:"Payment Support",
+              title: "Payment Support",
               headerShown: true
             })
           }
+        />
+        <Stack.Screen name="Neft" component={NeftScreen}
+          options={
+            ({ route }) => ({
+              title: "Payment Support",
+              headerShown: true
+            })
+          }
+        />
+        <Stack.Screen name="ProductWarranty" component={ProductWarenty}
+          options={
+            ({ route }) => ({
+              title: "Product Warranty Details",
+              headerShown: true,
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                fontWeight: '500'
+              },
+              headerStyle: {
+                shadowOpacity: 0,
+                elevation: 0,
+                borderBottomColor: '#ccc',
+                borderBottomWidth: 1
+              },
+            })
+          }
+        />
+        <Stack.Screen name="SupportScreen" component={Support}
+          options={
+            ({ route }) => ({
+              title: "Support",
+              headerShown: true,
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                fontWeight: '500'
+              },
+              headerStyle: {
+                shadowOpacity: 0,
+                elevation: 0,
+                borderBottomColor: '#ccc',
+                borderBottomWidth: 1
+              },
+            })
+          }
+        />
+        {/* ===========project tracor ==========*/}
+        <Stack.Screen name='Kitchen' component={kitchenScreen}
+          options={{
+            title: 'Kitchen',
+            headerShown: true,
+            headerTitleAlign: 'center',
+            headerTitleStyle: {
+              fontWeight: '500'
+            },
+            headerStyle: {
+              shadowOpacity: 0,
+              elevation: 0,
+              borderBottomColor: '#ccc',
+              borderBottomWidth: 1
+            },
+          }}
+        />
+        <Stack.Screen name='DrawingRoom' component={DrawingRoom}
+          options={{
+            title: 'DrawingRoom',
+            headerShown: true,
+            headerTitleAlign: 'center',
+            headerTitleStyle: {
+              fontWeight: '500'
+            },
+            headerStyle: {
+              shadowOpacity: 0,
+              elevation: 0,
+              borderBottomColor: '#ccc',
+              borderBottomWidth: 1
+            },
+          }}
+        />
+        <Stack.Screen name='ProjectRequests' component={ProjectTrackerRequests}
+          options={{
+            title: 'Project Tracker Requests',
+            headerShown: true,
+            headerTitleAlign: 'center',
+            headerTitleStyle: {
+              fontWeight: '500'
+            },
+            headerStyle: {
+              shadowOpacity: 0,
+              elevation: 0,
+              borderBottomColor: '#ccc',
+              borderBottomWidth: 1
+            },
+          }}
+        />
+        <Stack.Screen name='ProjectTrackerPhotos' component={Photos}
+          options={{
+            title: 'Project Tracker',
+            headerShown: true,
+            headerTitleAlign: 'center',
+            headerTitleStyle: {
+              fontWeight: '500'
+            },
+            headerStyle: {
+              shadowOpacity: 0,
+              elevation: 0,
+              borderBottomColor: '#ccc',
+              borderBottomWidth: 1
+            },
+            headerRight: () => (
+              <TouchableOpacity style={styles.HlpBtn} onPress={() => navigation.navigate('ProjectRequests')}>
+                <Feather name="info" style={styles.HlpIcon} />
+                <Text style={styles.helpText}>Help</Text>
+              </TouchableOpacity>
+            )
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
@@ -99,3 +220,18 @@ const PrNavigator = () => {
 
 
 export default PrNavigator;
+const styles = StyleSheet.create({
+  HlpBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 18,
+  },
+  HlpIcon: {
+    // color: '#ccc',
+    marginRight: 5,
+    fontSize: 18
+  },
+  helpText: {
+    fontWeight: '600'
+  }
+})

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity,TouchableNativeFeedback } from 'react-native'
+import { StyleSheet, Text, View, Dimensions, TouchableOpacity, TouchableNativeFeedback } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 const DeviceWidth = Dimensions.get('window').width;
@@ -8,52 +8,50 @@ const ItemCard = (props) => {
     const data = props.data;
     const [OverlayActive, setOverlayActive] = useState(false)
     return (
-        <View>
-        <TouchableOpacity style={styles.ListCon} onPress={()=>setOverlayActive(!OverlayActive)}>
-            <View style={styles.LeftBody}>
-                <View style={data.status === "paid" ? styles.ListIconActive : styles.ListIcon}>
-                    <Text style={data.status === "paid" ? styles.ListNumActive : styles.ListNum}>{data.id}</Text>
+            <View style={styles.ListCon}>
+                <View style={styles.LeftBody}>
+                    <View style={data.status === "paid" ? styles.ListIconActive : styles.ListIcon}>
+                        <Text style={data.status === "paid" ? styles.ListNumActive : styles.ListNum}>{data.id}</Text>
+                    </View>
                 </View>
-            </View>
-            <View style={styles.Body}>
-                <Text style={styles.BodyTextActive1}>{data.title}</Text>
-                <View style={styles.calenderCon}>
-                    <MaterialCommunityIcons name="calendar-month-outline" style={styles.calenderIcon} />
-                    <Text style={styles.BodyTextActive2}>
-                        Payment Date:{data.date}
-                    </Text>
+                <View style={styles.Body}>
+                    <Text style={styles.BodyTextActive1}>{data.title}</Text>
+                    <View style={styles.calenderCon}>
+                        <MaterialCommunityIcons name="calendar-month-outline" style={styles.calenderIcon} />
+                        <Text style={styles.BodyTextActive2}>
+                            Payment Date:{data.date}
+                        </Text>
+                    </View>
                 </View>
-            </View>
-            <View style={styles.RightBody}>
-                {
-                    data.status === 'paid' ?
-                        <View style={styles.Paid}>
-                            <MaterialIcons name="done" style={styles.PaidIcon} />
-                            <Text style={styles.PaidText}>Paid</Text>
-                        </View>
-                        :
-                        data.status === 'payNow' ?
-                            <TouchableOpacity style={styles.PayNowBtn}>
-                                <Text style={styles.PayNowText}>Pay now</Text>
-                            </TouchableOpacity>
+                <View style={styles.RightBody}>
+                    {
+                        data.status === 'paid' ?
+                            <View style={styles.Paid}>
+                                <MaterialIcons name="done" style={styles.PaidIcon} />
+                                <Text style={styles.PaidText}>Paid</Text>
+                            </View>
                             :
-                            data.status === 'Pending' ?
-                                <TouchableOpacity style={styles.PendingBtn}>
-                                    <Text style={styles.PendingText}>Pending..</Text>
+                            data.status === 'payNow' ?
+                                <TouchableOpacity style={styles.PayNowBtn} onPress={() => setOverlayActive(true)}>
+                                    <Text style={styles.PayNowText}>Pay now</Text>
                                 </TouchableOpacity>
-                                : null
-                }
+                                :
+                                data.status === 'Pending' ?
+                                    <TouchableOpacity style={styles.PendingBtn}>
+                                        <Text style={styles.PendingText}>Pending..</Text>
+                                    </TouchableOpacity>
+                                    : null
+                    }
+                </View>
+                <View style={[styles.overlayCon, { height: OverlayActive ? '100%' : 0, }]}>
+                    <TouchableOpacity style={[styles.OverlayBtn,{borderWidth:OverlayActive?1:0}]}>
+                        <Text style={styles.OverlayText}>CASH</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[styles.OverlayBtn,{borderWidth:OverlayActive?1:0}]} onPress={() => props.navigation.navigate('Neft')}>
+                        <Text style={styles.OverlayText}>NEFT</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
-            <View style={[styles.overlayCon, { opacity: OverlayActive ? 1 : 0, }]}>
-                <TouchableOpacity style={styles.OverlayBtn}>
-                    <Text style={styles.OverlayText}>CASH</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.OverlayBtn}>
-                    <Text style={styles.OverlayText}>NEFT</Text>
-                </TouchableOpacity>
-            </View>
-        </TouchableOpacity>
-        </View>
     )
 }
 
@@ -66,7 +64,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         marginTop: 10,
         backgroundColor: 'white',
-        paddingVertical:5
+        paddingVertical: 10,
+        paddingHorizontal: 10,
     },
     LeftBody: {
 
@@ -116,7 +115,8 @@ const styles = StyleSheet.create({
         width: 45,
         height: 45,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        borderWidth:0
     },
     PayNowBtn: {
         backgroundColor: "#383974",
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 50,
+        borderRadius: 25,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -171,7 +171,6 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     OverlayBtn: {
-        borderWidth: 1,
         borderColor: "#383974",
         paddingVertical: 0,
         paddingHorizontal: 19,

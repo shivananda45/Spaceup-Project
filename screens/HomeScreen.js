@@ -7,7 +7,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Feather from 'react-native-vector-icons/Feather';
 const Devicewidth = Dimensions.get('window').width;
 const Deviceheight = Dimensions.get('window').height;
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
     return (
         <View style={styles.container} >
             <ScrollView contentContainerStyle={styles.mainBody}>
@@ -27,17 +27,17 @@ const HomeScreen = () => {
                     </View>
                 </View>
                 <View style={styles.menu} >
-                    <TouchableOpacity style={styles.menuItem}>
+                    <TouchableOpacity style={styles.menuItem} onPress={()=>navigation.navigate('PaymentTracking')}>
                         <MaterialIcons name="payment" style={styles.iconStyle} />
                         <Text>Payment Tracking</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.menuItem}>
+                    <TouchableOpacity style={styles.menuItem}  onPress={()=>navigation.navigate('ProjectTracker')}>
                         <MaterialCommunityIcons name="briefcase-clock-outline" style={styles.iconStyle} />
                         <Text>Project tracker</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.menu} >
-                    <TouchableOpacity style={styles.menuItem}>
+                    <TouchableOpacity style={styles.menuItem} onPress={()=>navigation.navigate('LiveStreaming')}>
                         <MaterialIcons name='tap-and-play' style={styles.iconStyle} />
                         <Text>Live Streaming</Text>
                     </TouchableOpacity>
