@@ -16,8 +16,12 @@ const TempNav = ({ navigation }) => {
             <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.Btn}>
                 <Text>Home Screen</Text>
             </TouchableOpacity>
-            <Button title="payment support" onPress={() => navigation.navigate('PaymentSupport')} />
-            <Button title="bottomtabs " onPress={() => navigation.navigate('BottomTabs')} />
+            <TouchableOpacity onPress={() => navigation.navigate('PaymentSupport')} style={styles.Btn}>
+                <Text>Payment Support Screen</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('BottomTabs')} style={styles.Btn}>
+                <Text>BottomTabs Screen</Text>
+            </TouchableOpacity>
         </View>
     )
 }
