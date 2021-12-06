@@ -70,7 +70,7 @@ const RequestHistory = () => {
         },
     ];
     return (
-        <View style={{ width: '100%', alignSelf: 'center', backgroundColor: 'white',}}>
+        <View style={{ width: '100%', alignSelf: 'center', backgroundColor: 'white', height: '100%'}}>
             <FlatList
                 data={Data}
                 renderItem={({ item }) => <HistoryCard data={item} />}
