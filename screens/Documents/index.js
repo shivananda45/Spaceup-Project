@@ -2,15 +2,18 @@ import React from 'react'
 import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Card, CardItem } from 'native-base';
 export default function Documents({navigation}) {
     return (
         <View style={styles.con}>
             <Entypo name="text-document" style={styles.iconStyle} />
-            <TouchableOpacity style={styles.Item}>
+            <TouchableOpacity>
+            <Card style={styles.Item}>
                 <Text style={styles.itemText}>Final Drawing(PDF)</Text>
                 <View style={styles.itemIconCon}>
                     <Ionicons name="ios-document-outline" style={styles.itemIcon} />
                 </View>
+                </Card>
             </TouchableOpacity>
             <TouchableOpacity style={styles.Item}>
                 <Text style={styles.itemText}>3Ds(PDF)</Text>

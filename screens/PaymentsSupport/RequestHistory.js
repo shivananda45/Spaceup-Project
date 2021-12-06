@@ -1,8 +1,10 @@
 import React from 'react'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { Card, CardItem } from 'native-base';
+
 const HistoryCard = (props) => (
-    <View style={styles.History_Card}>
+    <Card style={styles.History_Card}>
         <View style={styles.header}>
             <Text>ID: {props.data.itemId}</Text>
             <Text>Raised On:{props.data.date}</Text>
@@ -36,7 +38,7 @@ const HistoryCard = (props) => (
                 </Text>
             </View>
         </View>
-    </View>
+    </Card>
 )
 // =======
 const RequestHistory = () => {
@@ -86,15 +88,15 @@ export default RequestHistory
 
 const styles = StyleSheet.create({
     History_Card: {
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.15,
-        shadowRadius: 3.84,
+        // shadowColor: "#000",
+        // shadowOffset: {
+        //     width: 0,
+        //     height: 2,
+        // },
+        // shadowOpacity: 0.15,
+        // shadowRadius: 3.84,
 
-        elevation: 2,
+        // elevation: 2,
         borderRadius: 10,
         marginVertical: 8,
         paddingVertical: 10,
