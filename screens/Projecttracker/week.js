@@ -57,6 +57,9 @@ const WeeksScreen = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
             </View>
+            <TouchableOpacity style={styles.plusbtn}>
+                <Feather name="plus" style={styles.plusIcon} />
+            </TouchableOpacity>
         </View>
     )
 }
@@ -147,6 +150,21 @@ const styles = StyleSheet.create({
     },
     PendingText: {
         color: "#383974"
+    },
+    plusbtn: {
+        position: 'absolute',
+        bottom: 30,
+        right: 15,
+        backgroundColor: '#393874',
+        height: 60,
+        width: 60,
+        borderRadius: 50,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    plusIcon: {
+        color: '#fff',
+        fontSize:35
     },
 })
 
