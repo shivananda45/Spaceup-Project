@@ -1,15 +1,16 @@
 import React from 'react'
 import { FlatList, Image, SafeAreaView, ScrollView, StyleSheet, Dimensions, Text, TouchableOpacity, View } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather'
+import Octicons from 'react-native-vector-icons/Octicons'
 const DeviceWidth = Dimensions.get('window').width;
 const DeviceHeight = Dimensions.get('window').height;
 function HeaderContainer() {
     return (
-        <View>
+        <View style={{marginBottom: -30,}}>
             <View style={styles.headerCon1}>
                 <Text style={styles.Toptext}>projectID:Req1234</Text>
                 <Text style={styles.MainHeddingText}>My Home Bhuja</Text>
-                <Text style={styles.text}>Lorem Ipsum dolor sit amet,consectetur</Text>
+                <Text style={styles.text}><Octicons name="location" style={{fontSize:13,color:'#383974'}}/> Lorem Ipsum dolor sit amet,consectetur</Text>
             </View>
             <View style={styles.child_con}>
                 <View style={styles.leftCon}>
@@ -17,11 +18,11 @@ function HeaderContainer() {
                     <Text style={styles.dayText}>60</Text>
                 </View>
                 <View style={styles.centerCon}>
-                    <Text style={styles.childHeddingText}>No. of Days</Text>
+                    <Text style={styles.childHeddingText}>Starting Date</Text>
                     <Text style={styles.dateText}>10/15/2021</Text>
                 </View>
                 <View style={styles.rightCon}>
-                    <Text style={styles.childHeddingText}>No. of Days</Text>
+                    <Text style={styles.childHeddingText}>Handover Date</Text>
                     <Text style={styles.dateText}>10/15/2021</Text>
                 </View>
             </View>
@@ -117,7 +118,8 @@ const styles = StyleSheet.create({
     },
     MainHeddingText: {
         fontSize: 25,
-        color: '#383974'
+        color: '#383974',
+        marginBottom: 7,
     },
     text: {
 
@@ -127,7 +129,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         backgroundColor: '#ebeaf8',
         alignSelf: 'center',
-        width: '93%',
+        width: '98%',
         borderRadius: 15,
         paddingVertical: 5,
         paddingHorizontal: 5,
@@ -137,7 +139,8 @@ const styles = StyleSheet.create({
 
     },
     childHeddingText: {
-        fontWeight: '900'
+        // fontWeight: '900',
+        marginBottom: 5,
     },
     centerCon: {
 
