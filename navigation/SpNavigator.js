@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -24,33 +24,41 @@ import Support from '../screens/Support';
 const PrNavigator = () => {
   const Stack = createStackNavigator();
   const Tab = createBottomTabNavigator();
+  const [isLoading, setisLoading] = useState(true)
+  useEffect(() => {
+    setTimeout(function () { setisLoading(false) }, 2000);
+  }, [])
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="TemNav"
+      initialRouteName={isLoading ? "Banner" : "TemNav"}
       // screenOptions={{
       //   headerBackTitleVisible: false,
       //   headerTintColor: '#FFFFFF',
       // }} 
       >
+        {
+          isLoading ?
+            <Stack.Screen name="Banner" component={BannerScreen}
+              options={
+                ({ route }) => ({
+                  headerShown: false,
+                })
+              }
+            />
+            :
+            <Stack.Screen name="TemNav" component={TempNav}
+              options={
+                ({ route }) => ({
+                  headerShown: false
+                })
+              }
+            />
+        }
         <Stack.Screen name="BottomTabs" component={BottomTabs}
           options={
             ({ route }) => ({
               headerShown: false
-            })
-          }
-        />
-        <Stack.Screen name="TemNav" component={TempNav}
-          options={
-            ({ route }) => ({
-              headerShown: false
-            })
-          }
-        />
-        <Stack.Screen name="Banner" component={BannerScreen}
-          options={
-            ({ route }) => ({
-              headerShown: true,
             })
           }
         />
