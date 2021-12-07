@@ -8,50 +8,54 @@ const ItemCard = (props) => {
     const data = props.data;
     const [OverlayActive, setOverlayActive] = useState(false)
     return (
-            <View style={styles.ListCon}>
-                <View style={styles.LeftBody}>
-                    <View style={data.status === "paid" ? styles.ListIconActive : styles.ListIcon}>
-                        <Text style={data.status === "paid" ? styles.ListNumActive : styles.ListNum}>{data.id}</Text>
+        <View style={styles.ListCon}>
+            {
+                OverlayActive ?
+                    <View style={[styles.overlayCon, { height: OverlayActive ? '100%' : 0, }]}>
+                        <TouchableOpacity style={[styles.OverlayBtn, { borderWidth: OverlayActive ? 1 : 0 }]}>
+                            <Text style={styles.OverlayText}>CASH</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[styles.OverlayBtn, { borderWidth: OverlayActive ? 1 : 0 }]} onPress={() => props.navigation.navigate('Neft')}>
+                            <Text style={styles.OverlayText}>NEFT</Text>
+                        </TouchableOpacity>
                     </View>
-                </View>
-                <View style={styles.Body}>
-                    <Text style={styles.BodyTextActive1}>{data.title}</Text>
-                    <View style={styles.calenderCon}>
-                        <MaterialCommunityIcons name="calendar-month-outline" style={styles.calenderIcon} />
-                        <Text style={styles.BodyTextActive2}>
-                        {data.status === "paid" ? 'Payment':'Due'} Date:{data.date}
-                        </Text>
-                    </View>
-                </View>
-                <View style={styles.RightBody}>
-                    {
-                        data.status === 'paid' ?
-                            <View style={styles.Paid}>
-                                <MaterialIcons name="done" style={styles.PaidIcon} />
-                                <Text style={styles.PaidText}>Paid</Text>
-                            </View>
-                            :
-                            data.status === 'payNow' ?
-                                <TouchableOpacity style={styles.PayNowBtn} onPress={() => setOverlayActive(true)}>
-                                    <Text style={styles.PayNowText}>Pay now</Text>
-                                </TouchableOpacity>
-                                :
-                                data.status === 'Pending' ?
-                                    <TouchableOpacity style={styles.PendingBtn}>
-                                        <Text style={styles.PendingText}>Pending..</Text>
-                                    </TouchableOpacity>
-                                    : null
-                    }
-                </View>
-                <View style={[styles.overlayCon, { height: OverlayActive ? '100%' : 0, }]}>
-                    <TouchableOpacity style={[styles.OverlayBtn,{borderWidth:OverlayActive?1:0}]}>
-                        <Text style={styles.OverlayText}>CASH</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={[styles.OverlayBtn,{borderWidth:OverlayActive?1:0}]} onPress={() => props.navigation.navigate('Neft')}>
-                        <Text style={styles.OverlayText}>NEFT</Text>
-                    </TouchableOpacity>
+                    : null
+            }
+            <View style={styles.LeftBody}>
+                <View style={data.status === "paid" ? styles.ListIconActive : styles.ListIcon}>
+                    <Text style={data.status === "paid" ? styles.ListNumActive : styles.ListNum}>{data.id}</Text>
                 </View>
             </View>
+            <View style={styles.Body}>
+                <Text style={styles.BodyTextActive1}>{data.title}</Text>
+                <View style={styles.calenderCon}>
+                    <MaterialCommunityIcons name="calendar-month-outline" style={styles.calenderIcon} />
+                    <Text style={styles.BodyTextActive2}>
+                        {data.status === "paid" ? 'Payment' : 'Due'} Date:{data.date}
+                    </Text>
+                </View>
+            </View>
+            <View style={styles.RightBody}>
+                {
+                    data.status === 'paid' ?
+                        <View style={styles.Paid}>
+                            <MaterialIcons name="done" style={styles.PaidIcon} />
+                            <Text style={styles.PaidText}>Paid</Text>
+                        </View>
+                        :
+                        data.status === 'payNow' ?
+                            <TouchableOpacity style={styles.PayNowBtn} onPress={() => setOverlayActive(true)}>
+                                <Text style={styles.PayNowText}>Pay now</Text>
+                            </TouchableOpacity>
+                            :
+                            data.status === 'Pending' ?
+                                <TouchableOpacity style={styles.PendingBtn}>
+                                    <Text style={styles.PendingText}>Pending..</Text>
+                                </TouchableOpacity>
+                                : null
+                }
+            </View>
+        </View>
     )
 }
 
@@ -63,7 +67,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         marginTop: 10,
-        backgroundColor: 'white',
+        // backgroundColor: 'red',
         paddingVertical: 10,
         paddingHorizontal: 10,
     },
@@ -74,7 +78,7 @@ const styles = StyleSheet.create({
         // backgroundColor: 'red'
     },
     RightBody: {
-
+        // backgroundColor:'red'
     },
     ListNum: {
         fontSize: 15
@@ -116,7 +120,7 @@ const styles = StyleSheet.create({
         height: 45,
         alignItems: 'center',
         justifyContent: 'center',
-        borderWidth:0
+        borderWidth: 0
     },
     PayNowBtn: {
         backgroundColor: "#383974",
@@ -151,11 +155,16 @@ const styles = StyleSheet.create({
     },
     overlayCon: {
         position: 'absolute',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        backgroundColor: 'rgba(255,255,255,0.8)',
+        // top: 0,
+        // // bottom: 0,
+        // left: 0,
+        // right: 0,
+        
+        marginHorizontal:10,
+        height: '100%',
+        width: '101%',
+        alignSelf: 'center',
+        backgroundColor: 'rgba(255,255,255,0.9)',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
@@ -168,7 +177,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
 
-        elevation: 5,
+        elevation: 5
     },
     OverlayBtn: {
         borderColor: "#383974",
