@@ -1,35 +1,42 @@
 import React from 'react'
 import { FlatList, Image, SafeAreaView, ScrollView, StyleSheet, Dimensions, Text, TouchableOpacity, View } from 'react-native'
-
+import Feather from 'react-native-vector-icons/Feather'
 const DeviceWidth = Dimensions.get('window').width;
 const DeviceHeight = Dimensions.get('window').height;
 function HeaderContainer() {
-    return (<View>
-        <View style={styles.headerCon1}>
-            <Text style={styles.Toptext}>projectID:Req1234</Text>
-            <Text style={styles.MainHeddingText}>My Home Bhuja</Text>
-            <Text style={styles.text}>Lorem Ipsum dolor sit amet,consectetur</Text>
+    return (
+        <View>
+            <View style={styles.headerCon1}>
+                <Text style={styles.Toptext}>projectID:Req1234</Text>
+                <Text style={styles.MainHeddingText}>My Home Bhuja</Text>
+                <Text style={styles.text}>Lorem Ipsum dolor sit amet,consectetur</Text>
+            </View>
+            <View style={styles.child_con}>
+                <View style={styles.leftCon}>
+                    <Text style={styles.childHeddingText}>No. of Days</Text>
+                    <Text style={styles.dayText}>60</Text>
+                </View>
+                <View style={styles.centerCon}>
+                    <Text style={styles.childHeddingText}>No. of Days</Text>
+                    <Text style={styles.dateText}>10/15/2021</Text>
+                </View>
+                <View style={styles.rightCon}>
+                    <Text style={styles.childHeddingText}>No. of Days</Text>
+                    <Text style={styles.dateText}>10/15/2021</Text>
+                </View>
+            </View>
         </View>
-        <View style={styles.child_con}>
-            <View style={styles.leftCon}>
-                <Text style={styles.childHeddingText}>No. of Days</Text>
-                <Text style={styles.dayText}>60</Text>
-            </View>
-            <View style={styles.centerCon}>
-                <Text style={styles.childHeddingText}>No. of Days</Text>
-                <Text style={styles.dateText}>10/15/2021</Text>
-            </View>
-            <View style={styles.rightCon}>
-                <Text style={styles.childHeddingText}>No. of Days</Text>
-                <Text style={styles.dateText}>10/15/2021</Text>
-            </View>
-        </View>
-    </View>);
+    );
 }
 function FooterContainer() {
     return (
         <View style={styles.footerCon}>
-            <Text>Footer</Text>
+            <View style={styles.footerIconCon}>
+                <Feather name="upload" style={styles.footerIcon} />
+            </View>
+            <View style={styles.footerTextCon}>
+                <Text style={styles.footerText}>Upload Status</Text>
+            </View>
         </View>
     );
 }
@@ -98,11 +105,12 @@ export default ProjectDetails
 
 const styles = StyleSheet.create({
     con: {
-        // flex: 1,
+        flex: 1,
         backgroundColor: 'white'
     },
     headerCon1: {
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 30,
     },
     Toptext: {
 
@@ -123,6 +131,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         paddingVertical: 5,
         paddingHorizontal: 5,
+        marginTop: 10,
     },
     leftCon: {
 
@@ -158,9 +167,41 @@ const styles = StyleSheet.create({
         height: DeviceWidth * 41 / 100,
         // flex: 0.5,
     },
-    footerCon:{
-        backgroundColor:'red',
+    footerCon: {
+        width: '98%',
+        alignSelf:'center',
+        // backgroundColor: 'red',
         // paddingBottom:80,
         marginVertical: 70,
+        borderColor: '#383974',
+        borderWidth: 2,
+        flexDirection: 'row',
+        alignItems: 'center',
+        // justifyContent:'center'
+        height: 50
+    },
+    footerIconCon: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 60,
+        borderRightColor: '#383974',
+        borderRightWidth: 2,
+        height: 50,
+    },
+    footerIcon: {
+        color: '#383974',
+        fontSize: 25
+    },
+    footerTextCon:{
+        textAlign: 'center',
+        // backgroundColor: 'red',
+        width: '70%',
+        justifyContent:'center',
+        alignItems:'center'
+
+    },
+    footerText: {
+        fontSize: 17,
+        color: '#383974'
     }
 })
