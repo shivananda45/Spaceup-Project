@@ -29,21 +29,21 @@ function HeaderContainer() {
         </View>
     );
 }
-function FooterContainer() {
+function FooterContainer(props) {
     return (
-        <View style={styles.footerCon}>
+        <TouchableOpacity style={styles.footerCon} onPress={()=>props.navigation.navigate('projectTracker')}>
             <View style={styles.footerIconCon}>
                 <Feather name="upload" style={styles.footerIcon} />
             </View>
             <View style={styles.footerTextCon}>
                 <Text style={styles.footerText}>Upload Status</Text>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 }
 
 
-const ProjectDetails = () => {
+const ProjectDetails = ({navigation}) => {
     const images = [
         {
             id: '1',
@@ -95,7 +95,7 @@ const ProjectDetails = () => {
                 data={images}
                 renderItem={({ item }) => <ImageCard data={item} />}
                 keyExtractor={(item, index) => item.id}
-                ListFooterComponent={FooterContainer}
+                ListFooterComponent={<FooterContainer navigation={navigation} />}
                 ListHeaderComponent={HeaderContainer}
             />
         </SafeAreaView>

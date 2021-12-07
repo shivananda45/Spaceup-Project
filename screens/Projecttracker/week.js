@@ -5,7 +5,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 // const navigation = useNavigation();
-const PaymentTracking = ({ navigation }) => {
+const WeeksScreen = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <MaterialCommunityIcons name="briefcase-clock-outline" style={styles.iconStyle} />
@@ -19,7 +19,7 @@ const PaymentTracking = ({ navigation }) => {
                     </View>
                 </View>
                 <View style={styles.RightBody}>
-                    <TouchableOpacity style={styles.PendingBtn} onPress={() => navigation.navigate('ProjectTrackerPhotos')}>
+                    <TouchableOpacity style={styles.PendingBtn} onPress={() => navigation.navigate('weeklyupdate')}>
                         <Feather name="upload" style={styles.RightIcon} />
                         <Text style={styles.PendingText}>Upload Status</Text>
                     </TouchableOpacity>
@@ -35,13 +35,13 @@ const PaymentTracking = ({ navigation }) => {
                     </View>
                 </View>
                 <View style={styles.RightBody}>
-                    <TouchableOpacity style={styles.PendingBtn} onPress={() => navigation.navigate("ProjectTrackerPhotos")}>
+                    <TouchableOpacity style={styles.PendingBtn} onPress={() => navigation.navigate("weeklyupdate")}>
                         <Feather name="upload" style={styles.RightIcon} />
                         <Text style={styles.PendingText}>Upload Status</Text>
                     </TouchableOpacity>
                 </View>
             </View>
-            <View style={[styles.ListCon, { borderBottomWidth: 0 }]}>
+            <View style={[styles.ListCon, { borderBottomWidth: 1 }]}>
                 <View style={styles.LeftBody}>
                     <View style={styles.ListIconActive}>
                         <Text style={styles.ListNumActive}>3</Text>
@@ -51,7 +51,7 @@ const PaymentTracking = ({ navigation }) => {
                     </View>
                 </View>
                 <View style={styles.RightBody}>
-                    <TouchableOpacity style={styles.PendingBtn} onPress={() => navigation.navigate('ProjectTrackerPhotos')}>
+                    <TouchableOpacity style={styles.PendingBtn} onPress={() => navigation.navigate('weeklyupdate')}>
                         <Feather name="upload" style={styles.RightIcon} />
                         <Text style={styles.PendingText}>Upload Status</Text>
                     </TouchableOpacity>
@@ -60,7 +60,7 @@ const PaymentTracking = ({ navigation }) => {
         </View>
     )
 }
-export default PaymentTracking;
+export default WeeksScreen;
 
 const styles = StyleSheet.create({
     container: {
