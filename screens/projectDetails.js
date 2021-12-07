@@ -8,7 +8,7 @@ function HeaderContainer() {
     return (
         <View style={{marginBottom: -30,}}>
             <View style={styles.headerCon1}>
-                <Text style={styles.Toptext}>projectID:Req1234</Text>
+                <Text style={styles.Toptext}>Project ID : Req1234</Text>
                 <Text style={styles.MainHeddingText}>My Home Bhuja</Text>
                 <Text style={styles.text}><Octicons name="location" style={{fontSize:13,color:'#383974'}}/> Lorem Ipsum dolor sit amet,consectetur</Text>
             </View>
@@ -120,9 +120,11 @@ const styles = StyleSheet.create({
         fontSize: 25,
         color: '#383974',
         marginBottom: 7,
+        fontWeight: '600'
     },
     text: {
-
+        paddingBottom: 10,
+        opacity: 0.5
     },
     child_con: {
         flexDirection: 'row',
@@ -132,7 +134,7 @@ const styles = StyleSheet.create({
         width: '98%',
         borderRadius: 15,
         paddingVertical: 5,
-        paddingHorizontal: 5,
+        //paddingHorizontal: 5,
         marginTop: 10,
     },
     leftCon: {
@@ -146,7 +148,8 @@ const styles = StyleSheet.create({
 
     },
     dateText: {
-        fontSize: 11
+        fontSize: 11,
+        color: '#383974'
     },
     rightCon: {
 
