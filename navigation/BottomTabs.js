@@ -290,9 +290,9 @@ const styles = StyleSheet.create({
     HlpIcon: {
         // color: '#ccc',
         marginRight: 5,
-        fontSize: 18
+        fontSize: 18,
     },
     helpText: {
-        fontWeight: '600'
+        fontWeight: 'bold'
     }
 })
