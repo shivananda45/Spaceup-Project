@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         alignItems:'center',
         justifyContent:'center',
-        marginRight: 10,
+        marginRight: 25,
     },
     headerLeftIconCon: {
         width: 40,
