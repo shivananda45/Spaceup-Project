@@ -7,14 +7,13 @@ import OnGoingProjects from './onGoingProjects';
 const HomeScreen = () => {
     return (
         <Tab.Navigator
-            // screenOptions={{
-            //     tabBarInactiveTintColor: 'red',
-            //     tabBarIndicatorStyle: {backgroundColor:'red'},
-            //     labelStyle: { fontSize: 12, },
-            //     // tabStyle: { width: 100 },
-            //     style: { backgroundColor: '#393874',elevation: 0, },
-            //     tabBarIndicatorStyle: { backgroundColor: 'white' }
-            // }}
+        screenOptions={{
+            tabBarLabelStyle: { fontSize: 12,fontWeight:'bold' },
+            tabBarActiveTintColor: '#fff',
+            tabBarInactiveTintColor: 'rgba(255,255,255,0.5)',
+            tabBarStyle: { backgroundColor: '#393874', shadowOpacity: 0, elevation: 0 },
+            tabBarIndicatorStyle: { backgroundColor: 'white' }
+        }}
         >
             <Tab.Screen name="NewProjects" component={NewProjects}
                 name="New Projects"
