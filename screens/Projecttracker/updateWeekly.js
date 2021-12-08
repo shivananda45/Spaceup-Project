@@ -45,7 +45,9 @@ const UpdatesWeekly = () => {
                 <MaterialCommunityIcons name="briefcase-clock-outline" style={styles.iconStyle} />
                 <View style={styles.headingCon}>
                     <Text style={styles.headingActiveText}>Weekly Update</Text>
+                    <View style={styles.headingInActive}>
                     <Text style={styles.headingInActiveText}>History</Text>
+                    </View>
                 </View>
                 <View style={styles.updateCon}>
                     <Text style={styles.HeddingText}>Week1 Update</Text>
@@ -131,14 +133,16 @@ const styles = StyleSheet.create({
         color: '#b3b3cc',
         fontWeight: 'bold'
     },
-    headingInActiveText: {
-        fontSize: 16,
-        color: '#393874',
-        fontWeight: 'bold',
+    headingInActive: {
         paddingVertical:8,
         paddingHorizontal:25,
         backgroundColor:'#ece9fb',
         borderRadius:50
+    },
+    headingInActiveText: {
+        fontSize: 16,
+        color: '#393874',
+        fontWeight: 'bold',
     },
     LablelText: {
         fontSize: 15,
@@ -210,7 +214,8 @@ const styles = StyleSheet.create({
         // backgroundColor: 'red',
         borderBottomColor: 'grey',
         borderBottomWidth: 0.9,
-        paddingVertical:20
+        paddingVertical:20,
+        marginHorizontal: '5%'
     },
     HeddingText: {
         color: '#393874',

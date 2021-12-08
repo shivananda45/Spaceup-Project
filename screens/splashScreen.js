@@ -4,7 +4,7 @@ import { View, Text,StyleSheet, Image } from 'react-native'
 const SplashScreen = () => {
     return (
         <View style={styles.container}>
-            <Image source={require('../assets/images/banner-img.png')} style={styles.image_style}/>
+            <Image source={require('../assets/images/splash.jpeg')} style={styles.image_style}/>
         </View>
     )
 }
