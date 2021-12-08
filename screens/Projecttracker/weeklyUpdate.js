@@ -13,6 +13,7 @@ const WeeklyUpdate = ({navigation}) => {
                     <Text style={styles.headingInActiveText}>History</Text>
                         </TouchableOpacity>
                 </View>
+                <View style={{paddingHorizontal:'6%'}}>
                 <Text style={styles.LablelText}>Add Comments</Text>
                 <TextInput
                     placeholder="Enter Comments..."
@@ -33,6 +34,7 @@ const WeeklyUpdate = ({navigation}) => {
                     <Text style={styles.OutLineBtnText}>Upload Images</Text>
                     <Text style={styles.SmallText}>(4 Images)</Text>
                 </TouchableOpacity>
+                </View>
             </ScrollView>
         </SafeAreaView>
     )

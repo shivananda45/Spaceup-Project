@@ -47,6 +47,7 @@ const UploadImages = ({navigation}) => {
                     <Text style={styles.headingActiveText}>Weekly Update</Text>
                     <Text style={styles.headingInActiveText}>History</Text>
                 </View>
+                <View style={{paddingHorizontal:'6%'}}>
                 <Text style={styles.LablelText}>Add Comments</Text>
                 <TextInput
                     placeholder="Enter Comments..."
@@ -71,6 +72,7 @@ const UploadImages = ({navigation}) => {
                 >
                     <Text style={styles.SubmitBtnText}>SEND</Text>
                 </TouchableOpacity>
+                </View>
             </ScrollView>
         </SafeAreaView>
     )
@@ -84,7 +86,6 @@ const styles = StyleSheet.create({
         // marginVertical: 30,
         flex: 1,
         backgroundColor: 'white',
-        paddingHorizontal: '5%'
     },
     iconStyle: {
         fontSize: 50,
