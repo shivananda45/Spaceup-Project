@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
         // marginVertical: 30,
         flex: 1,
         backgroundColor: 'white',
-        paddingHorizontal: '5%'
+        // paddingHorizontal: '5%'
     },
     iconStyle: {
         fontSize: 50,
