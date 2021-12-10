@@ -1,18 +1,45 @@
-import React from 'react'
-import { View, Text, ImageBackground, StyleSheet, TextInput, TouchableOpacity, Platform } from 'react-native'
+import React,{useState} from 'react';
+import { View, Text, ImageBackground, StyleSheet, TextInput, TouchableOpacity, Platform } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 const LoginScreen = () => {
+    const [LoginWith, setLoginWith] = useState('')
+    const [Password, setPassword] = useState('')
+    const OnSubmit = ()=> {
+        const apiURL = `https://sleakdeals.in/spaceup/api/v1/auth/login?username=${LoginWith}&password=${Password}&login_type=user`;
+        fetch(apiURL).then((res) => res.json())
+            .then((resJson) => {
+                console.log(resJson)
+                if (resJson.access_token !== '') {
+                 alert(resJson.user.username)
+                }
+            })
+            .catch(function (error) {
+                // CheckTheNetwork()
+            });
+    }
     return (
         // <View style={styles.con}>
             <ImageBackground source={require('../assets/images/login-bg-2.png')} style={styles.con}>
             <View style={styles.inputs_con}>
                 <Text style={styles.HeaddingText}>Login</Text>
                 <Text style={styles.LablelText}>Mobile/Email</Text>
-                <TextInput placeholder="Enter Mobile/Email" style={styles.InputStyle} placeholderTextColor="rgba(255,255,255,0.3)"/>
+                <TextInput 
+                placeholder="Enter Mobile/Email" 
+                style={styles.InputStyle} 
+                placeholderTextColor="rgba(255,255,255,0.3)"
+                onChangeText={(val)=>setLoginWith(val)}
+                defaultValue={LoginWith}
+                />
                 <Text style={styles.LablelText}>Password</Text>
-                <TextInput placeholder="Enter Your Password" style={styles.InputStyle}placeholderTextColor="rgba(255,255,255,0.3)" />
-                <TouchableOpacity style={styles.SubmitBtn}>
+                <TextInput 
+                placeholder="Enter Your Password" 
+                style={styles.InputStyle}
+                placeholderTextColor="rgba(255,255,255,0.3)"
+                onChangeText={(val)=>setPassword(val)} 
+                defaultValue={Password}
+                />
+                <TouchableOpacity style={styles.SubmitBtn} onPress={OnSubmit}>
                     <Text style={styles.SubmitBtnText}>LOGIN</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.ForgotBtn}>
