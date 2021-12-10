@@ -3,14 +3,15 @@ import { View, Text, ImageBackground, StyleSheet, TextInput, TouchableOpacity, P
 // import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 // import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 const LoginScreen = () => {
-const [LoginWith, setLoginWith] = useState('854756947')
+const [LoginWith, setLoginWith] = useState('')
 const [Password, setPassword] = useState('')
     const OnSubmit = ()=> {
         const apiURL = `https://sleakdeals.in/spaceup/api/v1/auth/login?username=${LoginWith}&password=${Password}&login_type=sitemanager`;
         fetch(apiURL).then((res) => res.json())
             .then((resJson) => {
+                console.log(resJson)
                 if (resJson.access_token !== '') {
-                 alert('succuess login',resJson.email_id)
+                 alert(resJson.user.username)
                 }
             })
             .catch(function (error) {
