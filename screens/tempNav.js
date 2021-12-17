@@ -1,7 +1,16 @@
 import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-
+import AsyncStorage from '@react-native-async-storage/async-storage'
 const TempNav = ({navigation}) => {
+    const LogOut = async () => {
+        try {
+            await AsyncStorage.removeItem('userToken');
+            navigation.navigate('login')
+          }
+          catch (e) {
+            console.log(e);
+          }
+    }
     return (
         <View style={styles.con}>
             <TouchableOpacity style={styles.btn} onPress={()=>navigation.navigate('login')}>
@@ -12,6 +21,9 @@ const TempNav = ({navigation}) => {
             </TouchableOpacity>
             <TouchableOpacity style={styles.btn} onPress={()=>navigation.navigate('projectDetails')}>
                 <Text style={styles.btnText}>Project Details</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.btn} onPress={LogOut}>
+                <Text style={styles.btnText}>LogOut</Text>
             </TouchableOpacity>
         </View>
     )
