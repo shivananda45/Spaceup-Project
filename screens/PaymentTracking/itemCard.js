@@ -8,7 +8,7 @@ const ItemCard = (props) => {
     const data = props.data;
     const [OverlayActive, setOverlayActive] = useState(false)
     return (
-        <View style={styles.ListCon}>
+        <View style={styles.con}>
             {
                 OverlayActive ?
                     <View style={[styles.overlayCon, { height: OverlayActive ? '100%' : 0, }]}>
@@ -21,6 +21,7 @@ const ItemCard = (props) => {
                     </View>
                     : null
             }
+        <View style={styles.ListCon}>
             <View style={styles.LeftBody}>
                 <View style={data.status === "paid" ? styles.ListIconActive : styles.ListIcon}>
                     <Text style={data.status === "paid" ? styles.ListNumActive : styles.ListNum}>{data.id}</Text>
@@ -56,12 +57,16 @@ const ItemCard = (props) => {
                 }
             </View>
         </View>
+        </View>
     )
 }
 
 export default ItemCard
 
 const styles = StyleSheet.create({
+    con:{
+
+    },  
     ListCon: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -160,15 +165,15 @@ const styles = StyleSheet.create({
         // left: 0,
         // right: 0,
         
-        marginHorizontal:10,
-        height: '100%',
-        width: '101%',
+        // marginHorizontal:10,
+        height: '90%',
+        width: '100%',
         alignSelf: 'center',
         backgroundColor: 'rgba(255,255,255,0.9)',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 25,
+        borderRadius: 50,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,

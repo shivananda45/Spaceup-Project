@@ -30,31 +30,30 @@ const PrNavigator = () => {
   }, [])
   return (
     <NavigationContainer>
-      <Stack.Navigator
-      initialRouteName={isLoading ? "Banner" : "TemNav"}
+      <Stack.Navigator initialRouteName="Banner"
       // screenOptions={{
       //   headerBackTitleVisible: false,
       //   headerTintColor: '#FFFFFF',
       // }} 
       >
-        {
+        <Stack.Screen name="Banner" component={BannerScreen}
+          options={
+            ({ route }) => ({
+              headerShown: false,
+            })
+          }
+        />
+        {/* {
           isLoading ?
-            <Stack.Screen name="Banner" component={BannerScreen}
-              options={
-                ({ route }) => ({
-                  headerShown: false,
-                })
-              }
-            />
             :
-            <Stack.Screen name="TemNav" component={TempNav}
-              options={
-                ({ route }) => ({
-                  headerShown: false
-                })
-              }
-            />
-        }
+          } */}
+          <Stack.Screen name="TemNav" component={TempNav}
+            options={
+              ({ route }) => ({
+                headerShown: false
+              })
+            }
+          />
         <Stack.Screen name="BottomTabs" component={BottomTabs}
           options={
             ({ route }) => ({
