@@ -13,15 +13,15 @@ const TempNav = ({navigation}) => {
     }
     return (
         <View style={styles.con}>
-            <TouchableOpacity style={styles.btn} onPress={()=>navigation.navigate('login')}>
+            {/* <TouchableOpacity style={styles.btn} onPress={()=>navigation.navigate('login')}>
                 <Text style={styles.btnText}>Login</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity style={styles.btn} onPress={()=>navigation.navigate('home')}>
                 <Text style={styles.btnText}>Home</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.btn} onPress={()=>navigation.navigate('projectDetails')}>
+            {/* <TouchableOpacity style={styles.btn} onPress={()=>navigation.navigate('projectDetails')}>
                 <Text style={styles.btnText}>Project Details</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity style={styles.btn} onPress={LogOut}>
                 <Text style={styles.btnText}>LogOut</Text>
             </TouchableOpacity>

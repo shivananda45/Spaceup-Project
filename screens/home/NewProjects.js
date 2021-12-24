@@ -1,86 +1,124 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 import Octicons from 'react-native-vector-icons/Octicons'
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import { Card, CardItem } from 'native-base';
-
-const HistoryCard = (props) => (
-    <Card style={styles.History_Card}>
-        <View style={styles.header}>
-            <Text>Project ID: {props.data.itemId}</Text>
-            <Text>Started:{props.data.date}</Text>
-        </View>
-        <View style={styles.body}>
-            <Text style={styles.headerText}>
-                {props.data.title}
-            </Text>
-            <Text style={styles.bodyText}>
-                <Octicons name="location" style={{ fontSize: 13, color: '#383974' }} /> {props.data.description}
-            </Text>
-        </View>
-        <View style={styles.footer}>
-            <View style={styles.statusCon}>
-                <Text style={styles.Status1Text}>
-                    No. of Days
-                </Text>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={styles.Status2Text}>
-                        {props.data.noofdays}
-                    </Text>
-                </View>
-            </View>
-            <View style={styles.ReplyCon}>
-                <Text style={styles.Reply1Text}>
-                    Handover Date
-                </Text>
-                <Text style={styles.Reply2Text}>
-                    {props.data.ReplyDate}
-                </Text>
-            </View>
-        </View>
-    </Card>
-)
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import HistoryCard from './HistoryCard';
 // =======
 const NewProjects = () => {
-    const Data = [
-        {
-            id: '1',
-            itemId: '1234',
-            date: '10/5/2021',
-            title: 'My Home Bhuja',
-            description: "Lorem Ipsum is simply dummy text, consectetur ",
-            noofdays: '60',
-            ReplyDate: '10/15/2021'
-        },
-        {
-            id: '2',
-            itemId: '1234',
-            date: '10/5/2021',
-            title: 'My Home Bhuja',
-            description: "Lorem Ipsum is simply dummy text, consectetur",
-            noofdays: '60',
-            ReplyDate: '10/15/2021'
-        },
-        {
-            id: '3',
-            itemId: '1234',
-            date: '10/5/2021',
-            title: 'My Home Bhuja',
-            description: "Lorem Ipsum is simply dummy text, consectetur",
-            noofdays: '60',
-            ReplyDate: '10/15/2021'
-        },
-        {
-            id: '4',
-            itemId: '1234',
-            date: '10/5/2021',
-            title: 'My Home Bhuja',
-            description: "Lorem Ipsum is simply dummy text, consectetur",
-            noofdays: '60',
-            ReplyDate: '10/15/2021'
-        },
-    ];
+    const [Data, setData] = useState([])
+    const [DataFound, setDataFound] = useState(false)
+    const [UserFound, setUserFound] = useState(false)
+    const [UserData, seUsertData] = useState([])
+    useEffect(() => {
+        FetchData()
+    }, [])
+    const FetchData = async () => {
+        let userId = ''; let accessToken = '';
+        userId = await AsyncStorage.getItem('userId');
+        accessToken = await AsyncStorage.getItem('accessToken');
+        LiftOfProjects(userId, accessToken)   
+    }
+    const LiftOfProjects = (userId, accessToken) => {
+        var InsertAPIURL = 'https://spaceup.co.in/api/v1/sitemanager/get-placed-project';
+        var headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + String(accessToken),
+        };
+
+        var Data = {
+            manager_id: userId
+        };
+        fetch(InsertAPIURL,
+            {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify(Data)
+            }
+        )
+            .then((response) => response.json())
+            .then((RES) => {
+                setData(RES)
+                setDataFound(true)
+                // console.log('project details' + JSON.stringify(RES));
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        UserProfileInfo(userId, accessToken)
+    }
+    // ======================
+    const UserProfileInfo = (userId, accessToken) => {
+        var InsertAPIURL = 'https://spaceup.co.in/api/v1/sitemanager/profile';
+        var headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + String(accessToken),
+        };
+
+        var Data = {
+            manager_id: userId
+        };
+        fetch(InsertAPIURL,
+            {
+                method: 'POST',
+                headers: headers,
+                // body: JSON.stringify(Data)
+            }
+        )
+            .then((response) => response.json())
+            .then((RES) => {
+                if(RES.status){
+                    seUsertData(RES)
+                    setUserFound(true)
+                }
+                // console.log('profile data' + JSON.stringify(RES));
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+    // const Data = [
+    //     {
+    //         id: '1',
+    //         itemId: '1234',
+    //         date: '10/5/2021',
+    //         title: 'My Home Bhuja',
+    //         description: "Lorem Ipsum is simply dummy text, consectetur ",
+    //         noofdays: '60',
+    //         ReplyDate: '10/15/2021'
+    //     },
+    //     {
+    //         id: '2',
+    //         itemId: '1234',
+    //         date: '10/5/2021',
+    //         title: 'My Home Bhuja',
+    //         description: "Lorem Ipsum is simply dummy text, consectetur",
+    //         noofdays: '60',
+    //         ReplyDate: '10/15/2021'
+    //     },
+    //     {
+    //         id: '3',
+    //         itemId: '1234',
+    //         date: '10/5/2021',
+    //         title: 'My Home Bhuja',
+    //         description: "Lorem Ipsum is simply dummy text, consectetur",
+    //         noofdays: '60',
+    //         ReplyDate: '10/15/2021'
+    //     },
+    //     {
+    //         id: '4',
+    //         itemId: '1234',
+    //         date: '10/5/2021',
+    //         title: 'My Home Bhuja',
+    //         description: "Lorem Ipsum is simply dummy text, consectetur",
+    //         noofdays: '60',
+    //         ReplyDate: '10/15/2021'
+    //     },
+    // ];
     const ListHeader = () => {
         return (
             <View style={styles.headerCon}>
@@ -90,7 +128,7 @@ const NewProjects = () => {
                     </View>
                     <View style={styles.headerRightCon}>
                         <Text style={styles.headerTopText}>Mobile No:</Text>
-                        <Text style={styles.headerBottomText}>+91-9876543210</Text>
+                        <Text style={styles.headerBottomText}>{UserFound?UserData.user.phone:''}</Text>
                     </View>
                 </View>
                 <View style={styles.headerChild}>
@@ -99,135 +137,85 @@ const NewProjects = () => {
                     </View>
                     <View style={styles.headerRightCon}>
                         <Text style={styles.headerTopText}>Site Engr ID:</Text>
-                        <Text style={styles.headerBottomText}>User12345</Text>
+                        <Text style={styles.headerBottomText}>{UserFound?UserData.user.id:''}</Text>
                     </View>
                 </View>
             </View>
         )
     }
     return (
-        <View style={{ width: '100%', alignSelf: 'center', backgroundColor: 'white', height: '100%' }}>
-            <FlatList
-                data={Data}
-                renderItem={({ item }) => <HistoryCard data={item} />}
-                keyExtractor={(item, index) => item.id}
-                showsVerticalScrollIndicator={false}
-                style={{ width: '90%', alignSelf: 'center' }}
-                ListFooterComponent={<View style={{ paddingBottom: 50 }} />}
-                ListHeaderComponent={ListHeader}
-            />
+        <View style={{ width: '100%', alignSelf: 'center', backgroundColor: 'white', height: '100%',paddingHorizontal:'5%' }}>
+            {
+                DataFound ?
+                Data.status !== false && Data.message !== 'Unauthenticated.' ?
+                            <FlatList
+                                key={'pos_posts'}
+                                data={Data.data}
+                                renderItem={({ item }) => <HistoryCard info={item} navigation={navigation} />}
+                                keyExtractor={(item, index) => item.id}
+                                showsVerticalScrollIndicator={false}
+                                ListFooterComponent={<View style={{ paddingBottom: 0 }} />}
+                                ListHeaderComponent={ListHeader}
+                            />
+                            // <Text>data found</Text>
+                            :
+                            <>
+                            {
+                                UserFound ?
+                                <ListHeader />
+                                :null
+                            }
+                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                <Text>{Data.message}</Text>
+                            </View>
+                            </>
+                    : null
+            }
         </View>
     )
 }
 
-export default NewProjects
+export default NewProjects;
 
 const styles = StyleSheet.create({
-    History_Card: {
-        // shadowColor: "#000",
-        // shadowOffset: {
-        //     width: 0,
-        //     height: 2,
-        // },
-        // shadowOpacity: 0.15,
-        // shadowRadius: 3.84,
-
-        // elevation: 2,
-        borderRadius: 10,
-        marginVertical: 8,
-        paddingVertical: 10,
-        paddingHorizontal: 10
-    },
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        borderBottomColor: 'rgba(0,0,0,0.2)',
-        borderBottomWidth: 1,
-        paddingVertical: 5
-    },
-    body: {
-
-    },
-    headerText: {
-        fontWeight: 'bold',
-        marginVertical: 5,
-        fontSize: 13
-    },
-    bodyText: {
-        fontSize: 13
-    },
-    footer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingVertical: 5,
-        marginTop: 5,
-    },
-    statusCon: {
-
-    },
-    Status1Text: {
-        fontWeight: 'bold',
-    },
-    Status2Text: {
-        fontWeight: 'bold',
-        color: 'green',
-    },
-    ReplyCon: {
-
-    },
-    Reply1Text: {
-        textAlign: 'right',
-        fontWeight: 'bold',
-    },
-    Reply2Text: {
-        textAlign: 'right',
-        color: '#393874',
-        fontSize: 12,
-    },
-    StatusIcon: {
-        marginRight: 5,
-        color: 'green'
-    },
     // ======================headertop
     headerCon: {
-        backgroundColor:'#f5f5fc',
-        borderRadius:50,
-        alignItems:'center',
+        backgroundColor: '#f5f5fc',
+        borderRadius: 50,
+        alignItems: 'center',
         // justifyContent:'space-evenly',
-        flexDirection:'row',
+        flexDirection: 'row',
         marginVertical: 15,
-        paddingHorizontal:10,
-        paddingVertical:10
+        paddingHorizontal: 10,
+        paddingVertical: 10
     },
     headerChild: {
-        flexDirection:'row',
-        alignItems:'center',
-        justifyContent:'center',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
         marginRight: 25,
     },
     headerLeftIconCon: {
         width: 40,
         height: 40,
-        backgroundColor:'#e9e9ef',
-        borderRadius:50,
-        alignItems:'center',
-        justifyContent:'center',
+        backgroundColor: '#e9e9ef',
+        borderRadius: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
         marginRight: 10,
     },
     HeaderIcon: {
-        fontSize:20,
+        fontSize: 20,
         color: '#393874'
     },
     headerRightCon: {
 
     },
     headerTopText: {
-        fontSize:12
+        fontSize: 12
     },
     headerBottomText: {
-        fontSize:13,
+        fontSize: 13,
         color: '#393874'
     },
 })

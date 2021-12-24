@@ -1,11 +1,94 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { FlatList, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, TouchableOpacityBase, View, Dimensions, Image } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather'
 const DeviceWidth = Dimensions.get('window').width;
 const DeviceHeight = Dimensions.get('window').height;
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import AntDesign from 'react-native-vector-icons/AntDesign'
-const UpdatesWeekly = () => {
+
+function UpdateCard(props) {
+    return (<View style={styles.updateCon}>
+        <Text style={styles.HeddingText}>Week{props.data.week} Update</Text>
+        <View style={styles.DW_con}>
+            <View style={styles.DwChildCon}>
+                <Text style={styles.DWC_Hedding}>Date</Text>
+                <Text style={styles.DWC_text}>{props.data.posted_on_date}</Text>
+            </View>
+            <View style={styles.DwChildCon}>
+                <Text style={styles.DWC_Hedding}>Work Order Status</Text>
+                <Text style={styles.DWC_text}>{props.data.status}</Text>
+            </View>
+        </View>
+        <Text style={styles.subHedding}>Comments</Text>
+        <Text style={styles.Text}>{props.data.comment}</Text>
+        {
+            <FlatList
+                horizontal={true}
+                data={props.data.project_picture}
+                renderItem={({ item }) => <ImageCard data={item} />}
+                keyExtractor={(item, index) => item.id}
+            />
+        }
+    </View>);
+}
+const ImageCard = (props) => {
+    return (
+        <TouchableOpacity style={styles.imageContainer}
+        //  onPress={() => setImagePreview(!ImagePreview)}
+        >
+            <Image source={{uri:props.data}}
+                style={{
+                    width: '100%',
+                    height: '100%',
+                    borderRadius: 10,
+                }} />
+            {/* <AntDesign name="closecircle" style={styles.imageCloseIcon} /> */}
+        </TouchableOpacity>
+    )
+}
+
+const UpdatesWeekly = ({ route, navigation }) => {
+    const info = route.params.data;
+    console.log('weekly update', info);
+    // ==============
+    const [Data, setData] = useState([])
+    const [DataFound, setDataFound] = useState(false)
+    useEffect(() => {
+        FetchData()
+    }, [])
+    const FetchData = async () => {
+        let userId = ''; let accessToken = '';
+        userId = await AsyncStorage.getItem('userId');
+        accessToken = await AsyncStorage.getItem('accessToken');
+        var InsertAPIURL = 'https://spaceup.co.in/api/v1/sitemanager/get-weekly-update';
+        var headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + String(accessToken),
+        };
+
+        var Data = {
+            manager_id: info.managerId,
+            project_id: info.projectID
+        };
+        fetch(InsertAPIURL,
+            {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify(Data)
+            }
+        )
+            .then((response) => response.json())
+            .then((RES) => {
+                setData(RES)
+                setDataFound(true)
+                console.log('update weekly return data' + JSON.stringify(RES));
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
     const images = [
         {
             id: '1',
@@ -24,21 +107,7 @@ const UpdatesWeekly = () => {
             source: require('../../assets/images/kitchen3.png'),
         },
     ];
-    const ImageCard = (props) => {
-        return (
-            <TouchableOpacity style={styles.imageContainer}
-            //  onPress={() => setImagePreview(!ImagePreview)}
-            >
-                <Image source={props.data.source}
-                    style={{
-                        width: '100%',
-                        height: '100%',
-                        borderRadius: 10,
-                    }} />
-                {/* <AntDesign name="closecircle" style={styles.imageCloseIcon} /> */}
-            </TouchableOpacity>
-        )
-    }
+    
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -46,57 +115,24 @@ const UpdatesWeekly = () => {
                 <View style={styles.headingCon}>
                     <Text style={styles.headingActiveText}>Weekly Update</Text>
                     <View style={styles.headingInActive}>
-                    <Text style={styles.headingInActiveText}>History</Text>
+                        <Text style={styles.headingInActiveText}>History</Text>
                     </View>
                 </View>
-                <View style={styles.updateCon}>
-                    <Text style={styles.HeddingText}>Week1 Update</Text>
-                    <View style={styles.DW_con}>
-                        <View style={styles.DwChildCon}>
-                            <Text style={styles.DWC_Hedding}>Date</Text>
-                            <Text style={styles.DWC_text}>10/27/21</Text>
-                        </View>
-                        <View style={styles.DwChildCon}>
-                            <Text style={styles.DWC_Hedding}>Work Order Status</Text>
-                            <Text style={styles.DWC_text}>Pending</Text>
-                        </View>
-                    </View>
-                    <Text style={styles.subHedding}>Comments</Text>
-                    <Text style={styles.Text}>Lorem Ipsum is simply dummy text of the printing
-                        and typesetting industry. Lorem Ipsum has been the industry's
-                        standard dummy text ever since the 1500s, when an unknown printer took a
-                        galley of type and scrambled</Text>
-                    <FlatList
-                        horizontal={true}
-                        data={images}
-                        renderItem={({ item }) => <ImageCard data={item} />}
-                        keyExtractor={(item, index) => item.id}
-                    />
-                </View>
-                <View style={styles.updateCon}>
-                    <Text style={styles.HeddingText}>Week2 Update</Text>
-                    <View style={styles.DW_con}>
-                        <View style={styles.DwChildCon}>
-                            <Text style={styles.DWC_Hedding}>Date</Text>
-                            <Text style={styles.DWC_text}>10/27/21</Text>
-                        </View>
-                        <View style={styles.DwChildCon}>
-                            <Text style={styles.DWC_Hedding}>Work Order Status</Text>
-                            <Text style={styles.DWC_text}>Pending</Text>
-                        </View>
-                    </View>
-                    <Text style={styles.subHedding}>Comments</Text>
-                    <Text style={styles.Text}>Lorem Ipsum is simply dummy text of the printing
-                        and typesetting industry. Lorem Ipsum has been the industry's
-                        standard dummy text ever since the 1500s, when an unknown printer took a
-                        galley of type and scrambled</Text>
-                    <FlatList
-                        horizontal={true}
-                        data={images}
-                        renderItem={({ item }) => <ImageCard data={item} />}
-                        keyExtractor={(item, index) => item.id}
-                    />
-                </View>
+                {
+                    DataFound ?
+                        Data.status && Data.message !== 'Unauthenticated.' ?
+                            <FlatList
+                                // horizontal={true}
+                                data={Data.data}
+                                renderItem={({ item }) => <UpdateCard data={item} />}
+                                keyExtractor={(item, index) => index}
+                            />
+                            :
+                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                <Text>{Data.message}</Text>
+                            </View>
+                        : null
+                }
             </ScrollView>
         </SafeAreaView>
     )
@@ -134,10 +170,10 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     headingInActive: {
-        paddingVertical:8,
-        paddingHorizontal:25,
-        backgroundColor:'#ece9fb',
-        borderRadius:50
+        paddingVertical: 8,
+        paddingHorizontal: 25,
+        backgroundColor: '#ece9fb',
+        borderRadius: 50
     },
     headingInActiveText: {
         fontSize: 16,
@@ -214,7 +250,7 @@ const styles = StyleSheet.create({
         // backgroundColor: 'red',
         borderBottomColor: 'grey',
         borderBottomWidth: 0.9,
-        paddingVertical:20,
+        paddingVertical: 20,
         marginHorizontal: '5%'
     },
     HeddingText: {

@@ -1,65 +1,159 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 // const navigation = useNavigation();
-const WeeksScreen = ({ navigation }) => {
+const WeeksScreen = ({ route, navigation }) => {
+    const info = route.params.data;
+    // console.log('week screen log', info);
+    const [WeekCount, setWeekCount] = useState(1)
+    const [Week1Visible, setWeek1Visible] = useState(false)
+    const [Week2Visible, setWeek2Visible] = useState(false)
+    const [Week3Visible, setWeek3Visible] = useState(false)
+    const [Week4Visible, setWeek4Visible] = useState(false)
+    const [isAddBtnVisible, setisAddBtnVisible] = useState(true)
+    const [routeData, setrouteData] = useState(null)
+    // ===================
+    const IncrementWeek = (count) => {
+        if (count < 5) {
+            setWeekCount(count + 1)
+            setisAddBtnVisible(true)
+            if (WeekCount === 1) {
+                setWeek1Visible(true)
+                setrouteData({ managerId: info.managerId, projectID: info.projectID, WeekId: 1 });
+            }
+            else if (WeekCount === 2) {
+                setWeek1Visible(true)
+                setWeek2Visible(true)
+                setrouteData({ managerId: info.managerId, projectID: info.projectID, WeekId: 2 });
+            }
+            else if (WeekCount === 3) {
+                setWeek1Visible(true)
+                setWeek2Visible(true)
+                setWeek3Visible(true)
+                setrouteData({ managerId: info.managerId, projectID: info.projectID, WeekId: 3 });
+            }
+            else if (WeekCount === 4) {
+                setWeek1Visible(true)
+                setWeek2Visible(true)
+                setWeek3Visible(true)
+                setWeek4Visible(true)
+                setrouteData({ managerId: info.managerId, projectID: info.projectID, WeekId: 4 });
+            }
+            else {
+                setWeek1Visible(false)
+                setWeek2Visible(false)
+                setWeek3Visible(false)
+                setWeek4Visible(false)
+            }
+        }
+        else {
+            setisAddBtnVisible(false)
+        }
+    }
+    // ==============
     return (
         <View style={styles.container}>
             <MaterialCommunityIcons name="briefcase-clock-outline" style={styles.iconStyle} />
-            <View style={styles.ListCon}>
-                <View style={styles.LeftBody}>
-                    <View style={styles.ListIconActive}>
-                        <Text style={styles.ListNumActive}>1</Text>
+            {
+                Week1Visible ?
+                    <View style={styles.ListCon}>
+                        <View style={styles.LeftBody}>
+                            <View style={styles.ListIconActive}>
+                                <Text style={styles.ListNumActive}>1</Text>
+                            </View>
+                            <View style={styles.Body}>
+                                <Text style={styles.BodyTextActive1}>Week1</Text>
+                            </View>
+                        </View>
+                        <View style={styles.RightBody}>
+                            <TouchableOpacity
+                                style={styles.PendingBtn}
+                                onPress={() =>
+                                    navigation.navigate('uploadimages', { data: routeData })
+                                }>
+                                <Feather name="upload" style={styles.RightIcon} />
+                                <Text style={styles.PendingText}>Upload Status</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                    <View style={styles.Body}>
-                        <Text style={styles.BodyTextActive1}>Week1</Text>
+                    : null
+            }
+            {Week2Visible ?
+                <View style={styles.ListCon}>
+                    <View style={styles.LeftBody}>
+                        <View style={styles.ListIconActive}>
+                            <Text style={styles.ListNumActive}>2</Text>
+                        </View>
+                        <View style={styles.Body}>
+                            <Text style={styles.BodyTextActive1}>Week2</Text>
+                        </View>
+                    </View>
+                    <View style={styles.RightBody}>
+                        <TouchableOpacity
+                            style={styles.PendingBtn}
+                            onPress={() =>
+                                navigation.navigate("uploadimages", { data: routeData })
+                            }>
+                            <Feather name="upload" style={styles.RightIcon} />
+                            <Text style={styles.PendingText}>Upload Status</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
-                <View style={styles.RightBody}>
-                    <TouchableOpacity style={styles.PendingBtn} onPress={() => navigation.navigate('weeklyupdate')}>
-                        <Feather name="upload" style={styles.RightIcon} />
-                        <Text style={styles.PendingText}>Upload Status</Text>
+                : null
+            }
+            {Week3Visible ?
+                <View style={[styles.ListCon, { borderBottomWidth: 1 }]}>
+                    <View style={styles.LeftBody}>
+                        <View style={styles.ListIconActive}>
+                            <Text style={styles.ListNumActive}>3</Text>
+                        </View>
+                        <View style={styles.Body}>
+                            <Text style={styles.BodyTextActive1}>Week3</Text>
+                        </View>
+                    </View>
+                    <View style={styles.RightBody}>
+                        <TouchableOpacity
+                            style={styles.PendingBtn}
+                            onPress={() => navigation.navigate('uploadimages', { data: routeData })}>
+                            <Feather name="upload" style={styles.RightIcon} />
+                            <Text style={styles.PendingText}>Upload Status</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                : null
+            }
+            {Week4Visible ?
+                <View style={[styles.ListCon, { borderBottomWidth: 1 }]}>
+                    <View style={styles.LeftBody}>
+                        <View style={styles.ListIconActive}>
+                            <Text style={styles.ListNumActive}>4</Text>
+                        </View>
+                        <View style={styles.Body}>
+                            <Text style={styles.BodyTextActive1}>Week4</Text>
+                        </View>
+                    </View>
+                    <View style={styles.RightBody}>
+                        <TouchableOpacity
+                            style={styles.PendingBtn}
+                            onPress={() => navigation.navigate('uploadimages', { data: routeData })}>
+                            <Feather name="upload" style={styles.RightIcon} />
+                            <Text style={styles.PendingText}>Upload Status</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                : null
+            }
+            {
+                isAddBtnVisible ?
+                    <TouchableOpacity style={styles.plusbtn} onPress={() => IncrementWeek(WeekCount)}>
+                        <Feather name="plus" style={styles.plusIcon} />
                     </TouchableOpacity>
-                </View>
-            </View>
-            <View style={styles.ListCon}>
-                <View style={styles.LeftBody}>
-                    <View style={styles.ListIconActive}>
-                        <Text style={styles.ListNumActive}>2</Text>
-                    </View>
-                    <View style={styles.Body}>
-                        <Text style={styles.BodyTextActive1}>Week2</Text>
-                    </View>
-                </View>
-                <View style={styles.RightBody}>
-                    <TouchableOpacity style={styles.PendingBtn} onPress={() => navigation.navigate("weeklyupdate")}>
-                        <Feather name="upload" style={styles.RightIcon} />
-                        <Text style={styles.PendingText}>Upload Status</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-            <View style={[styles.ListCon, { borderBottomWidth: 1 }]}>
-                <View style={styles.LeftBody}>
-                    <View style={styles.ListIconActive}>
-                        <Text style={styles.ListNumActive}>3</Text>
-                    </View>
-                    <View style={styles.Body}>
-                        <Text style={styles.BodyTextActive1}>Week3</Text>
-                    </View>
-                </View>
-                <View style={styles.RightBody}>
-                    <TouchableOpacity style={styles.PendingBtn} onPress={() => navigation.navigate('weeklyupdate')}>
-                        <Feather name="upload" style={styles.RightIcon} />
-                        <Text style={styles.PendingText}>Upload Status</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-            <TouchableOpacity style={styles.plusbtn}>
-                <Feather name="plus" style={styles.plusIcon} />
-            </TouchableOpacity>
+                    :
+                    null
+            }
         </View>
     )
 }
@@ -164,7 +258,7 @@ const styles = StyleSheet.create({
     },
     plusIcon: {
         color: '#fff',
-        fontSize:35
+        fontSize: 35
     },
 })
 
