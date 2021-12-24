@@ -4,8 +4,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 // import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 // import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 const LoginScreen = ({ navigation }) => {
-    const [LoginWith, setLoginWith] = useState('sitemanage')
-    const [Password, setPassword] = useState('123456')
+    const [LoginWith, setLoginWith] = useState('')
+    const [Password, setPassword] = useState('')
     const [modalVisible, setModalVisible] = useState(false);
     const [errorText, seterrorText] = useState("Username or Password is not Correct");
     const OnSubmit = async () => {
