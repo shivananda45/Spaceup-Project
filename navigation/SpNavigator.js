@@ -14,13 +14,13 @@ import TempNav from '../screens/tempNav';
 import BottomTabs from './BottomTabs';
 import NeftScreen from '../screens/PaymentTracking/neft'
 import PaymentsSupport from '../screens/PaymentsSupport'
-import kitchenScreen from '../screens/ProjectTracker/kitchen';
 import ProjectTrackerRequests from '../screens/ProjectTracker/ProjectTrackerRequests';
 import DrawingRoom from '../screens/ProjectTracker/DrawingRoom';
 import Photos from '../screens/ProjectTracker/Photos';
 import ProductWarenty from '../screens/Documents/ProductWarenty';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Support from '../screens/Support';
+import PhotosGalleryScreen from '../screens/ProjectTracker/PhotosGallery';
 const PrNavigator = () => {
   const Stack = createStackNavigator();
   const Tab = createBottomTabNavigator();
@@ -47,13 +47,13 @@ const PrNavigator = () => {
           isLoading ?
             :
           } */}
-          <Stack.Screen name="TemNav" component={TempNav}
-            options={
-              ({ route }) => ({
-                headerShown: false
-              })
-            }
-          />
+        <Stack.Screen name="TemNav" component={TempNav}
+          options={
+            ({ route }) => ({
+              headerShown: false
+            })
+          }
+        />
         <Stack.Screen name="BottomTabs" component={BottomTabs}
           options={
             ({ route }) => ({
@@ -161,9 +161,9 @@ const PrNavigator = () => {
           }
         />
         {/* ===========project tracor ==========*/}
-        <Stack.Screen name='Kitchen' component={kitchenScreen}
-          options={{
-            title: 'Kitchen',
+        <Stack.Screen name='PhotosGallery' component={PhotosGalleryScreen}
+          options={({ route }) => ({
+            title: route.params.data.room_type_name,
             headerShown: true,
             headerTitleAlign: 'center',
             headerTitleStyle: {
@@ -175,7 +175,7 @@ const PrNavigator = () => {
               borderBottomColor: '#ccc',
               borderBottomWidth: 1
             },
-          }}
+          })}
         />
         <Stack.Screen name='DrawingRoom' component={DrawingRoom}
           options={{

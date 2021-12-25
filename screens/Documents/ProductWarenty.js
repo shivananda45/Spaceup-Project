@@ -1,25 +1,54 @@
 import React from 'react'
-import { StyleSheet, Text, View ,Dimensions,Image,TouchableOpacity, SafeAreaView, ScrollView} from 'react-native'
+import { StyleSheet, Text, View, Dimensions, Image, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native'
 const Devicewidth = Dimensions.get('window').width;
 const Deviceheight = Dimensions.get('window').height;
-const ProductWarenty = () => {
+import Pdf from 'react-native-pdf';
+import RNFetchBlob from 'react-native-fetch-blob'
+const ProductWarenty = ({ route, navigation }) => {
+    const info = route.params.data;
+    console.log('the unique id', info);
+    // ==============
+    const DownloadHandler = async (val) => {
+        const { config, fs } = RNFetchBlob;
+        let PictureDir = fs.dirs.PictureDir;
+        let options = {
+            fileCache: true,
+            addAndroidDownloads: {
+                useDownloadManager: true,
+                notification: true,
+                description: ('downloading_file')
+                // path: 'image/',
+            }
+        };
+        config(options)
+            .fetch('GET', info.document_file)
+            .then(res => {
+                console.log('The file saved to ', res.path())
+            }).catch(function (error) {
+                console.log(error);
+            });
+    };
     return (
-        <SafeAreaView style={{flex: 1,backgroundColor:'white'}}>
-            <ScrollView>
-        <View style={styles.con}>
-            <Text style={styles.HeddingText}>Plywood</Text>
-            <Image 
-            source={require('../../assets/images/text.png')}
-            style={{width:Devicewidth*80/100,height:Deviceheight*100/100,borderWidth:0}}
-            />
-            <View 
-            style={{height:1,width:'75%',backgroundColor:'#393874',marginBottom:50}}
-            />
-            <TouchableOpacity style={styles.SubmitBtn}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+            <Text style={styles.HeddingText}>{info.document_type}</Text>
+            <Pdf
+                source={{ uri: info.document_file }}
+                onLoadComplete={(numberOfPages, filePath) => {
+                    console.log(`Number of pages: ${numberOfPages}`);
+                }}
+                onPageChanged={(page, numberOfPages) => {
+                    console.log(`Current page: ${page}`);
+                }}
+                onError={(error) => {
+                    console.log(error);
+                }}
+                onPressLink={(uri) => {
+                    console.log(`Link pressed: ${uri}`);
+                }}
+                style={styles.pdf} />
+            <TouchableOpacity style={styles.SubmitBtn} onPress={DownloadHandler}>
                 <Text style={styles.SubmitBtnText}>Download</Text>
             </TouchableOpacity>
-        </View>
-        </ScrollView>
         </SafeAreaView>
     )
 }
@@ -32,24 +61,32 @@ const styles = StyleSheet.create({
         // marginVertical: 30,
         // flex: 1,
         backgroundColor: 'white',
-        alignItems:'center'
+        alignItems: 'center'
     },
-    HeddingText:{
-        marginVertical:25,
-        borderWidth:0,
-        fontWeight:'bold',
-        fontSize:20
+    HeddingText: {
+        // marginVertical: 25,
+        paddingVertical: 10,
+        borderWidth: 0,
+        fontWeight: 'bold',
+        fontSize: 20,
+        textAlign: 'center'
     },
     SubmitBtn: {
-        paddingVertical:15,
-        backgroundColor:'#393874',
-        marginBottom:20,
-        marginTop:35,
-        alignItems:'center',
-        width: '90%'
+        paddingVertical: 15,
+        backgroundColor: '#393874',
+        marginBottom: 10,
+        marginTop: 10,
+        alignItems: 'center',
+        width: '90%',
+        alignSelf: 'center'
     },
     SubmitBtnText: {
-        fontSize:15,
+        fontSize: 15,
         color: '#fff'
     },
+    pdf: {
+        flex: 1,
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').height,
+    }
 })

@@ -2,7 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, View, FlatList, Image, Modal, TouchableOpacity } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import ImageViewer from 'react-native-image-zoom-viewer';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Button } from 'native-base';
 function FlatlistTop() {
     return (
@@ -12,7 +13,55 @@ function FlatlistTop() {
         </View>
     );
 }
-const kitchenScreen = ({ navigation }) => {
+const PhotosGalleryScreen = ({ route, navigation }) => {
+    const info = route.params.data;
+    console.log('the unique id', info);
+    // ================
+    const [Data, setData] = useState([])
+    const [DataFound, setDataFound] = useState(false)
+    // ==============
+    useEffect(() => {
+        FetchData()
+    }, [])
+    // ==============
+    const FetchData = async () => {
+        let userId = ''; let accessToken = '';
+        userId = await AsyncStorage.getItem('userId');
+        accessToken = await AsyncStorage.getItem('accessToken');
+        LiftOfProjects(userId, accessToken)
+    }
+    // ==============
+    const LiftOfProjects = (userId, accessToken) => {
+        var InsertAPIURL = 'https://spaceup.co.in/api/v1/enduser/get-project-week-list-details';
+        var headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + String(accessToken),
+        };
+
+        var Data = {
+            user_id: userId,
+            unique_id: info.unique_id
+        };
+        fetch(InsertAPIURL,
+            {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify(Data)
+            }
+        )
+            .then((response) => response.json())
+            .then((RES) => {
+                setData(RES)
+                setDataFound(true)
+                // console.log('images lios', JSON.stringify(RES));
+                // console.log('images lios', JSON.stringify(RES.data.pictures));
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+    // ==============
     const [ImagePreview, setImagePreview] = useState(false)
     const images = [
         {
@@ -67,22 +116,41 @@ const kitchenScreen = ({ navigation }) => {
             }
         }]
     const ImageCard = (props) => {
+        console.log('image uri',props.info);
         return (
             <TouchableOpacity style={styles.imageContainer} onPress={() => setImagePreview(!ImagePreview)}>
-                <Image source={props.data.source} style={{ width: 165, height: 165, borderRadius: 10, marginTop: 40 }} />
+                <Image source={{ uri: props.info }}
+                    style={{
+                        width: 50,
+                        height: 50,
+                        borderRadius: 10,
+                        marginTop: 40, backgroundColor: 'red',
+                    }} />
             </TouchableOpacity>
         )
     }
     return (
         <View style={{ flex: 1, alignItems: 'center', }} >
-            <FlatList
-                numColumns={2}
-                data={images}
-                renderItem={({ item }) => <ImageCard data={item} />}
-                keyExtractor={(item, index) => item.id}
-                ListHeaderComponent={FlatlistTop}
-                ListFooterComponent={<View style={{ height: 50 }} />}
-            />
+            {
+                DataFound ?
+                    Data.status && Data.message !== 'Unauthenticated.' ?
+                        <FlatList
+                            numColumns={2}
+                            data={Data.data.pictures}
+                            renderItem={({ item }) => <ImageCard info={item} />}
+                            keyExtractor={(item, index) => index}
+                            ListHeaderComponent={FlatlistTop}
+                            ListFooterComponent={<View style={{ height: 50 }} />}
+                            style={{ width: '100%',backgroundColor:'white' }}
+                        />
+                        :
+                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                            <Text>{Data.message}</Text>
+                        </View>
+                    :
+                    null
+            }
+
             <Modal visible={ImagePreview} transparent={true}
                 onRequestClose={() => setImagePreview(!ImagePreview)}
             >
@@ -100,16 +168,17 @@ const kitchenScreen = ({ navigation }) => {
     )
 }
 
-export default kitchenScreen;
+export default PhotosGalleryScreen;
 
 
 const styles = StyleSheet.create({
     imageContainer: {
-        width: '45%',
+        width: 500,
         height: 200,
         borderRadius: 10,
         alignItems: 'center',
-        marginHorizontal: '2.5%'
+        marginHorizontal: 20,
+        backgroundColor: 'red',
     },
     dateContainer: {
         width: '100%',

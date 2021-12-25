@@ -12,6 +12,10 @@ target 'spaceup' do
     :hermes_enabled => false
   )
 
+  pod 'react-native-pdf', :path => '../node_modules/react-native-pdf'
+
+  pod 'react-native-blob-util', :path => '../node_modules/react-native-blob-util'
+
   target 'spaceupTests' do
     inherit! :complete
     # Pods for testing

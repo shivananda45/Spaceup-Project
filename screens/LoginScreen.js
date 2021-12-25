@@ -1,24 +1,45 @@
 import React, { useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { View, Text, ImageBackground, StyleSheet, TextInput, TouchableOpacity, Platform } from 'react-native'
+import { View, Text, ImageBackground, StyleSheet, TextInput, TouchableOpacity, Platform, Modal } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-const LoginScreen = ({navigation}) => {
-    const [LoginWith, setLoginWith] = useState('sam123')
-    const [Password, setPassword] = useState('123456')
+const LoginScreen = ({ navigation }) => {
+    const [LoginWith, setLoginWith] = useState('')
+    const [Password, setPassword] = useState('')
+    const [modalVisible, setModalVisible] = useState(false);
+    const [errorText, seterrorText] = useState("Username or Password is not Correct");
     const OnSubmit = async () => {
         const apiURL = `https://spaceup.co.in/api/v1/auth/login?username=${LoginWith}&password=${Password}&login_type=user`;
         fetch(apiURL).then((res) => res.json())
             .then(async (resJson) => {
-                console.log(resJson);
-                if (resJson.access_token !== '') {
+                if (resJson.access_token) {
                     try {
-                        await AsyncStorage.setItem('userToken', String(resJson.user.id))
+                        await AsyncStorage.setItem('userId', String(resJson.user.id))
+                        await AsyncStorage.setItem('username', resJson.user.username)
+                        await AsyncStorage.setItem('phone', resJson.user.phone)
+                        await AsyncStorage.setItem('password', resJson.user.view_password)
+                        await AsyncStorage.setItem('accessToken', resJson.access_token)
                     }
                     catch (e) {
                         console.log('error async', e);
                     }
                     navigation.navigate('TemNav')
+                }
+                else {
+                    const errorText = "Username or Password is not Correct";
+                    if (resJson.error) {
+                        seterrorText(resJson.error);
+                        // errorText = resJson.error;
+                    }
+                    else if (resJson.errors.username) {
+                        seterrorText(resJson.errors.username);
+                        // errorText = resJson.errors.username;
+                    }
+                    else {
+                        seterrorText("Username or Password is not Correct");
+                        // errorText = "Username or Password is not Correct";
+                    }
+                    setModalVisible(true)
                 }
             })
             .catch(function (error) {
@@ -47,6 +68,27 @@ const LoginScreen = ({navigation}) => {
                     <Text style={styles.ForgotBtnText}>Forgot Password?</Text>
                 </TouchableOpacity>
             </View>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                    setModalVisible(!modalVisible);
+                }}
+            >
+                <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
+                        <Text style={styles.modalHedding}>Login Failed!</Text>
+                        <Text style={styles.modalText}>{errorText}</Text>
+                        <TouchableOpacity
+                            style={[styles.button, styles.buttonClose]}
+                            onPress={() => setModalVisible(!modalVisible)}
+                        >
+                            <Text style={styles.textStyle}>Okay</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
         </ImageBackground>
         // {/* </View> */}
     )
@@ -106,4 +148,56 @@ const styles = StyleSheet.create({
         color: '#fff',
         textDecorationLine: 'underline',
     },
+    // modal style starts here======
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        // marginTop: 22,
+        backgroundColor: 'rgba(0,0,0,0.8)'
+    },
+    modalView: {
+        // margin: 20,
+        width: '80%',
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
+    },
+    button: {
+        borderRadius: 20,
+        paddingVertical: 10,
+        paddingHorizontal: 25,
+        elevation: 2,
+        marginTop: 25
+    },
+    buttonOpen: {
+        backgroundColor: "#F194FF",
+    },
+    buttonClose: {
+        backgroundColor: "#2196F3",
+    },
+    textStyle: {
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center"
+    },
+    modalHedding: {
+        marginBottom: 15,
+        textAlign: "center",
+        color: 'red',
+        fontSize: 20
+    },
+    modalText: {
+        marginBottom: 15,
+        textAlign: "center"
+    }
 })

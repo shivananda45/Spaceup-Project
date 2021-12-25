@@ -24,6 +24,7 @@ import EmiScreen from '../screens/PaymentTracking/emi'
 const BottomTabs = ({navigation}) => {
     return (
         <Tab.Navigator
+        initialRouteName='PaymentTracking'
             tabBarOptions={{
                 activeTintColor: 'white',
                 inactiveTintColor:'#b0b1e1',
@@ -124,7 +125,7 @@ const PaymentTrackingStackscreen = ({ navigation }) => (
                     borderBottomWidth: 1
                 },
                 headerRight: () => (
-                    <TouchableOpacity style={styles.HlpBtn}>
+                    <TouchableOpacity style={styles.HlpBtn} onPress={() => navigation.navigate('PaymentSupport')}>
                         {/* <Feather name="info" style={styles.HlpIcon} /> */}
                         <MaterialCommunityIcons name="information-outline" style={styles.HlpIcon} />
                         <Text>help</Text>

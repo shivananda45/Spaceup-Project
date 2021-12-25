@@ -1,30 +1,99 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react'
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 // const navigation = useNavigation();
+
+function WeekListItem(props) {
+    return (<View style={styles.ListCon}>
+        <View style={styles.LeftBody}>
+            <View style={styles.ListIconActive}>
+                <Text style={styles.ListNumActive}>{props.info.week}</Text>
+            </View>
+            <View style={styles.Body}>
+                <Text style={styles.BodyTextActive1}>Week{props.info.week}</Text>
+            </View>
+        </View>
+        <View style={styles.RightBody}>
+            <TouchableOpacity style={styles.PendingBtn} onPress={() => props.navigation.navigate('ProjectTrackerPhotos',{schedule_id:props.info.schedule_id})}>
+                <FontAwesome name="photo" style={styles.RightIcon} />
+                <Text style={styles.PendingText}>Photos</Text>
+            </TouchableOpacity>
+        </View>
+    </View>);
+}
+
+
 const PaymentTracking = ({ navigation }) => {
+    const [Data, setData] = useState([])
+    const [DataFound, setDataFound] = useState(false)
+    // ==============
+    useEffect(() => {
+        FetchData()
+    }, [])
+    // ==============
+    const FetchData = async () => {
+        let userId = ''; let accessToken = '';
+        userId = await AsyncStorage.getItem('userId');
+        accessToken = await AsyncStorage.getItem('accessToken');
+        LiftOfProjects(userId, accessToken)
+    }
+    // ==============
+    const LiftOfProjects = (userId, accessToken) => {
+        var InsertAPIURL = 'https://spaceup.co.in/api/v1/enduser/get-project-week-track';
+        var headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + String(accessToken),
+        };
+
+        var Data = {
+            user_id: userId
+        };
+        fetch(InsertAPIURL,
+            {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify(Data)
+            }
+        )
+            .then((response) => response.json())
+            .then((RES) => {
+                setData(RES)
+                setDataFound(true)
+                // console.log('payment details' + JSON.stringify(RES));
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+    // ==============
     return (
         <View style={styles.container}>
-            <MaterialCommunityIcons name="briefcase-clock-outline" style={styles.iconStyle} />
-            <View style={styles.ListCon}>
-                <View style={styles.LeftBody}>
-                    <View style={styles.ListIconActive}>
-                        <Text style={styles.ListNumActive}>1</Text>
-                    </View>
-                    <View style={styles.Body}>
-                        <Text style={styles.BodyTextActive1}>Week1</Text>
-                    </View>
-                </View>
-                <View style={styles.RightBody}>
-                    <TouchableOpacity style={styles.PendingBtn} onPress={() => navigation.navigate('ProjectTrackerPhotos')}>
-                        <FontAwesome name="photo" style={styles.RightIcon} />
-                        <Text style={styles.PendingText}>Photos</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-            <View style={styles.ListCon}>
+            {/* <WeekListItem navigate={navigation.navigate} /> */}
+            {
+                DataFound ?
+                    Data.status && Data.message !== 'Unauthenticated.' ?
+                        <>
+                            <FlatList
+                                data={Data.data}
+                                renderItem={({ item }) => <WeekListItem info={item} navigation={navigation} />}
+                                keyExtractor={(item, index) => index}
+                                showsVerticalScrollIndicator={false}
+                                ListFooterComponent={<View style={{paddingBottom:50}} />}
+                                ListHeaderComponent={ <MaterialCommunityIcons name="briefcase-clock-outline" style={styles.iconStyle} />}
+                            />
+                        </>
+                        :
+                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                            <Text>{Data.message}</Text>
+                        </View>
+                    :
+                    null
+            }
+            {/* <View style={styles.ListCon}>
                 <View style={styles.LeftBody}>
                     <View style={styles.ListIconActive}>
                         <Text style={styles.ListNumActive}>2</Text>
@@ -35,7 +104,7 @@ const PaymentTracking = ({ navigation }) => {
                 </View>
                 <View style={styles.RightBody}>
                     <TouchableOpacity style={styles.PendingBtn} onPress={() => navigation.navigate("ProjectTrackerPhotos")}>
-                        <FontAwesome name="photo" style={styles.RightIcon}/>
+                        <FontAwesome name="photo" style={styles.RightIcon} />
                         <Text style={styles.PendingText}>Photos</Text>
                     </TouchableOpacity>
                 </View>
@@ -51,11 +120,11 @@ const PaymentTracking = ({ navigation }) => {
                 </View>
                 <View style={styles.RightBody}>
                     <TouchableOpacity style={styles.PendingBtn} onPress={() => navigation.navigate('ProjectTrackerPhotos')}>
-                        <FontAwesome name="photo" style={styles.RightIcon}/>
+                        <FontAwesome name="photo" style={styles.RightIcon} />
                         <Text style={styles.PendingText}>Photos</Text>
                     </TouchableOpacity>
                 </View>
-            </View>
+            </View> */}
         </View>
     )
 }
