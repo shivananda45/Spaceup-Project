@@ -4,7 +4,7 @@ import { FlatList, StyleSheet, Text, View } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import HistoryCard from './HistoryCard';
 // =======
-const OnGoingProjects = ({navigation}) => {
+const OnGoingProjects = ({ navigation }) => {
     const [Data, setData] = useState([])
     const [DataFound, setDataFound] = useState(false)
     useEffect(() => {

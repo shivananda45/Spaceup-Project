@@ -39,7 +39,7 @@ const SplashScreen = ({ navigation }) => {
             }
           })
         setisLogged(true);
-        navigation.navigate('tempnav')
+        navigation.navigate('home')
       }
       //   alert(userToken)
     }, 1000);

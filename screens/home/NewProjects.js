@@ -7,7 +7,7 @@ import { Card, CardItem } from 'native-base';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import HistoryCard from './HistoryCard';
 // =======
-const NewProjects = () => {
+const NewProjects = ({navigation}) => {
     const [Data, setData] = useState([])
     const [DataFound, setDataFound] = useState(false)
     const [UserFound, setUserFound] = useState(false)

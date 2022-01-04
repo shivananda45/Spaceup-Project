@@ -11,14 +11,16 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import ImagePicker from 'react-native-image-crop-picker';
 import { BottomSheet } from 'react-native-btr';
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { launchImageLibrary } from 'react-native-image-picker'
 const UploadImages = ({ route, navigation }) => {
     const info = route.params.data;
     console.log('upload images', info);
     const [imageUrl, setImageUrl] = useState(null)
     const [imageUrls, setImageUrls] = useState([])
+    const [maxImages, setmaxImages] = useState(0)
     const [visible, setvisible] = useState(false);
     const [Data, setData] = useState([])
-    const [ErrorsData, setErrorsData] = useState([])
+    const [ResponseData, setResponseData] = useState([])
     const [ErrorsFound, setErrorsFound] = useState(false)
     // ====
     const [Comment, setComment] = useState('')
@@ -27,6 +29,12 @@ const UploadImages = ({ route, navigation }) => {
     const [SelectedRoomTypeId, setSelectedRoomTypeId] = useState(null)
     // ==
     const [modalVisible, setModalVisible] = useState(false);
+    // ====errors
+    const [managerIdError, setmanagerIdError] = useState(null)
+    const [ProjectIdError, setProjectIdError] = useState(null)
+    const [weekError, setweekError] = useState(null)
+    const [roomTypeError, setroomTypeError] = useState(null)
+    const [commentError, setcommentError] = useState(null)
     useEffect(() => {
         FetchData()
     }, [])
@@ -81,11 +89,35 @@ const UploadImages = ({ route, navigation }) => {
             source: require('../../assets/images/kitchen3.png'),
         },
     ];
-    const TakePhotoFromGallery = () => {
+    const TakePhotoFromGallery = async () => {
+        // const options = {
+        //     noData: true,
+        //     // selection
+        //     selectionLimit: 2
+        // };
+        // const result = await launchImageLibrary(options);
+        // console.log('reslut',result);
+        // launchImageLibrary(options, response => {
+        //     console.log("response", response.assets[0].uri);
+        //     // if (response.assets[0].uri) {
+        //     //     // this.setState({ photo: response });
+        //     //     // console.log('the response', response);
+        //     // console.log("if response", response.assets[0].uri);
+
+        //     //     setImageUrl(response)
+        //     //     setImageUrls(...imageUrls,  response.assets[0].uri)
+        //     //     // console.log('images', imageUrls);
+        //     //     setImageUrlVerification(true)
+        //     // }
+        // });
+        // console.log('the results', result);
+
         ImagePicker.openPicker({
             width: 400,
             height: 400,
-            multiple: true
+            multiple: true,
+            mediaType: 'photo',
+            // maxFiles: 2
             // compressImageQuality: 0.9,
             // cropping: true,
             // cropperActiveWidgetColor: colors.red,
@@ -93,6 +125,7 @@ const UploadImages = ({ route, navigation }) => {
             // cropperToolbarColor: 'green'
         }).then(image => {
             // console.log('images url', image);
+            setmaxImages(maxImages+1)
             setImageUrl(image)
             setImageUrls(...imageUrls, image.path)
             // console.log('images', imageUrls);
@@ -164,10 +197,49 @@ const UploadImages = ({ route, navigation }) => {
         )
             .then((response) => response.json())
             .then((RES) => {
-                setErrorsData(RES)
-                setErrorsFound(true)
-                setModalVisible(true)
-                console.log('upload status' + JSON.stringify(RES));
+                setResponseData(RES)
+                if (RES.status !== true) {
+                    setErrorsFound(true)
+                    setModalVisible(true)
+                    if (RES.errors.manager_id) {
+                        setmanagerIdError(RES.errors.manager_id)
+                    }
+                    else {
+                        setmanagerIdError(null)
+                    }
+                    if (RES.errors.project_id) {
+                        setProjectIdError(RES.errors.project_id)
+                    }
+                    else {
+                        setProjectIdError(null)
+                    }
+                    if (RES.errors.week) {
+                        setweekError(RES.errors.week)
+                    }
+                    else {
+                        setweekError(null)
+                    }
+                    if (RES.errors.room_type) {
+                        setroomTypeError(RES.errors.room_type)
+                    }
+                    else {
+                        setroomTypeError(null)
+                    }
+                    if (RES.errors.comment) {
+                        setcommentError(RES.errors.comment)
+                    }
+                    else {
+                        setcommentError(null)
+                    }
+                }
+                else {
+                    setErrorsFound(false)
+                    setModalVisible(true)
+                    setComment('')
+                }
+                // setErrorsData(RES.errors)
+                // setErrorsFound(true)
+                // console.log('upload status' + JSON.stringify(RES.errors.manager_id[0]));
             })
             .catch(function (error) {
                 console.log(error);
@@ -239,7 +311,7 @@ const UploadImages = ({ route, navigation }) => {
                                     </>
                                     :
                                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                        <Text>{Data.message}</Text>
+                                        <Text>{Data.message} good </Text>
                                     </View>
                                 : null
                         }
@@ -256,35 +328,48 @@ const UploadImages = ({ route, navigation }) => {
                 >
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
-                            <Text style={styles.modalHeddingText}>
-                                {
-                                    ErrorsFound ?
-                                        ErrorsData.status ? 'Uploded Successfully' : 'Please check your data'
-                                        : null
-                                }</Text>
-                            {/* <Text style={styles.modalText}>
-                                {
-                                    ErrorsFound ?
-                                        ErrorsData.errors.room_type
-                                        : null
-                                }
-                                {"\n"}
-                            </Text>
-                            <Text style={styles.modalText}>
-                                {
-                                    ErrorsFound ?
-                                        ErrorsData.errors.comment
-                                        : null
-                                }
-                                {"\n"}
-                            </Text>
-                            <Text style={styles.modalText}>
-                                {
-                                    ErrorsFound ?
-                                        ErrorsData.errors.images
-                                        : null
-                                }
-                            </Text> */}
+                            {
+                                ErrorsFound ?
+                                    <>
+                                        {
+                                            managerIdError !== null ?
+                                                <Text style={styles.modalText}>
+                                                    {managerIdError}
+                                                </Text>
+                                                : null
+                                        }
+                                        {
+                                            ProjectIdError !== null ?
+                                                <Text style={styles.modalText}>
+                                                    {ProjectIdError}
+                                                </Text>
+                                                : null
+                                        }
+                                        {
+                                            weekError !== null ?
+                                                <Text style={styles.modalText}>
+                                                    {weekError}
+                                                </Text>
+                                                : null
+                                        }
+                                        {
+                                            roomTypeError !== null ?
+                                                <Text style={styles.modalText}>
+                                                    {roomTypeError}
+                                                </Text>
+                                                : null
+                                        }
+                                        {
+                                            commentError !== null ?
+                                                <Text style={styles.modalText}>
+                                                    {commentError}
+                                                </Text>
+                                                : null
+                                        }
+                                    </>
+                                    : <View style={{justifyContent: 'center', alignItems: 'center' }}>
+                                        <Text>{ResponseData.message}</Text>
+                                    </View>}
                         </View>
                     </View>
                 </Modal>
