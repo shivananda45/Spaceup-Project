@@ -1,65 +1,115 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Dimensions, Platform } from 'react-native';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Entypo from 'react-native-vector-icons/Entypo';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import Feather from 'react-native-vector-icons/Feather';
 const Devicewidth = Dimensions.get('window').width;
 const Deviceheight = Dimensions.get('window').height;
 const HomeScreen = ({ navigation }) => {
+    const [Data, setData] = useState([])
+    const [DataFound, setDataFound] = useState(false)
+    // ==============
+    useEffect(() => {
+        FetchData()
+    }, [])
+    // ==============
+    const FetchData = async () => {
+        let userId = ''; let accessToken = '';
+        userId = await AsyncStorage.getItem('userId');
+        accessToken = await AsyncStorage.getItem('accessToken');
+        LiftOfProjects(userId, accessToken)
+    }
+    // ==============
+    const LiftOfProjects = (userId, accessToken) => {
+        var InsertAPIURL = 'https://spaceup.co.in/api/v1/enduser/profile';
+        var headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + String(accessToken),
+        };
+
+        var Data = {
+            user_id: userId
+        };
+        fetch(InsertAPIURL,
+            {
+                method: 'POST',
+                headers: headers,
+                // body: JSON.stringify(Data)
+            }
+        )
+            .then((response) => response.json())
+            .then((RES) => {
+                setData(RES)
+                setDataFound(true)
+                console.log('home details' + JSON.stringify(RES));
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
     return (
         <View style={styles.container} >
             <ScrollView contentContainerStyle={styles.mainBody}>
                 {/* <View style={styles.bodyTop}> */}
                 <View style={styles.welCon} >
-                    <Text style={styles.welcomeText}>Hi Welcome</Text>
-                    <Text style={styles.nameText}>Santhosh Kumar</Text>
+                    <Text style={styles.welcomeText}>Hi, Welcome</Text>
+                    {
+                        DataFound ?
+                            Data.status && Data.message !== 'Unauthenticated.' ?
+                                <Text style={styles.nameText}>
+                                    {Data.user.username}
+                                </Text>
+                                : null : null
+                    }
                 </View>
                 <View style={styles.progressCon}>
-                    <Text style={styles.progressText}>51% Completed</Text>
+                    <Text style={styles.progressText}>0% Completed</Text>
                     <View style={styles.progressCon1}>
                         <View style={styles.progressCon2}>
                             <Image source={require('../assets/images/progressbar.png')}
                                 resizeMode={Platform.OS === 'ios' ? 'repeat' : 'cover'}
-                                style={styles.progressCon3} />
+                                style={[styles.progressCon3,{width:'0%'}]} />
                         </View>
                     </View>
                 </View>
                 <View style={styles.menu} >
                     <TouchableOpacity style={styles.menuItem}
                         onPress={() => navigation.navigate('BottomTabs', { screen: 'PaymentTracking' })}>
-                        <MaterialIcons name="payment" style={styles.iconStyle} />
+                        <MaterialIcons name="payment" style={[styles.iconStyle,{fontSize:38}]} />
                         <Text>Payment Tracking</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.menuItem}
                         onPress={() => navigation.navigate('BottomTabs', { screen: 'ProjectTracker' })}>
-                        <MaterialCommunityIcons name="briefcase-clock-outline" style={styles.iconStyle} />
+                        <MaterialCommunityIcons name="briefcase-clock-outline" style={[styles.iconStyle,{fontSize:36}]} />
                         <Text>Project tracker</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.menu} >
                     <TouchableOpacity style={styles.menuItem}
                         onPress={() => navigation.navigate('BottomTabs', { screen: 'LiveStreaming' })}>
-                        <MaterialIcons name='tap-and-play' style={styles.iconStyle} />
+                        <MaterialIcons name='tap-and-play' style={[styles.iconStyle,{fontSize:38}]} />
                         <Text>Live Streaming</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.menuItem}
                         onPress={() => navigation.navigate('BottomTabs', { screen: 'Documents' })}
                     >
-                        <Entypo name="text-document" style={styles.iconStyle} />
+                        <Entypo name="text-document" style={[styles.iconStyle,{fontSize:38}]} />
                         <Text>Documents</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.menu}>
                     <TouchableOpacity style={styles.menuItem}
                         onPress={() => navigation.navigate('BottomTabs', { screen: 'Materials' })}>
-                        <Feather name="box" style={styles.iconStyle} />
+                        <Feather name="box" style={[styles.iconStyle,{fontSize:38}]} />
                         <Text>Materials</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.menuItem}
                         onPress={() => navigation.navigate('BottomTabs', { screen: 'Support' })}>
-                        <MaterialIcons name="headset" style={styles.iconStyle} />
+                        <MaterialIcons name="headset" style={[styles.iconStyle,{fontSize:38}]} />
                         <Text>Support</Text>
                     </TouchableOpacity>
                 </View>
@@ -173,7 +223,7 @@ const styles = StyleSheet.create({
         borderRadius: 25
     },
     progressCon3: {
-        width: '51%',
+        // width: '51%',
         height: 15,
         //backgroundColor: '',
         // alignItems:'center',

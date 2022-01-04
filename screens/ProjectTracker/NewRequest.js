@@ -31,12 +31,12 @@ const NewRequest = () => {
         )
             .then((response) => response.json())
             .then((RES) => {
+                setMsgText('')
                 setData(RES)
-                if (RES.status) {
-                    setModalVisible(!modalVisible)
-                    setDataFound(true)
-                    setMsgText('')
-                }
+                setDataFound(true)
+                setModalVisible(true)
+        // if (RES.status) {
+                // }
                 console.log('payment details' + JSON.stringify(RES));
             })
             .catch(function (error) {
@@ -51,6 +51,7 @@ const NewRequest = () => {
                 onChangeText={val => setMsgText(val)}
                 placeholderTextColor={"#ddd"}
                 style={styles.InputStyle}
+                defaultValue={MsgText}
             />
             <TouchableOpacity style={styles.SubmitBtn} onPress={() => SubmitMessage()}>
                 <Text style={styles.SubmitBtnText}>SEND</Text>
@@ -72,7 +73,7 @@ const NewRequest = () => {
                         <Text style={styles.modalText}>
                             {DataFound ?
                                 Data.status ?
-                                    Data.message : null : null
+                                    Data.message :  Data.errors.message  : null
                             }
                         </Text>
                     </View>

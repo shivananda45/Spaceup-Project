@@ -39,7 +39,7 @@ const BannerScreen = ({ navigation }) => {
             }
           })
         setisLogged(true);
-        navigation.navigate('TemNav')
+        navigation.navigate('Home')
       }
       //   alert(userToken)
     }, 1000);
