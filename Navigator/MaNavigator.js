@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Image, View } from 'react-native';
+import { StyleSheet, Image, View, TouchableOpacity } from 'react-native';
 import LoginScreen from '../screens/loginScreen';
 import ProjectDetails from '../screens/projectDetails';
 import SplashScreen from '../screens/splashScreen';
@@ -13,6 +13,7 @@ import UpdateWeekly from '../screens/Projecttracker/updateWeekly';
 import TempNav from '../screens/tempNav';
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import { useState } from 'react';
 import { useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -21,138 +22,141 @@ const MaNavigator = ({ navigation }) => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-      initialRouteName= "splash">
+        initialRouteName="splash">
         <Stack.Screen name="splash" component={SplashScreen} options={
           ({ route }) => ({
             headerShown: false,
           })
         } />
-          <Stack.Screen name="tempnav" component={TempNav}
-            options={
-              ({ route }) => ({
-                headerShown: false,
-              })
-            } />
-          <Stack.Screen name="projectDetails" component={ProjectDetails}
-            options={
-              ({ route }) => ({
-                title: "Project Details",
-                headerShown: true,
-                headerTitleAlign: 'center',
-                headerTitleStyle: {
-                  fontWeight: '500'
-                },
-                headerStyle: {
-                  shadowOpacity: 0,
-                  elevation: 0,
-                  borderBottomColor: '#ccc',
-                  borderBottomWidth: 1
-                },
-              })
-            }
-          />
-          <Stack.Screen name="projectTracker" component={Week}
-            options={
-              ({ route }) => ({
-                title: "Project Tracker",
-                headerShown: true,
-                headerTitleAlign: 'center',
-                headerTitleStyle: {
-                  fontWeight: '500'
-                },
-                headerStyle: {
-                  shadowOpacity: 0,
-                  elevation: 0,
-                  borderBottomColor: '#ccc',
-                  borderBottomWidth: 1
-                },
-              })
-            }
-          />
-          <Stack.Screen name="weeklyupdate" component={WeeklyUpdate}
-            options={
-              ({ route }) => ({
-                title: "Project Tracker",
-                headerShown: true,
-                headerTitleAlign: 'center',
-                headerTitleStyle: {
-                  fontWeight: '500'
-                },
-                headerStyle: {
-                  shadowOpacity: 0,
-                  elevation: 0,
-                  borderBottomColor: '#ccc',
-                  borderBottomWidth: 1
-                },
-              })
-            }
-          />
-          <Stack.Screen name="uploadimages" component={UploadImages}
-            options={
-              ({ route }) => ({
-                title: "Project Tracker",
-                headerShown: true,
-                headerTitleAlign: 'center',
-                headerTitleStyle: {
-                  fontWeight: '500'
-                },
-                headerStyle: {
-                  shadowOpacity: 0,
-                  elevation: 0,
-                  borderBottomColor: '#ccc',
-                  borderBottomWidth: 1
-                },
-              })
-            }
-          />
-          <Stack.Screen name="updateswekly" component={UpdateWeekly}
-            options={
-              ({ route }) => ({
-                title: "Project Tracker",
-                headerShown: true,
-                headerTitleAlign: 'center',
-                headerTitleStyle: {
-                  fontWeight: '500'
-                },
-                headerStyle: {
-                  shadowOpacity: 0,
-                  elevation: 0,
-                  borderBottomColor: '#ccc',
-                  borderBottomWidth: 1
-                },
-              })
-            }
-          />
-          <Stack.Screen name="home" component={HomeScreen}
-            options={
-              ({ route }) => ({
-                title: "",
-                headerShown: true,
-                headerTitleAlign: 'center',
-                headerTitleStyle: {
-                  fontWeight: '500'
-                },
-                headerStyle: {
-                  shadowOpacity: 0,
-                  elevation: 0,
-                  borderBottomColor: '#ccc',
-                  borderBottomWidth: 1
-                },
-                headerLeft: () => (
-                  <Image source={require('../assets/images/logo.png')} style={{ width: 115, height: 25, marginLeft: 10, }} />
-                ),
-                headerRight: () => (
-                  <View style={{ marginRight: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                    <EvilIcons name="bell" style={{ color: '#393874', fontSize: 35, marginRight: 10, }} />
-                    <View style={{ backgroundColor: '#eaeaf9', borderRadius: 50, width: 30, height: 30, alignItems: 'center', justifyContent: 'center' }}>
-                      <AntDesign name="user" style={{ color: '#393874', fontSize: 20 }} />
-                    </View>
+        <Stack.Screen name="tempnav" component={TempNav}
+          options={
+            ({ route }) => ({
+              headerShown: false,
+            })
+          } />
+        <Stack.Screen name="projectDetails" component={ProjectDetails}
+          options={
+            ({ route }) => ({
+              title: "Project Details",
+              headerShown: true,
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                fontWeight: '500'
+              },
+              headerStyle: {
+                shadowOpacity: 0,
+                elevation: 0,
+                borderBottomColor: '#ccc',
+                borderBottomWidth: 1
+              },
+            })
+          }
+        />
+        <Stack.Screen name="projectTracker" component={Week}
+          options={
+            ({ route }) => ({
+              title: "Project Tracker",
+              headerShown: true,
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                fontWeight: '500'
+              },
+              headerStyle: {
+                shadowOpacity: 0,
+                elevation: 0,
+                borderBottomColor: '#ccc',
+                borderBottomWidth: 1
+              },
+            })
+          }
+        />
+        <Stack.Screen name="weeklyupdate" component={WeeklyUpdate}
+          options={
+            ({ route }) => ({
+              title: "Project Tracker",
+              headerShown: true,
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                fontWeight: '500'
+              },
+              headerStyle: {
+                shadowOpacity: 0,
+                elevation: 0,
+                borderBottomColor: '#ccc',
+                borderBottomWidth: 1
+              },
+            })
+          }
+        />
+        <Stack.Screen name="uploadimages" component={UploadImages}
+          options={
+            ({ route }) => ({
+              title: "Project Tracker",
+              headerShown: true,
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                fontWeight: '500'
+              },
+              headerStyle: {
+                shadowOpacity: 0,
+                elevation: 0,
+                borderBottomColor: '#ccc',
+                borderBottomWidth: 1
+              },
+            })
+          }
+        />
+        <Stack.Screen name="updateswekly" component={UpdateWeekly}
+          options={
+            ({ route }) => ({
+              title: "Project Tracker",
+              headerShown: true,
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                fontWeight: '500'
+              },
+              headerStyle: {
+                shadowOpacity: 0,
+                elevation: 0,
+                borderBottomColor: '#ccc',
+                borderBottomWidth: 1
+              },
+            })
+          }
+        />
+        <Stack.Screen name="home" component={HomeScreen}
+          options={
+            ({ route }) => ({
+              title: "",
+              headerShown: false,
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                fontWeight: '500'
+              },
+              headerStyle: {
+                shadowOpacity: 0,
+                elevation: 0,
+                borderBottomColor: '#ccc',
+                borderBottomWidth: 1
+              },
+              headerLeft: () => (
+                <Image source={require('../assets/images/logo.png')} style={{ width: 115, height: 25, marginLeft: 10, }} />
+              ),
+              headerRight: () => (
+                <View style={{ marginRight: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                  <EvilIcons name="bell" style={{ color: '#393874', fontSize: 35, marginRight: 10, }} />
+                  <TouchableOpacity onPress={()=>LogOut()}>
+                    <Ionicons name="power" style={{ color: '#393874', fontSize: 26, marginRight: 10, }} />
+                  </TouchableOpacity>
+                  <View style={{ backgroundColor: '#eaeaf9', borderRadius: 50, width: 30, height: 30, alignItems: 'center', justifyContent: 'center' }}>
+                    <AntDesign name="user" style={{ color: '#393874', fontSize: 20 }} />
                   </View>
-                )
-              })
-            }
-          />
-            <Stack.Screen name="login" component={LoginScreen} />
+                </View>
+              )
+            })
+          }
+        />
+        <Stack.Screen name="login" component={LoginScreen} />
         {/* <Stack.Screen name="login" component={LoginScreen} /> */}
         {/* <Stack.Screen name="splash" component={SplashScreen} options={
           ({ route }) => ({

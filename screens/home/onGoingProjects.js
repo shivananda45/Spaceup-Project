@@ -35,7 +35,7 @@ const OnGoingProjects = ({ navigation }) => {
             .then((RES) => {
                 setData(RES)
                 setDataFound(true)
-                console.log('ongoing' + JSON.stringify(RES));
+                // console.log('ongoing' + JSON.stringify(RES));
             })
             .catch(function (error) {
                 console.log(error);

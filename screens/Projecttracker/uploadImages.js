@@ -14,9 +14,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { launchImageLibrary } from 'react-native-image-picker'
 const UploadImages = ({ route, navigation }) => {
     const info = route.params.data;
-    console.log('upload images', info);
+    // console.log('upload images', info);
     const [imageUrl, setImageUrl] = useState(null)
     const [imageUrls, setImageUrls] = useState([])
+    const [imagesError, setImagesError] = useState('')
     const [maxImages, setmaxImages] = useState(0)
     const [visible, setvisible] = useState(false);
     const [Data, setData] = useState([])
@@ -125,7 +126,7 @@ const UploadImages = ({ route, navigation }) => {
             // cropperToolbarColor: 'green'
         }).then(image => {
             // console.log('images url', image);
-            setmaxImages(maxImages+1)
+            setmaxImages(maxImages + 1)
             setImageUrl(image)
             setImageUrls(...imageUrls, image.path)
             // console.log('images', imageUrls);
@@ -136,11 +137,11 @@ const UploadImages = ({ route, navigation }) => {
     const RemoveThisImage = (path) => {
         const filteredData = imageUrl.filter(item => item.path !== path)
         setImageUrl(filteredData);
-        console.log('removed', imageUrl);
+        // console.log('removed', imageUrl);
     }
     //   ==============
     const ImageCard = (props) => {
-        console.log(props.data.path);
+        // console.log(props.data.path);
         return (
             <TouchableOpacity style={styles.imageContainer}
                 onPress={() => RemoveThisImage(props.data.path)}
@@ -169,81 +170,93 @@ const UploadImages = ({ route, navigation }) => {
     }
     // =================
     const onSubmitForm = async () => {
-        let userId = ''; let accessToken = '';
-        userId = await AsyncStorage.getItem('userId');
-        accessToken = await AsyncStorage.getItem('accessToken');
-        var InsertAPIURL = 'https://spaceup.co.in/api/v1/sitemanager/upload-weekly-update';
-        var headers = {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + String(accessToken),
-        };
+        if (imageUrl !== null) {
+            if (imageUrl.length >= 1 && imageUrl.length < 5) {
+                setImagesError('')
+                let userId = ''; let accessToken = '';
+                userId = await AsyncStorage.getItem('userId');
+                accessToken = await AsyncStorage.getItem('accessToken');
+                var InsertAPIURL = 'https://spaceup.co.in/api/v1/sitemanager/upload-weekly-update';
+                var headers = {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + String(accessToken),
+                };
 
-        var Data = {
-            manager_id: info.managerId,
-            project_id: info.projectID,
-            week: info.WeekId,
-            room_type: SelectedRoomTypeId,
-            comment: Comment,
-            images: imageUrls
+                var Data = {
+                    manager_id: info.managerId,
+                    project_id: info.projectID,
+                    week: info.WeekId,
+                    room_type: SelectedRoomTypeId,
+                    comment: Comment,
+                    images: imageUrls
 
-        };
-        fetch(InsertAPIURL,
-            {
-                method: 'POST',
-                headers: headers,
-                body: JSON.stringify(Data)
+                };
+                fetch(InsertAPIURL,
+                    {
+                        method: 'POST',
+                        headers: headers,
+                        body: JSON.stringify(Data)
+                    }
+                )
+                    .then((response) => response.json())
+                    .then((RES) => {
+                        setResponseData(RES)
+                        if (RES.status !== true) {
+                            setErrorsFound(true)
+                            setModalVisible(true)
+                            if (RES.errors.manager_id) {
+                                setmanagerIdError(RES.errors.manager_id)
+                            }
+                            else {
+                                setmanagerIdError(null)
+                            }
+                            if (RES.errors.project_id) {
+                                setProjectIdError(RES.errors.project_id)
+                            }
+                            else {
+                                setProjectIdError(null)
+                            }
+                            if (RES.errors.week) {
+                                setweekError(RES.errors.week)
+                            }
+                            else {
+                                setweekError(null)
+                            }
+                            if (RES.errors.room_type) {
+                                setroomTypeError(RES.errors.room_type)
+                            }
+                            else {
+                                setroomTypeError(null)
+                            }
+                            if (RES.errors.comment) {
+                                setcommentError(RES.errors.comment)
+                            }
+                            else {
+                                setcommentError(null)
+                            }
+                        }
+                        else {
+                            setErrorsFound(false)
+                            setModalVisible(true)
+                            setComment('')
+                            navigation.navigate('home')
+                        }
+                        // setErrorsData(RES.errors)
+                        // setErrorsFound(true)
+                        // console.log('upload status' + JSON.stringify(RES.errors.manager_id[0]));
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
             }
-        )
-            .then((response) => response.json())
-            .then((RES) => {
-                setResponseData(RES)
-                if (RES.status !== true) {
-                    setErrorsFound(true)
-                    setModalVisible(true)
-                    if (RES.errors.manager_id) {
-                        setmanagerIdError(RES.errors.manager_id)
-                    }
-                    else {
-                        setmanagerIdError(null)
-                    }
-                    if (RES.errors.project_id) {
-                        setProjectIdError(RES.errors.project_id)
-                    }
-                    else {
-                        setProjectIdError(null)
-                    }
-                    if (RES.errors.week) {
-                        setweekError(RES.errors.week)
-                    }
-                    else {
-                        setweekError(null)
-                    }
-                    if (RES.errors.room_type) {
-                        setroomTypeError(RES.errors.room_type)
-                    }
-                    else {
-                        setroomTypeError(null)
-                    }
-                    if (RES.errors.comment) {
-                        setcommentError(RES.errors.comment)
-                    }
-                    else {
-                        setcommentError(null)
-                    }
-                }
-                else {
-                    setErrorsFound(false)
-                    setModalVisible(true)
-                    setComment('')
-                }
-                // setErrorsData(RES.errors)
-                // setErrorsFound(true)
-                // console.log('upload status' + JSON.stringify(RES.errors.manager_id[0]));
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+            else {
+                setImagesError('Please select Min 1 and Max 4 images')
+            }
+        }
+        // else {
+        //     setImagesError('Please select Min 1 and Max 4 images')
+        // }
     }
     return (
         <SafeAreaView style={styles.container}>
@@ -280,6 +293,7 @@ const UploadImages = ({ route, navigation }) => {
                         <Text style={styles.OutLineBtnText}>Upload Images</Text>
                         <Text style={styles.SmallText}></Text>
                     </TouchableOpacity>
+                    <Text style={[styles.SmallText,{color:'red'}]}>{imagesError}</Text>
                     <TouchableOpacity style={styles.SubmitBtn}
                         onPress={() => onSubmitForm()}
                     >
@@ -367,7 +381,7 @@ const UploadImages = ({ route, navigation }) => {
                                                 : null
                                         }
                                     </>
-                                    : <View style={{justifyContent: 'center', alignItems: 'center' }}>
+                                    : <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                                         <Text>{ResponseData.message}</Text>
                                     </View>}
                         </View>

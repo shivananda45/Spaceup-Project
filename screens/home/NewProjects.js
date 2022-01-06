@@ -137,7 +137,7 @@ const NewProjects = ({navigation}) => {
                     </View>
                     <View style={styles.headerRightCon}>
                         <Text style={styles.headerTopText}>Site Engr ID:</Text>
-                        <Text style={styles.headerBottomText}>{UserFound?UserData.user.id:''}</Text>
+                        <Text style={styles.headerBottomText}>{UserFound?UserData.user.employee_id:''}</Text>
                     </View>
                 </View>
             </View>

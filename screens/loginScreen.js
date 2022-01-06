@@ -24,7 +24,7 @@ const LoginScreen = ({ navigation }) => {
                     catch (e) {
                         console.log('error async', e);
                     }
-                    navigation.navigate('tempnav')
+                    navigation.navigate('home')
                 }
                 else {
                     const errorText = "Username or Password is not Correct";

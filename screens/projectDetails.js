@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { FlatList, Image, SafeAreaView, ScrollView, StyleSheet, Dimensions, Text, TouchableOpacity, View } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather'
 import Octicons from 'react-native-vector-icons/Octicons'
+import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 const DeviceWidth = Dimensions.get('window').width;
 const DeviceHeight = Dimensions.get('window').height;
@@ -9,15 +10,20 @@ function HeaderContainer(props) {
     var date1 = new Date(props.PostData.start_date);
     var date2 = new Date(props.PostData.handover_date);
     var diffDays = parseInt((date2 - date1) / (1000 * 60 * 60 * 24), 10);
+    var a = moment(props.PostData.handover_date);
+    var b = moment(props.PostData.start_date);
+    var c = a.diff(b, 'days')
+    const startDateIs = moment(props.PostData.start_date, 'YYYY-MM-DD').format("DD/MM/YYYY");
+    const handoverDateIs = moment(props.PostData.handover_date, 'YYYY-MM-DD').format("DD/MM/YYYY");
     return (
         <View style={{ marginBottom: -30, }}>
             <View style={styles.headerCon1}>
-                <Text style={styles.Toptext}>Project ID : {props.PostData.project_id}</Text>
+                <Text style={styles.Toptext}>Project ID : {props.PostData.unique_id}</Text>
                 <Text style={styles.MainHeddingText}>{props.PostData.project_name}</Text>
                 {props.PostData.project_name !== null ?
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                         <Octicons name="location" style={{ fontSize: 13, color: '#383974', marginRight: 12 }} />
-                        <Text style={styles.text}>{props.PostData.project_name}</Text>
+                        <Text style={styles.text}>{props.PostData.location}</Text>
                     </View>
                     : null
                 }
@@ -25,15 +31,15 @@ function HeaderContainer(props) {
             <View style={styles.child_con}>
                 <View style={styles.leftCon}>
                     <Text style={styles.childHeddingText}>No. of Days</Text>
-                    <Text style={styles.dayText}>{diffDays}</Text>
+                    <Text style={styles.dayText}>{c}</Text>
                 </View>
                 <View style={styles.centerCon}>
                     <Text style={styles.childHeddingText}>Starting Date</Text>
-                    <Text style={styles.dateText}>{props.PostData.start_date}</Text>
+                    <Text style={styles.dateText}>{startDateIs}</Text>
                 </View>
                 <View style={styles.rightCon}>
                     <Text style={styles.childHeddingText}>Handover Date</Text>
-                    <Text style={styles.dateText}>{props.PostData.handover_date}</Text>
+                    <Text style={styles.dateText}>{handoverDateIs}</Text>
                 </View>
             </View>
         </View>

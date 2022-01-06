@@ -2,30 +2,37 @@ import React, { } from 'react'
 import { StyleSheet, Text, TouchableNativeFeedback, TouchableWithoutFeedbackBase, View } from 'react-native'
 import Octicons from 'react-native-vector-icons/Octicons'
 import { Card } from 'native-base';
-
+import moment from 'moment';
 export default function HistoryCard(props) {
     // console.log('props', props);
     var date1 = new Date(props.info.start_date);
     var date2 = new Date(props.info.handover_date);
     var diffDays = parseInt((date2 - date1) / (1000 * 60 * 60 * 24), 10);
+    var a = moment(props.info.handover_date);
+    var b = moment(props.info.start_date);
+    var c = a.diff(b, 'days')
+
+    const startDateIs = moment(props.info.start_date, 'YYYY-MM-DD').format("DD/MM/YYYY");
+    const handoverDateIs = moment(props.info.handover_date, 'YYYY-MM-DD').format("DD/MM/YYYY");
     return (
-        <TouchableNativeFeedback onPress={() => props.navigation.navigate("projectDetails",{data:props.info})}>
+        <TouchableNativeFeedback onPress={() => props.navigation.navigate("projectDetails", { data: props.info })}>
             <Card style={styles.History_Card}>
                 <View style={styles.header}>
-                    <Text>Project ID: {props.info.project_id}</Text>
-                    <Text>Started:{props.info.start_date}</Text>
+                    <Text style={{ fontSize: 12.5 }}>Project ID: {props.info.unique_id}</Text>
+                    <Text style={{ fontSize: 12.5 }}>Started:{startDateIs}</Text>
                 </View>
                 <View style={styles.body}>
                     <Text style={styles.headerText}>
                         {props.info.project_name}
                     </Text>
                     <Text style={styles.bodyText}>
-                        {props.info.description !== null ?
-                            <>
-                                <Octicons name="location" style={{ fontSize: 13, color: '#383974' }} /> {props.info.description} </>
-                            : null
-                        }
+                        <Octicons name="location" style={{ fontSize: 13, color: '#383974' }} /> {props.info.location}
                     </Text>
+                    {
+                        props.info.description !== null ?
+                        <Text>{props.info.description}</Text>
+                        :null
+                    }
                 </View>
                 <View style={styles.footer}>
                     <View style={styles.statusCon}>
@@ -34,7 +41,7 @@ export default function HistoryCard(props) {
                         </Text>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Text style={styles.Status2Text}>
-                                {diffDays}
+                                {c}
                             </Text>
                         </View>
                     </View>
@@ -43,7 +50,7 @@ export default function HistoryCard(props) {
                             Handover Date
                         </Text>
                         <Text style={styles.Reply2Text}>
-                            {props.info.handover_date}
+                            {handoverDateIs}
                         </Text>
                     </View>
                 </View>
