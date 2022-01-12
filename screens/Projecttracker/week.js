@@ -1,13 +1,14 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 // const navigation = useNavigation();
 const WeeksScreen = ({ route, navigation }) => {
     const info = route.params.data;
-    // console.log('week screen log', info);
+    // console.log('week screen log', info)
     const [WeekCount, setWeekCount] = useState(1)
     const [Week1Visible, setWeek1Visible] = useState(false)
     const [Week2Visible, setWeek2Visible] = useState(false)
@@ -15,6 +16,57 @@ const WeeksScreen = ({ route, navigation }) => {
     const [Week4Visible, setWeek4Visible] = useState(false)
     const [isAddBtnVisible, setisAddBtnVisible] = useState(true)
     const [routeData, setrouteData] = useState(null)
+    const [Data, setData] = useState([])
+    const [DataFound, setDataFound] = useState(false)
+    // ===========================
+    useEffect(() => {
+        FetchData()
+    }, [])
+    const FetchData = async () => {
+        let userId = ''; let accessToken = '';
+        userId = await AsyncStorage.getItem('userId');
+        accessToken = await AsyncStorage.getItem('accessToken');
+        var InsertAPIURL = 'https://spaceup.co.in/api/v1/sitemanager/get-weekly-update';
+        var headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + String(accessToken),
+        };
+
+        var Data = {
+            manager_id: userId,
+            project_id: info.project_id
+        };
+        fetch(InsertAPIURL,
+            {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify(Data)
+            }
+        )
+            .then((response) => response.json())
+            .then((RES) => {
+                if(RES !== false){
+                    let TheWeekList = [];
+                    RES.map(info => {
+                        TheWeekList.push({
+                            "weekId":info.data[0].week,
+                            "weekName":"Week"+info.data[0].week
+                        })
+                    })
+                    setData(TheWeekList)
+                    setDataFound(true)
+                    // console.log(' weeks return data' + JSON.stringify(RES));
+                    console.log('edited week list',TheWeekList);
+                }
+                else{
+                    console.log('else weeks return data' + JSON.stringify(RES));
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
     // ===================
     const IncrementWeek = (count) => {
         if (count < 5) {
@@ -22,25 +74,25 @@ const WeeksScreen = ({ route, navigation }) => {
             setisAddBtnVisible(true)
             if (WeekCount === 1) {
                 setWeek1Visible(true)
-                setrouteData({ managerId: info.managerId, projectID: info.projectID, WeekId: 1 });
+                setrouteData({ user_id: info.user_id, project_id: info.project_id, WeekId: 1 });
             }
             else if (WeekCount === 2) {
                 setWeek1Visible(true)
                 setWeek2Visible(true)
-                setrouteData({ managerId: info.managerId, projectID: info.projectID, WeekId: 2 });
+                setrouteData({ user_id: info.user_id, project_id: info.project_id, WeekId: 2 });
             }
             else if (WeekCount === 3) {
                 setWeek1Visible(true)
                 setWeek2Visible(true)
                 setWeek3Visible(true)
-                setrouteData({ managerId: info.managerId, projectID: info.projectID, WeekId: 3 });
+                setrouteData({ user_id: info.user_id, project_id: info.project_id, WeekId: 3 });
             }
             else if (WeekCount === 4) {
                 setWeek1Visible(true)
                 setWeek2Visible(true)
                 setWeek3Visible(true)
                 setWeek4Visible(true)
-                setrouteData({ managerId: info.managerId, projectID: info.projectID, WeekId: 4 });
+                setrouteData({ user_id: info.user_id, project_id: info.project_id, WeekId: 4 });
             }
             else {
                 setWeek1Visible(false)

@@ -11,10 +11,11 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import ImagePicker from 'react-native-image-crop-picker';
 import { BottomSheet } from 'react-native-btr';
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { launchImageLibrary } from 'react-native-image-picker'
+import RNFetchBlob from 'rn-fetch-blob';
+import moment from 'moment';
 const UploadImages = ({ route, navigation }) => {
     const info = route.params.data;
-    // console.log('upload images', info);
+    console.log('upload images', info);
     const [imageUrl, setImageUrl] = useState(null)
     const [imageUrls, setImageUrls] = useState([])
     const [imagesError, setImagesError] = useState('')
@@ -91,52 +92,38 @@ const UploadImages = ({ route, navigation }) => {
         },
     ];
     const TakePhotoFromGallery = async () => {
-        // const options = {
-        //     noData: true,
-        //     // selection
-        //     selectionLimit: 2
-        // };
-        // const result = await launchImageLibrary(options);
-        // console.log('reslut',result);
-        // launchImageLibrary(options, response => {
-        //     console.log("response", response.assets[0].uri);
-        //     // if (response.assets[0].uri) {
-        //     //     // this.setState({ photo: response });
-        //     //     // console.log('the response', response);
-        //     // console.log("if response", response.assets[0].uri);
-
-        //     //     setImageUrl(response)
-        //     //     setImageUrls(...imageUrls,  response.assets[0].uri)
-        //     //     // console.log('images', imageUrls);
-        //     //     setImageUrlVerification(true)
-        //     // }
-        // });
-        // console.log('the results', result);
-
+        let imageList = [];
         ImagePicker.openPicker({
-            width: 400,
-            height: 400,
             multiple: true,
             mediaType: 'photo',
+            compressImageQuality: 0.9,
+            // width: 400,
+            // height: 400,
             // maxFiles: 2
-            // compressImageQuality: 0.9,
             // cropping: true,
-            // cropperActiveWidgetColor: colors.red,
-            // cropperStatusBarColor: colors.black,
-            // cropperToolbarColor: 'green'
-        }).then(image => {
-            // console.log('images url', image);
-            setmaxImages(maxImages + 1)
-            setImageUrl(image)
-            setImageUrls(...imageUrls, image.path)
-            // console.log('images', imageUrls);
-            setImageUrlVerification(true)
+            // forceJpg:true,
+            // includeBase64: true
+        }).then(response => {
+            setImageUrl(response)
+            console.log('images got', response);
+            response.map(image => {
+                imageList.push({
+                    name: 'image',
+                    'filename': moment().format() + '.png',
+                    'data': RNFetchBlob.wrap(image.path),
+                    'type': image.mime,
+                    'path': image.path,
+                });
+            });
+            setImageUrls(imageList)
+        }).catch(function (error) {
+            alert('the error', error);
         });
     }
     // ==============
     const RemoveThisImage = (path) => {
-        const filteredData = imageUrl.filter(item => item.path !== path)
-        setImageUrl(filteredData);
+        const filteredData = imageUrls.filter(item => item.path !== path)
+        setImageUrls(filteredData);
         // console.log('removed', imageUrl);
     }
     //   ==============
@@ -144,7 +131,11 @@ const UploadImages = ({ route, navigation }) => {
         // console.log(props.data.path);
         return (
             <TouchableOpacity style={styles.imageContainer}
-                onPress={() => RemoveThisImage(props.data.path)}
+                onPress={() => RemoveThisImage(
+                    // props.data.path
+                    // props.data.assets.uri
+                    props.data.path
+                )}
             >
                 <Image source={{ uri: props.data.path }}
                     style={{
@@ -170,37 +161,48 @@ const UploadImages = ({ route, navigation }) => {
     }
     // =================
     const onSubmitForm = async () => {
+        console.log('the images data', imageUrls);
         if (imageUrl !== null) {
             if (imageUrl.length >= 1 && imageUrl.length < 5) {
-                setImagesError('')
                 let userId = ''; let accessToken = '';
                 userId = await AsyncStorage.getItem('userId');
                 accessToken = await AsyncStorage.getItem('accessToken');
-                var InsertAPIURL = 'https://spaceup.co.in/api/v1/sitemanager/upload-weekly-update';
-                var headers = {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
+                let ImagesListIs = [];
+                ImagesListIs = imageUrls;
+                RNFetchBlob.fetch('POST', 'https://spaceup.co.in/api/v1/sitemanager/upload-weekly-update', {
                     'Authorization': 'Bearer ' + String(accessToken),
-                };
-
-                var Data = {
-                    manager_id: info.managerId,
-                    project_id: info.projectID,
-                    week: info.WeekId,
-                    room_type: SelectedRoomTypeId,
-                    comment: Comment,
-                    images: imageUrls
-
-                };
-                fetch(InsertAPIURL,
-                    {
-                        method: 'POST',
-                        headers: headers,
-                        body: JSON.stringify(Data)
-                    }
-                )
+                    otherHeader: "foo",
+                    'Content-Type': 'multipart/form-data',
+                },
+                    // JSON.stringify({
+                    //         manager_id: info.managerId,
+                    //         project_id: info.projectID,
+                    //         week: info.WeekId,
+                    //         room_type: SelectedRoomTypeId,
+                    //         comment: Comment,
+                    //         images: imageUrls
+                    //     })
+                    // )
+                    [
+                        {
+                            name: 'images',
+                            data: imageUrls
+                        },
+                        JSON.stringify({
+                            manager_id: info.user_id,
+                            project_id: info.project_id,
+                            week: info.WeekId,
+                            room_type: SelectedRoomTypeId,
+                            comment: Comment,
+                            // images: imageUrls
+                        })
+                    ])
+                    // .uploadProgress((currentCount, totalCount) => {
+                    //     console.log(currentCount / totalCount)
+                    // })
                     .then((response) => response.json())
                     .then((RES) => {
+                        console.log('yes', JSON.stringify(RES))
                         setResponseData(RES)
                         if (RES.status !== true) {
                             setErrorsFound(true)
@@ -240,23 +242,25 @@ const UploadImages = ({ route, navigation }) => {
                             setErrorsFound(false)
                             setModalVisible(true)
                             setComment('')
-                            navigation.navigate('home')
+                            // setTimeout(() => {
+                            //     navigation.navigate('home')
+                            // }, 3000);
                         }
-                        // setErrorsData(RES.errors)
-                        // setErrorsFound(true)
-                        // console.log('upload status' + JSON.stringify(RES.errors.manager_id[0]));
+                        setErrorsData(RES.errors)
+                        setErrorsFound(true)
+                        console.log('upload status' + JSON.stringify(RES.errors.manager_id[0]));
                     })
                     .catch(function (error) {
-                        console.log(error);
+                        alert('the api error' + error);
                     });
             }
             else {
                 setImagesError('Please select Min 1 and Max 4 images')
             }
         }
-        // else {
-        //     setImagesError('Please select Min 1 and Max 4 images')
-        // }
+        else {
+            setImagesError('Please select Min 1 and Max 4 images')
+        }
     }
     return (
         <SafeAreaView style={styles.container}>
@@ -282,7 +286,7 @@ const UploadImages = ({ route, navigation }) => {
                     <FlatList
                         // numColumns={2}
                         horizontal={true}
-                        data={imageUrl !== null ? imageUrl : images}
+                        data={imageUrls !== null ? imageUrls : images}
                         renderItem={({ item }) => <ImageCard data={item} />}
                         keyExtractor={(item, index) => index}
                     // ListFooterComponent={FooterContainer}
@@ -293,7 +297,7 @@ const UploadImages = ({ route, navigation }) => {
                         <Text style={styles.OutLineBtnText}>Upload Images</Text>
                         <Text style={styles.SmallText}></Text>
                     </TouchableOpacity>
-                    <Text style={[styles.SmallText,{color:'red'}]}>{imagesError}</Text>
+                    <Text style={[styles.SmallText, { color: 'red' }]}>{imagesError}</Text>
                     <TouchableOpacity style={styles.SubmitBtn}
                         onPress={() => onSubmitForm()}
                     >
@@ -325,7 +329,7 @@ const UploadImages = ({ route, navigation }) => {
                                     </>
                                     :
                                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                        <Text>{Data.message} good </Text>
+                                        <Text>{Data.message}</Text>
                                     </View>
                                 : null
                         }
@@ -345,6 +349,9 @@ const UploadImages = ({ route, navigation }) => {
                             {
                                 ErrorsFound ?
                                     <>
+                                        <Text style={styles.modalText}>
+                                            {ResponseData.errors}
+                                        </Text>
                                         {
                                             managerIdError !== null ?
                                                 <Text style={styles.modalText}>
@@ -381,9 +388,11 @@ const UploadImages = ({ route, navigation }) => {
                                                 : null
                                         }
                                     </>
-                                    : <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                        <Text>{ResponseData.message}</Text>
-                                    </View>}
+                                    :
+                                    <View style={{ backgroundColor: 'red' }}>
+                                        <Text>Success:{ResponseData.message}</Text>
+                                    </View>
+                            }
                         </View>
                     </View>
                 </Modal>

@@ -69,7 +69,7 @@ const UpdatesWeekly = ({ route, navigation }) => {
         };
 
         var Data = {
-            manager_id: info.managerId,
+            manager_id: userId,
             project_id: info.projectID
         };
         fetch(InsertAPIURL,
@@ -83,7 +83,7 @@ const UpdatesWeekly = ({ route, navigation }) => {
             .then((RES) => {
                 setData(RES)
                 setDataFound(true)
-                console.log('update weekly return data' + JSON.stringify(RES));
+                // console.log('update weekly return data' + JSON.stringify(RES));
             })
             .catch(function (error) {
                 console.log(error);

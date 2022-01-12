@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 const DeviceWidth = Dimensions.get('window').width;
 const DeviceHeight = Dimensions.get('window').height;
 function HeaderContainer(props) {
+    // console.log('project details',props.data.project_id);
     var date1 = new Date(props.PostData.start_date);
     var date2 = new Date(props.PostData.handover_date);
     var diffDays = parseInt((date2 - date1) / (1000 * 60 * 60 * 24), 10);
@@ -16,7 +17,7 @@ function HeaderContainer(props) {
     const startDateIs = moment(props.PostData.start_date, 'YYYY-MM-DD').format("DD/MM/YYYY");
     const handoverDateIs = moment(props.PostData.handover_date, 'YYYY-MM-DD').format("DD/MM/YYYY");
     return (
-        <View style={{ marginBottom: -30, }}>
+        <View style={{ marginBottom: 5, }}>
             <View style={styles.headerCon1}>
                 <Text style={styles.Toptext}>Project ID : {props.PostData.unique_id}</Text>
                 <Text style={styles.MainHeddingText}>{props.PostData.project_name}</Text>
@@ -46,11 +47,11 @@ function HeaderContainer(props) {
     );
 }
 function FooterContainer(props) {
-    const theInfo = { managerId: props.managerId, projectID: props.projectID };
+    const theData = {project_id:props.project_id,user_id:props.user_id}
     return (
         <TouchableOpacity style={styles.footerCon} onPress={() =>
             props.navigation.navigate('projectTracker',
-                { data: theInfo })}
+                { data:theData })}
         >
             <View style={styles.footerIconCon}>
                 <Feather name="upload" style={styles.footerIcon} />
@@ -65,54 +66,59 @@ function FooterContainer(props) {
 
 const ProjectDetails = ({ route, navigation }) => {
     const info = route.params.data;
-    // console.log('route', info);
+    console.log('details', info.project_id);
     const [DataAvailable, setDataAvailable] = useState(false)
+    const [Data, setData] = useState([])
     const [User_Id, setUser_Id] = useState(null)
-    // const [Access_Token, setAccess_Token] = useState(null)
     useEffect(() => {
-        GetUserData()
-        // FetchData()
+        FetchData()
     }, [])
-    const GetUserData = async () => {
-        let userId = ''; let accessToken = '';
+    const FetchData = async() => {
+        let userId = ''; let Access_Token = '';
         try {
             userId = await AsyncStorage.getItem('userId');
-            // accessToken = await AsyncStorage.getItem('accessToken');
+            Access_Token = await AsyncStorage.getItem('accessToken');
             setUser_Id(userId)
-            // setAccess_Token(accessToken)
-            // console.warn('token ',Access_Token);
-            // console.warn('id',User_Id);
         }
         catch (e) {
             console.log(e);
         }
-    }
-    // const FetchData = () => {
-    //     var InsertAPIURL = 'https://spaceup.co.in/api/v1/enduser/get-payment-pending-status';
-    //     var headers = {
-    //         'Accept': 'application/json',
-    //         'Content-Type': 'application/json',
-    //         'Authorization': 'Bearer '+String(Access_Token),
-    //     };
+        var InsertAPIURL = 'https://spaceup.co.in/api/v1/sitemanager/get-weekly-update';
+        var headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+String(Access_Token),
+        };
 
-    //     var Data = {
-    //         user_id: User_Id
-    //     };
-    //     fetch(InsertAPIURL,
-    //         {
-    //             method: 'POST',
-    //             headers: headers,
-    //             body: JSON.stringify(Data)
-    //         }
-    //     )
-    //         .then((response) => response.json())
-    //         .then((RES) => {
-    //             console.log('project details' + JSON.stringify(RES));
-    //         })
-    //         .catch(function (error) {
-    //             console.log(error);
-    //         });
-    // }
+        var Data = {
+                manager_id:info.user_id,
+                project_id:info.project_id
+            
+        };
+        fetch(InsertAPIURL,
+            {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify(Data)
+            }
+        )
+            .then((response) => response.json())
+            .then((RES) => {
+                if(RES.status === true){
+                    setDataAvailable(true)
+                    setData(RES)
+                    // console.log('done',RES)
+                }
+                else{
+                    setDataAvailable(false)
+                    setData(RES)
+                }
+                // console.log('project details' + JSON.stringify(RES));
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
     const images = [
         {
             id: '1',
@@ -140,17 +146,33 @@ const ProjectDetails = ({ route, navigation }) => {
         }
     ]
     const ImageCard = (props) => {
+        // console.log('the image',props.data);
         return (
             <TouchableOpacity style={styles.imageContainer}
-            //  onPress={() => setImagePreview(!ImagePreview)}
-            >
-                <Image source={props.data.source}
-                    style={{
-                        width: '100%',
-                        height: '100%',
-                        borderRadius: 10, marginTop: 40
-                    }} />
-            </TouchableOpacity>
+        //  onPress={() => setImagePreview(!ImagePreview)}
+        >
+            <Image source={{uri:props.data}}
+                style={{
+                    width: '100%',
+                    height: '100%',
+                    borderRadius: 10,
+                }} />
+            {/* <AntDesign name="closecircle" style={styles.imageCloseIcon} /> */}
+        </TouchableOpacity>
+        )
+    }
+    const CardList = (props) => {
+        // console.log('the image',props.data);
+        return (
+            <View>
+            <FlatList
+                // horizontal={true}
+                numColumns={2}
+                data={props.data.project_picture}
+                renderItem={({ item }) => <ImageCard data={item} />}
+                keyExtractor={(item, index) => index}
+            />
+            </View>
         )
     }
     return (
@@ -160,14 +182,21 @@ const ProjectDetails = ({ route, navigation }) => {
                     <FlatList
                         style={{
                             height: DeviceHeight,
-                            paddingHorizontal: '5.5%'
+                            paddingHorizontal: '5.5%',
                         }}
-                        numColumns={2}
-                        data={images}
-                        renderItem={({ item }) => <ImageCard data={item} />}
-                        keyExtractor={(item, index) => item.id}
-                        ListFooterComponent={<FooterContainer navigation={navigation} />}
-                        ListHeaderComponent={HeaderContainer}
+                        // numColumns={2}
+                        // horizontal={true}
+                        data={Data.data}
+                        renderItem={({ item }) => <CardList data={item} />}
+                        keyExtractor={(item, index) =>index}
+                        ListFooterComponent={
+                        <FooterContainer 
+                        project_id={info.project_id} 
+                        user_id={info.user_id}
+                        navigation={navigation} 
+                        />
+                    }
+                        ListHeaderComponent={<HeaderContainer PostData={info} />}
                     />
                     :
                     <View style={{ height: '100%', width: '100%' }}>
@@ -176,9 +205,9 @@ const ProjectDetails = ({ route, navigation }) => {
                         </View>
                         <View style={{ height: '20%', width: '100%', justifyContent: 'center' }}>
                             <FooterContainer
-                                navigation={navigation}
-                                projectID={info.project_id}
-                                managerId={User_Id !== null ? User_Id : null}
+                                project_id={info.project_id} 
+                                user_id={info.user_id}
+                                navigation={navigation} 
                             />
                         </View>
                     </View>
