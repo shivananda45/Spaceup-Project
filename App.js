@@ -1,7 +1,7 @@
 import React from 'react';
 
 import SpNavigator from './navigation/SpNavigator';
-// import pull request
+// import test one
 export default function App() {
   return (
     <SpNavigator />
